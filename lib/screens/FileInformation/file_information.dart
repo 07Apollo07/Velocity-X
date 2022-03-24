@@ -1,26 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:timeline_tile/timeline_tile.dart';
-import 'package:velocityx/screens/Home/HomeComponents/BottomNavBar.dart';
-import 'package:velocityx/screens/Home/HomeComponents/FloatingButton.dart';
 
 class FileInformation extends StatelessWidget {
   const FileInformation({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    var bottomNavIndex = 0;
-    bool floatingActive = false;
     return Container(
       child: Scaffold(
-        floatingActionButton: FloatingButton(
-          floatingActive: floatingActive,
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        bottomNavigationBar: BottomNavBar(
-          bottomNavIndex: bottomNavIndex,
-          floatingActive: floatingActive,
-        ),
         backgroundColor: Color.fromRGBO(36, 36, 36, 1.0),
         body: Padding(
           padding: const EdgeInsets.fromLTRB(25.0, 70, 25, 40),

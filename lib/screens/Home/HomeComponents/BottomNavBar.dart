@@ -42,7 +42,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
               // size: 24,
               color: color,
             ),
-            const SizedBox(height: 4),
+            // const SizedBox(height: 2),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8),
               child: Text(

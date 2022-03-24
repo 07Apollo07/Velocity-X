@@ -1,11 +1,13 @@
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:velocityx/models/user.dart';
-// import 'package:brew_crew/services/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:io' show Platform;
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  GoogleSignIn _gooogleSignIn = GoogleSignIn();
+  // GoogleSignIn _gooogleSignIn = GoogleSignIn();
+
   MyUser? _userFromFirebaseUser(User? user) {
     return user != null ? MyUser(uid: user.uid) : null;
   }
@@ -16,35 +18,54 @@ class AuthService {
         .map((User? user) => _userFromFirebaseUser(user));
   }
 
-  // sign in anon
-  // Future signInWithGoogle() async {
-  //   try {
-  //     AuthResult result = await _auth.signInAnonymously();
-  //     FirebaseUser user = result.user;
-  //     return _userFromFirebaseUser(user);
-  //   } catch (e) {
-  //     print(e.toString());
-  //     return null;
-  //   }
-  // }
-
   Future<UserCredential> signInWithGoogle() async {
-    // Trigger the authentication flow
-    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+    try {
+      if (kIsWeb) {
+        try {
+          // Create a new provider
+          GoogleAuthProvider googleProvider = GoogleAuthProvider();
 
-    // Obtain the auth details from the request
-    final GoogleSignInAuthentication? googleAuth =
-        await googleUser?.authentication;
+          googleProvider
+              .addScope('https://www.googleapis.com/auth/contacts.readonly');
+          googleProvider
+              .setCustomParameters({'login_hint': 'user@example.com'});
 
-    // Create a new credential
-    final credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth?.accessToken,
-      idToken: googleAuth?.idToken,
-    );
-    print("Sign In Sucessful");
+          // Once signed in, return the UserCredential
+          return await FirebaseAuth.instance.signInWithPopup(googleProvider);
+          
+          // Or use signInWithRedirect
+          // return await FirebaseAuth.instance.signInWithRedirect(googleProvider);
+        } catch (e) {
+          print(e.toString());
+        }
+      } else {
+        if (Platform.isAndroid) {
+          try {
+            // Trigger the authentication flow
+            final GoogleSignInAccount? googleUser =
+                await GoogleSignIn().signIn();
 
-    // Once signed in, return the UserCredential
-    return await FirebaseAuth.instance.signInWithCredential(credential);
+            // Obtain the auth details from the request
+            final GoogleSignInAuthentication? googleAuth =
+                await googleUser?.authentication;
+
+            // Create a new credential
+            final credential = GoogleAuthProvider.credential(
+              accessToken: googleAuth?.accessToken,
+              idToken: googleAuth?.idToken,
+            );
+
+            // Once signed in, return the UserCredential
+            return await FirebaseAuth.instance.signInWithCredential(credential);
+          } catch (e) {
+            print(e.toString());
+          }
+        }
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+    throw "";
   }
 
   // sign out

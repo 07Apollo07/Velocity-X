@@ -23,9 +23,6 @@ class _ScanQRCodeState extends State<ScanQRCode> {
     }on PlatformException{
       qrResult = 'Fail to read QR Code';
     }
-
-
-
   }
 
   @override

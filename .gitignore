@@ -81,3 +81,4 @@ app.*.map.json
 **/ios/Runner/GeneratedPluginRegistrant.*
 
 firebase_options.dart
+Config.js

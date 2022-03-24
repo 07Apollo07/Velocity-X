@@ -1,9 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:velocityx/models/user.dart';
-import 'package:velocityx/screens/Home/home.dart';
-import 'package:velocityx/screens/authenticate/sign_in.dart';
-import 'package:velocityx/screens/metadata/meta_data.dart';
 import 'package:velocityx/screens/wrapper.dart';
 import 'package:provider/provider.dart';
 import 'package:velocityx/services/auth.dart';

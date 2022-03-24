@@ -1,7 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:velocityx/services/auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 class SignIn extends StatelessWidget {
   const SignIn({Key? key}) : super(key: key);
@@ -14,7 +12,7 @@ class SignIn extends StatelessWidget {
         body: Stack(
       children: [
         Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
               image: DecorationImage(
             image: AssetImage('assets/images/loginBg.png'),
             fit: BoxFit.cover,
@@ -28,7 +26,7 @@ class SignIn extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text(
+              const Text(
                 "Welcome",
                 style: TextStyle(
                     fontFamily: 'Segoe',
@@ -36,10 +34,10 @@ class SignIn extends StatelessWidget {
                     fontWeight: FontWeight.w400,
                     color: Color(0xFF78D6FF)),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
-              Text(
+              const Text(
                 "VelocityX next gen document handler ",
                 style: TextStyle(
                   fontFamily: 'Segoe',
@@ -48,7 +46,7 @@ class SignIn extends StatelessWidget {
                   fontWeight: FontWeight.w300,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 23,
               ),
               ElevatedButton(
@@ -66,10 +64,10 @@ class SignIn extends StatelessWidget {
                         width: 20,
                         height: 20,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 50,
                       ),
-                      Text(
+                      const Text(
                         'Login with google',
                         style: TextStyle(color: Colors.black, fontSize: 17),
                       )
