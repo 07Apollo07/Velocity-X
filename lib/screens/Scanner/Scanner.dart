@@ -37,7 +37,7 @@ class _ScannerState extends State<Scanner> {
             title: Text('QR Code Scanner'),
             backgroundColor: Color.fromRGBO(36, 36, 36, 1.0),
           ),
-          backgroundColor: Color.fromRGBO(36, 36, 36, 1.0),
+          // backgroundColor: Color.fromRGBO(36, 36, 36, 1.0),
           body: Column(
             children: [
               Text('$qrResult', style: TextStyle(color: Colors.white)),

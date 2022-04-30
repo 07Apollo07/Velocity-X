@@ -5,6 +5,7 @@ import 'package:velocityx/screens/wrapper.dart';
 import 'package:provider/provider.dart';
 import 'package:velocityx/services/auth.dart';
 import 'firebase_options.dart';
+import 'custom_theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,6 +34,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         home: Wrapper(),
+        theme: CustomTheme.darkTheme,
       ),
     );
   }

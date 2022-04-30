@@ -23,7 +23,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Container(
         child: Scaffold(
-      backgroundColor: Color.fromRGBO(36, 36, 36, 1.0),
+      // backgroundColor: Color.fromRGBO(36, 36, 36, 1.0),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
