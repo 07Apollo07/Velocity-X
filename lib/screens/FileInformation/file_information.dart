@@ -8,7 +8,7 @@ class FileInformation extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Scaffold(
-        backgroundColor: Color.fromRGBO(36, 36, 36, 1.0),
+        // backgroundColor: Color.fromRGBO(36, 36, 36, 1.0),
         body: Padding(
           padding: const EdgeInsets.fromLTRB(25.0, 70, 25, 40),
           child: Container(
@@ -17,7 +17,7 @@ class FileInformation extends StatelessWidget {
               decoration: BoxDecoration(
                 border: Border.all(
                   width: 4,
-                  color: Color(0xFF4784F1),
+                  color: Theme.of(context).primaryColor,
                 ),
                 borderRadius: BorderRadius.all(Radius.circular(45)),
               ),
@@ -30,10 +30,11 @@ class FileInformation extends StatelessWidget {
                         height: 70.0,
                         width: 400.0,
                         decoration: BoxDecoration(
-                          color: Color(0xFF4784F1),
+                          // color: Color(0xFF4784F1),
+                          color: Theme.of(context).primaryColor,
                           border: Border.all(
                             width: 4,
-                            color: Color(0xFF4784F1),
+                            color: Theme.of(context).primaryColor,
                           ),
                           borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(40),
@@ -45,7 +46,7 @@ class FileInformation extends StatelessWidget {
                             child: Text(
                               'File Tracking Information',
                               style: TextStyle(
-                                  color: Colors.white,
+                                  // color: Colors.white,
                                   letterSpacing: 1.8,
                                   fontSize: 17),
                             ),
@@ -56,12 +57,12 @@ class FileInformation extends StatelessWidget {
                         TimelineTile(
                           alignment: TimelineAlign.manual,
                           lineXY: 0.5,
-                          beforeLineStyle: const LineStyle(
-                            color: Color(0xFF4784F1),
+                          beforeLineStyle: LineStyle(
+                            color: Theme.of(context).primaryColor,
                             thickness: 6,
                           ),
-                          afterLineStyle: const LineStyle(
-                            color: Color(0xFF4784F1),
+                          afterLineStyle: LineStyle(
+                            color: Theme.of(context).primaryColor,
                             thickness: 6,
                           ),
                           startChild: Padding(
@@ -76,7 +77,7 @@ class FileInformation extends StatelessWidget {
                                 children: const [
                                   Text(
                                     "Jan 31, 2021",
-                                    style: TextStyle(color: Colors.white),
+                                    // style: TextStyle(color: Colors.white),
                                   ),
                                 ],
                               ),
@@ -89,24 +90,24 @@ class FileInformation extends StatelessWidget {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.center,
-                              children: const [
+                              children: [
                                 Icon(
                                   Icons.supervised_user_circle,
-                                  color: Color(0xFF4784F1),
+                                  color: Theme.of(context).primaryColor,
                                 ),
                                 SizedBox(
                                   width: 5,
                                 ),
                                 Text(
                                   "User_1",
-                                  style: TextStyle(color: Colors.white),
+                                  // style: TextStyle(color: Colors.white),
                                 ),
                                 SizedBox(
                                   width: 5,
                                 ),
                                 Icon(
                                   Icons.link,
-                                  color: Color(0xFF4784F1),
+                                  color: Theme.of(context).primaryColor,
                                 )
                               ],
                             ),
@@ -115,12 +116,12 @@ class FileInformation extends StatelessWidget {
                         TimelineTile(
                           alignment: TimelineAlign.manual,
                           lineXY: 0.5,
-                          beforeLineStyle: const LineStyle(
-                            color: Color(0xFF4784F1),
+                          beforeLineStyle: LineStyle(
+                            color: Theme.of(context).primaryColor,
                             thickness: 6,
                           ),
-                          afterLineStyle: const LineStyle(
-                            color: Color(0xFF4784F1),
+                          afterLineStyle: LineStyle(
+                            color: Theme.of(context).primaryColor,
                             thickness: 6,
                           ),
                           startChild: Padding(
@@ -135,7 +136,7 @@ class FileInformation extends StatelessWidget {
                                 children: const [
                                   Text(
                                     "Jan 31, 2021",
-                                    style: TextStyle(color: Colors.white),
+                                    // style: TextStyle(color: Colors.white),
                                   ),
                                 ],
                               ),
@@ -148,24 +149,24 @@ class FileInformation extends StatelessWidget {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.center,
-                              children: const [
+                              children: [
                                 Icon(
                                   Icons.supervised_user_circle,
-                                  color: Color(0xFF4784F1),
+                                  color: Theme.of(context).primaryColor,
                                 ),
                                 SizedBox(
                                   width: 5,
                                 ),
                                 Text(
                                   "User_2",
-                                  style: TextStyle(color: Colors.white),
+                                  // style: TextStyle(color: Colors.white),
                                 ),
                                 SizedBox(
                                   width: 5,
                                 ),
                                 Icon(
                                   Icons.link,
-                                  color: Color(0xFF4784F1),
+                                  color: Theme.of(context).primaryColor,
                                 )
                               ],
                             ),
@@ -174,12 +175,12 @@ class FileInformation extends StatelessWidget {
                         TimelineTile(
                           alignment: TimelineAlign.manual,
                           lineXY: 0.5,
-                          beforeLineStyle: const LineStyle(
-                            color: Color(0xFF4784F1),
+                          beforeLineStyle: LineStyle(
+                            color: Theme.of(context).primaryColor,
                             thickness: 6,
                           ),
-                          afterLineStyle: const LineStyle(
-                            color: Color(0xFF4784F1),
+                          afterLineStyle: LineStyle(
+                            color: Theme.of(context).primaryColor,
                             thickness: 6,
                           ),
                           startChild: Padding(
@@ -194,7 +195,7 @@ class FileInformation extends StatelessWidget {
                                 children: const [
                                   Text(
                                     "Feb 31, 2021",
-                                    style: TextStyle(color: Colors.white),
+                                    // style: TextStyle(color: Colors.white),
                                   ),
                                 ],
                               ),
@@ -207,25 +208,23 @@ class FileInformation extends StatelessWidget {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.center,
-                              children: const [
+                              children: [
                                 Icon(
                                   Icons.supervised_user_circle,
-                                  color: Color(0xFF4784F1),
+                                  color: Theme.of(context).primaryColor,
                                 ),
                                 SizedBox(
                                   width: 5,
                                 ),
                                 Text(
                                   "User_3",
-                                  style: TextStyle(color: Colors.white),
+                                  // style: TextStyle(color: Colors.white),
                                 ),
                                 SizedBox(
                                   width: 5,
                                 ),
-                                Icon(
-                                  Icons.link,
-                                  color: Color(0xFF4784F1),
-                                )
+                                Icon(Icons.link,
+                                    color: Theme.of(context).primaryColor)
                               ],
                             ),
                           ),

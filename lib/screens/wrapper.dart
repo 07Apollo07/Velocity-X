@@ -5,6 +5,7 @@ import 'package:velocityx/assets/custom_icons_icons.dart';
 import 'package:velocityx/screens/FileInformation/file_information.dart';
 import 'package:velocityx/screens/Home/home.dart';
 import 'package:velocityx/screens/Scanner/Scanner.dart';
+import 'package:velocityx/screens/authenticate/sign_in.dart';
 import 'package:velocityx/screens/metadata/meta_data.dart';
 import 'package:velocityx/services/auth.dart';
 
@@ -45,19 +46,19 @@ class _WrapperState extends State<Wrapper> {
     //   return SignIn();
     // } else {
     return Scaffold(
-        backgroundColor: Color.fromRGBO(36, 36, 36, 1.0),
+        // backgroundColor: Color.fromRGBO(36, 36, 36, 1.0),
         appBar: AppBar(
-          backgroundColor: Color.fromRGBO(36, 36, 36, 1.0),
+          // backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
           elevation: 0.0,
           actions: <Widget>[
             Container(
                 margin: EdgeInsets.only(right: 15.0),
-                decoration: const BoxDecoration(
-                    color: Color.fromRGBO(36, 36, 36, 1.0),
+                decoration: BoxDecoration(
+                    color: Theme.of(context).scaffoldBackgroundColor,
                     shape: BoxShape.circle,
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.blue,
+                        color: Theme.of(context).primaryColor,
                         blurRadius: 5.0,
                       ),
                     ]),
@@ -65,23 +66,26 @@ class _WrapperState extends State<Wrapper> {
                     onPressed: () {
                       // Navigator.pushNamed(context, '/MetaData');
                     },
-                    icon: Icon(CustomIcons.search_1))),
+                    icon: Icon(CustomIcons.search_1),
+                    color: Theme.of(context).primaryColor)),
             Container(
-                margin: EdgeInsets.only(right: 15.0),
-                decoration: const BoxDecoration(
-                    color: Color.fromRGBO(36, 36, 36, 1.0),
-                    shape: BoxShape.circle,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.blue,
-                        blurRadius: 5.0,
-                      ),
-                    ]),
-                child: IconButton(
-                    onPressed: () {
-                      _auth.signOut();
-                    },
-                    icon: Icon(CustomIcons.bell))),
+              margin: EdgeInsets.only(right: 15.0),
+              decoration: BoxDecoration(
+                  color: Theme.of(context).scaffoldBackgroundColor,
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Theme.of(context).primaryColor,
+                      blurRadius: 5.0,
+                    ),
+                  ]),
+              child: IconButton(
+                  onPressed: () {
+                    _auth.signOut();
+                  },
+                  icon: Icon(CustomIcons.bell),
+                  color: Theme.of(context).primaryColor),
+            ),
           ],
         ),
         body: screen[_bottomNavIndex],
@@ -93,7 +97,7 @@ class _WrapperState extends State<Wrapper> {
         //   floatingActive: floatingActive,
         // ),
         floatingActionButton: FloatingActionButton(
-          backgroundColor: Color.fromRGBO(71, 132, 241, 1.0),
+          backgroundColor: Theme.of(context).primaryColor,
           child: Icon(
             Icons.qr_code_scanner_sharp,
             color: _floatingActive ? Colors.white : Colors.black,
@@ -144,7 +148,7 @@ class _WrapperState extends State<Wrapper> {
             );
           },
           itemCount: iconList.length,
-          backgroundColor: const Color.fromRGBO(71, 132, 241, 1.0),
+          backgroundColor: Theme.of(context).primaryColor,
           activeIndex: _bottomNavIndex,
           gapLocation: GapLocation.center,
           notchSmoothness: NotchSmoothness.softEdge,

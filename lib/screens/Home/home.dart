@@ -67,9 +67,9 @@ class _HomeState extends State<Home> {
             ),
             Padding(
               padding: const EdgeInsets.all(14.0),
-              child: const Text(
+              child: Text(
                 "Assigned to You",
-                style: TextStyle(color: Colors.white, fontSize: 24),
+                style: Theme.of(context).textTheme.headline3,
                 textAlign: TextAlign.start,
               ),
             ),

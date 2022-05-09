@@ -66,7 +66,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
         );
       },
       itemCount: iconList.length,
-      backgroundColor: const Color.fromRGBO(71, 132, 241, 1.0),
+      backgroundColor: Theme.of(context).primaryColor,
       activeIndex: widget.bottomNavIndex,
       gapLocation: GapLocation.center,
       notchSmoothness: NotchSmoothness.softEdge,

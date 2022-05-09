@@ -23,7 +23,7 @@ class MetaDataPage extends StatelessWidget {
                       color: Colors.white,
                       border: Border.all(
                         width: 4,
-                        color: Color(0xFF4784F1),
+                        color: Theme.of(context).primaryColor,
                       ),
                       borderRadius: BorderRadius.all(Radius.circular(30)),
                     ),
@@ -40,7 +40,7 @@ class MetaDataPage extends StatelessWidget {
                 ),
                 Text(
                   'File Properties:',
-                  style: TextStyle(color: Colors.white, fontSize: 20),
+                  style: TextStyle(fontSize: 20),
                 ),
                 SizedBox(
                   height: 10,
@@ -53,20 +53,26 @@ class MetaDataPage extends StatelessWidget {
         Modified : Jun 24, 2021
         Permission : User1, user2 .''',
                   textAlign: TextAlign.start,
-                  style: TextStyle(color: Colors.white, fontSize: 16),
+                  style: TextStyle(fontSize: 16),
                 ),
                 SizedBox(
-                  height: 280,
+                  height: 200,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     IconLogo(
-                        color: Color(0xFF4784F1), icon: CustomIcons.search_1),
+                        color: Theme.of(context).primaryColor,
+                        icon: CustomIcons.search_1),
                     IconLogo(
-                        color: Color(0xFF4784F1), icon: CustomIcons.bookmark),
-                    IconLogo(color: Color(0xFF4784F1), icon: CustomIcons.bell),
-                    IconLogo(color: Color(0xFF4784F1), icon: CustomIcons.home),
+                        color: Theme.of(context).primaryColor,
+                        icon: CustomIcons.bookmark),
+                    IconLogo(
+                        color: Theme.of(context).primaryColor,
+                        icon: CustomIcons.bell),
+                    IconLogo(
+                        color: Theme.of(context).primaryColor,
+                        icon: CustomIcons.home),
                   ],
                 )
               ],
