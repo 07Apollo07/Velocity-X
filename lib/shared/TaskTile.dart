@@ -24,34 +24,60 @@ class TaskTile extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
+              SizedBox(
+                width: 10,
+              ),
               Icon(
                 Icons.circle,
                 color: Color(0xFFA2B9E4),
+              ),
+              SizedBox(
+                width: 10,
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     task_name,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
                   ),
                   SizedBox(
                     height: 3,
                   ),
-                  Text(
-                    'Assigned by: $assigned_by',
-                  ),
+                  Row(children: [
+                    Text(
+                      'Assigned by:',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 13,
+                      ),
+                    ),
+                    SizedBox(
+                      width: 3,
+                    ),
+                    Text(assigned_by)
+                  ]),
                 ],
+              ),
+              SizedBox(
+                width: 15,
               ),
               Column(
                 children: [
                   SizedBox(
-                    height: 18,
+                    height: 29,
                   ),
                   Text(
                     'Due by: $due_date',
                     style: TextStyle(color: Color(0xFFA2B9E4)),
                   ),
                 ],
+              ),
+              SizedBox(
+                width: 10,
               ),
             ],
           ),

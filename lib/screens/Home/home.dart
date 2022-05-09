@@ -73,82 +73,152 @@ class _HomeState extends State<Home> {
                 textAlign: TextAlign.start,
               ),
             ),
-            Column(
-              children: [
-                TaskTile(
-                  task_name: "task_name",
-                  assigned_by: "assigned_by",
-                  due_date: "due_date",
-                ),
-                TaskTile(
-                    task_name: "task_name",
-                    assigned_by: "assigned_by",
-                    due_date: "due_date"),
-                TaskTile(
-                    task_name: "task_name",
-                    assigned_by: "assigned_by",
-                    due_date: "due_date"),
-                TaskTile(
-                    task_name: "task_name",
-                    assigned_by: "assigned_by",
-                    due_date: "due_date"),
-                TaskTile(
-                    task_name: "task_name",
-                    assigned_by: "assigned_by",
-                    due_date: "due_date"),
-                TaskTile(
-                    task_name: "task_name",
-                    assigned_by: "assigned_by",
-                    due_date: "due_date"),
-                TaskTile(
-                    task_name: "task_name",
-                    assigned_by: "assigned_by",
-                    due_date: "due_date"),
-                TaskTile(
-                    task_name: "task_name",
-                    assigned_by: "assigned_by",
-                    due_date: "due_date"),
-                TaskTile(
-                    task_name: "task_name",
-                    assigned_by: "assigned_by",
-                    due_date: "due_date"),
-                TaskTile(
-                    task_name: "task_name",
-                    assigned_by: "assigned_by",
-                    due_date: "due_date"),
-                TaskTile(
-                    task_name: "task_name",
-                    assigned_by: "assigned_by",
-                    due_date: "due_date"),
-                TaskTile(
-                    task_name: "task_name",
-                    assigned_by: "assigned_by",
-                    due_date: "due_date"),
-                TaskTile(
-                    task_name: "task_name",
-                    assigned_by: "assigned_by",
-                    due_date: "due_date"),
-                TaskTile(
-                    task_name: "task_name",
-                    assigned_by: "assigned_by",
-                    due_date: "due_date"),
-                TaskTile(
-                    task_name: "task_name",
-                    assigned_by: "assigned_by",
-                    due_date: "due_date"),
-                TaskTile(
-                    task_name: "task_name",
-                    assigned_by: "assigned_by",
-                    due_date: "due_date"),
-                TaskTile(
-                    task_name: "task_name",
-                    assigned_by: "assigned_by",
-                    due_date: "due_date"),
-                TaskTile(
-                    task_name: "task_name",
-                    assigned_by: "assigned_by",
-                    due_date: "due_date"),
-              ],
+            Center(
+              child: (MediaQuery.of(context).size.width > 600)
+                  ? Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Column(children: [
+                          TaskTile(
+                              task_name: "task_name",
+                              assigned_by: "assigned_by",
+                              due_date: "due_date"),
+                          TaskTile(
+                              task_name: "task_name",
+                              assigned_by: "assigned_by",
+                              due_date: "due_date"),
+                          TaskTile(
+                              task_name: "task_name",
+                              assigned_by: "assigned_by",
+                              due_date: "due_date"),
+                          TaskTile(
+                              task_name: "task_name",
+                              assigned_by: "assigned_by",
+                              due_date: "due_date"),
+                          TaskTile(
+                              task_name: "task_name",
+                              assigned_by: "assigned_by",
+                              due_date: "due_date"),
+                          TaskTile(
+                              task_name: "task_name",
+                              assigned_by: "assigned_by",
+                              due_date: "due_date"),
+                          TaskTile(
+                              task_name: "task_name",
+                              assigned_by: "assigned_by",
+                              due_date: "due_date"),
+                        ]),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Column(children: [
+                          TaskTile(
+                              task_name: "task_name",
+                              assigned_by: "assigned_by",
+                              due_date: "due_date"),
+                          TaskTile(
+                              task_name: "task_name",
+                              assigned_by: "assigned_by",
+                              due_date: "due_date"),
+                          TaskTile(
+                              task_name: "task_name",
+                              assigned_by: "assigned_by",
+                              due_date: "due_date"),
+                          TaskTile(
+                              task_name: "task_name",
+                              assigned_by: "assigned_by",
+                              due_date: "due_date"),
+                          TaskTile(
+                              task_name: "task_name",
+                              assigned_by: "assigned_by",
+                              due_date: "due_date"),
+                          TaskTile(
+                              task_name: "task_name",
+                              assigned_by: "assigned_by",
+                              due_date: "due_date"),
+                          TaskTile(
+                              task_name: "task_name",
+                              assigned_by: "assigned_by",
+                              due_date: "due_date"),
+                        ]),
+                      ],
+                    )
+                  : Column(
+                      children: [
+                        TaskTile(
+                            task_name: "task_name",
+                            assigned_by: "assigned_by",
+                            due_date: "due_date"),
+                        TaskTile(
+                            task_name: "task_name",
+                            assigned_by: "assigned_by",
+                            due_date: "due_date"),
+                        TaskTile(
+                            task_name: "task_name",
+                            assigned_by: "assigned_by",
+                            due_date: "due_date"),
+                        TaskTile(
+                            task_name: "task_name",
+                            assigned_by: "assigned_by",
+                            due_date: "due_date"),
+                        TaskTile(
+                            task_name: "task_name",
+                            assigned_by: "assigned_by",
+                            due_date: "due_date"),
+                        TaskTile(
+                            task_name: "task_name",
+                            assigned_by: "assigned_by",
+                            due_date: "due_date"),
+                        TaskTile(
+                            task_name: "task_name",
+                            assigned_by: "assigned_by",
+                            due_date: "due_date"),
+                        TaskTile(
+                            task_name: "task_name",
+                            assigned_by: "assigned_by",
+                            due_date: "due_date"),
+                        TaskTile(
+                            task_name: "task_name",
+                            assigned_by: "assigned_by",
+                            due_date: "due_date"),
+                        TaskTile(
+                            task_name: "task_name",
+                            assigned_by: "assigned_by",
+                            due_date: "due_date"),
+                        TaskTile(
+                            task_name: "task_name",
+                            assigned_by: "assigned_by",
+                            due_date: "due_date"),
+                        TaskTile(
+                            task_name: "task_name",
+                            assigned_by: "assigned_by",
+                            due_date: "due_date"),
+                        TaskTile(
+                            task_name: "task_name",
+                            assigned_by: "assigned_by",
+                            due_date: "due_date"),
+                        TaskTile(
+                            task_name: "task_name",
+                            assigned_by: "assigned_by",
+                            due_date: "due_date"),
+                        TaskTile(
+                            task_name: "task_name",
+                            assigned_by: "assigned_by",
+                            due_date: "due_date"),
+                        TaskTile(
+                            task_name: "task_name",
+                            assigned_by: "assigned_by",
+                            due_date: "due_date"),
+                        TaskTile(
+                            task_name: "task_name",
+                            assigned_by: "assigned_by",
+                            due_date: "due_date"),
+                        TaskTile(
+                            task_name: "task_name",
+                            assigned_by: "assigned_by",
+                            due_date: "due_date"),
+                      ],
+                    ),
             ),
           ],
         ),

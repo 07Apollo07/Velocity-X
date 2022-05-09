@@ -20,7 +20,7 @@ class CategoryTile extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.fromLTRB(8.0, 45, 8, 5),
         child: Center(
-          child: Text(title, style: Theme.of(context).textTheme.bodyText1),
+          child: Text(title, style: Theme.of(context).textTheme.bodyText2),
         ),
       ),
     );

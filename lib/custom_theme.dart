@@ -52,6 +52,8 @@ class CustomTheme {
         headline1: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
         headline3: TextStyle(fontSize: 24),
         bodyText1: TextStyle(letterSpacing: 1.8),
+        bodyText2: TextStyle(
+            fontSize: 27, letterSpacing: 1.8, fontWeight: FontWeight.bold),
       ),
       // bottomAppBarColor: const Color(0xFF4784F1)
       // fontFamily: 'Lato', //3,
