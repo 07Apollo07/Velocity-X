@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FilesDb{
-  final CollectionReference userCollection = FirebaseFirestore.instance.collection("files");
+  final CollectionReference userCollection = FirebaseFirestore.instance.collection("Files");
 
 
   Future<List> getAllFiles() async{

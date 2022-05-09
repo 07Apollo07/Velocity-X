@@ -43,9 +43,9 @@ class _WrapperState extends State<Wrapper> {
     final user = Provider.of<MyUser?>(context);
 
     // return either the Home or Authenticate widget
-    if (user == null) {
-      return SignIn();
-    } else {
+    // if (user == null) {
+    //   return SignIn();
+    // } else {
     return Scaffold(
         // backgroundColor: Color.fromRGBO(36, 36, 36, 1.0),
         appBar: AppBar(
@@ -162,4 +162,4 @@ class _WrapperState extends State<Wrapper> {
         ));
   }
   }
-}
+// }
