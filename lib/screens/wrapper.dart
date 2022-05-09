@@ -10,6 +10,7 @@ import 'package:velocityx/screens/metadata/meta_data.dart';
 import 'package:velocityx/services/auth.dart';
 
 import '../models/user.dart';
+import 'authenticate/sign_in.dart';
 
 class Wrapper extends StatefulWidget {
   @override
@@ -42,9 +43,9 @@ class _WrapperState extends State<Wrapper> {
     final user = Provider.of<MyUser?>(context);
 
     // return either the Home or Authenticate widget
-    // if (user == null) {
-    //   return SignIn();
-    // } else {
+    if (user == null) {
+      return SignIn();
+    } else {
     return Scaffold(
         // backgroundColor: Color.fromRGBO(36, 36, 36, 1.0),
         appBar: AppBar(
@@ -160,5 +161,5 @@ class _WrapperState extends State<Wrapper> {
           }),
         ));
   }
-  // }
+  }
 }
