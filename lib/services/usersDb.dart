@@ -45,15 +45,24 @@ class UserDb {
     return allData;
   }
 
-  Future<List> getUser(String docID) async {
-    QuerySnapshot querySnapshot =
-        await userCollection.doc(docID).get() as QuerySnapshot<Object?>;
-    final allData = querySnapshot.docs.map((doc) => doc.data()).toList();
+  Future<UserModel> getUser(String docID) async {
+    // QuerySnapshot querySnapshot =
+    //     await userCollection.doc(docID).get() as QuerySnapshot<Object?>;
+    // final allData = querySnapshot.docs.map((doc) => doc.data()).toList();
     // for (var snapshot in querySnapshot.docs) {
     //   var documentID = snapshot.id;
     //   print(documentID.runtimeType);// <-- Document ID
     // }
+    try {
+      DocumentSnapshot _doc =
+          await _firestore.collection("users").doc(docID).get();
 
-    return allData;
+      return UserModel.fromDocumentSnapshot(documentSnapshot: _doc);
+    } catch (e) {
+      print(e);
+      rethrow;
+    }
+
+    // return allData;
   }
 }
