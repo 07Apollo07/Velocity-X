@@ -1,12 +1,36 @@
-class MyUser {
-  final String uid;
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-  MyUser({required this.uid});
-}
+class UserModel {
+  late String? id;
+  late String? f_name;
+  late String? l_name;
+  int phone = 0000000000;
+  late String? email;
+  String organization_emp_no = "No Organization";
+  String organization_no = "00";
+  String designation = "No Designation";
+  String joining_date = "No Joining Date";
 
-class UserData {
-  final String uid;
-  final String name;
+  UserModel(
+      {this.id,
+      this.f_name,
+      this.l_name,
+      int phone = 0000000000,
+      this.email,
+      String organization_emp_no = "No Organization",
+      String organization_no = "00",
+      String designation = "No Designation",
+      String joining_date = "No Joining Date"}); // UserModel();
 
-  UserData({required this.uid, required this.name});
+  UserModel.fromDocumentSnapshot({DocumentSnapshot? documentSnapshot}) {
+    id = documentSnapshot!.id;
+    f_name = documentSnapshot["f_name"];
+    l_name = documentSnapshot["l_name"];
+    phone = documentSnapshot["phone"];
+    email = documentSnapshot["email"];
+    organization_emp_no = documentSnapshot["organization_emp_no"];
+    organization_no = documentSnapshot["organization_no"];
+    designation = documentSnapshot["designation"];
+    joining_date = documentSnapshot["joining_date"];
+  }
 }

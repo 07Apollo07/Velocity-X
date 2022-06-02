@@ -1,0 +1,129 @@
+import 'package:get/get.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:velocityx/controllers/userController.dart';
+import 'package:velocityx/models/user.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:io' show Platform;
+import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:velocityx/screens/authenticate/sign_in.dart';
+import 'package:velocityx/screens/wrapper.dart';
+import 'package:velocityx/services/usersDb.dart';
+
+class AuthController extends GetxController {
+  static AuthController instance = Get.find();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  late Rx<User?> _firebaseUser;
+
+  User? get user => _firebaseUser.value;
+
+  @override
+  onReady() {
+    super.onReady();
+    _firebaseUser = Rx<User?>(_auth.currentUser);
+    _firebaseUser.bindStream(_auth.userChanges());
+    ever(_firebaseUser, _initialScreen);
+  }
+
+  _initialScreen(User? user) {
+    if (user == null) {
+      Get.offAll(() => SignIn());
+    } else {
+      Get.offAll(() => Wrapper());
+    }
+  }
+
+  void signInWithGoogle() async {
+    try {
+      if (kIsWeb) {
+        try {
+          // Create a new provider
+          GoogleAuthProvider googleProvider = GoogleAuthProvider();
+
+          googleProvider
+              .addScope('https://www.googleapis.com/auth/contacts.readonly');
+          googleProvider
+              .setCustomParameters({'login_hint': 'user@example.com'});
+
+          // Once signed in, return the UserCredential
+          UserCredential _authResult =
+              await _auth.signInWithPopup(googleProvider);
+
+          UserModel _user = UserModel(
+            id: _authResult.user?.uid,
+            f_name: _authResult.additionalUserInfo?.profile!['given_name'],
+            l_name: _authResult.additionalUserInfo?.profile!['family_name'],
+            email: _authResult.user?.email,
+          );
+
+          if (await UserDb().createNewUser(_user)) {
+            Get.find<UserController>().user = _user;
+            Get.back();
+          }
+          // Get.snackbar("Signed In", "Signed In using Google");
+        } catch (e) {
+          print(e.toString());
+          Get.snackbar(
+            "Error creating Account",
+            e.toString(),
+            snackPosition: SnackPosition.BOTTOM,
+          );
+        }
+      } else {
+        if (Platform.isAndroid) {
+          try {
+            // Trigger the authentication flow
+            final GoogleSignInAccount? googleUser =
+                await GoogleSignIn().signIn();
+
+            // Obtain the auth details from the request
+            final GoogleSignInAuthentication? googleAuth =
+                await googleUser?.authentication;
+
+            // Create a new credential
+            final credential = GoogleAuthProvider.credential(
+              accessToken: googleAuth?.accessToken,
+              idToken: googleAuth?.idToken,
+            );
+
+            // Once signed in, return the UserCredential
+            UserCredential _authResult =
+                await FirebaseAuth.instance.signInWithCredential(credential);
+            print(await _authResult);
+            print(_authResult.additionalUserInfo?.profile!['given_name']);
+            UserModel _user = UserModel(
+              id: _authResult.user?.uid,
+              f_name: _authResult.additionalUserInfo?.profile!['given_name'],
+              l_name: _authResult.additionalUserInfo?.profile!['family_name'],
+              email: _authResult.user?.email,
+            );
+            if (await UserDb().createNewUser(_user)) {
+              Get.find<UserController>().user = _user;
+              Get.snackbar("Signed In", "Signed In using Google");
+              Get.back();
+            }
+          } catch (e) {
+            print(e.toString());
+            Get.snackbar(
+              "Error creating Account",
+              e.toString(),
+              snackPosition: SnackPosition.BOTTOM,
+            );
+          }
+        }
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  // sign out
+  Future signOut() async {
+    try {
+      print(_firebaseUser);
+      return await _auth.signOut();
+    } catch (error) {
+      print(error.toString());
+      return null;
+    }
+  }
+}

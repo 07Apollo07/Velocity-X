@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:velocityx/services/auth.dart';
+import 'package:get/get.dart';
+import 'package:velocityx/controllers/authController.dart';
 
-class SignIn extends StatelessWidget {
+class SignIn extends GetWidget<AuthController> {
   const SignIn({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final AuthService _auth = AuthService();
+    // final AuthController _auth = AuthController();
 
     return Scaffold(
         body: Stack(
@@ -52,7 +53,7 @@ class SignIn extends StatelessWidget {
               ElevatedButton(
                 onPressed: () {
                   // Navigator.pushNamed(context, '/home');
-                  _auth.signInWithGoogle();
+                  controller.signInWithGoogle();
                 },
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(12, 12, 15, 12),
