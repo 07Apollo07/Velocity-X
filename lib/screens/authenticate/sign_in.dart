@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:velocityx/services/auth.dart';
+import 'package:get/get.dart';
+import 'package:velocityx/controllers/authController.dart';
 
-class SignIn extends StatelessWidget {
+class SignIn extends GetWidget<AuthController> {
   const SignIn({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final AuthService _auth = AuthService();
+    // final AuthController _auth = AuthController();
+    final TextEditingController emailController = TextEditingController();
+    final TextEditingController passwordController = TextEditingController();
 
     return Scaffold(
         body: Stack(
@@ -19,7 +22,7 @@ class SignIn extends StatelessWidget {
           )),
         ),
         Positioned(
-          top: 570,
+          top: 300,
           left: 30,
           right: 30,
           child: Column(
@@ -52,7 +55,7 @@ class SignIn extends StatelessWidget {
               ElevatedButton(
                 onPressed: () {
                   // Navigator.pushNamed(context, '/home');
-                  _auth.signInWithGoogle();
+                  controller.signInWithGoogle();
                 },
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(12, 12, 15, 12),
@@ -70,13 +73,47 @@ class SignIn extends StatelessWidget {
                       const Text(
                         'Login with google',
                         style: TextStyle(color: Colors.black, fontSize: 17),
-                      )
+                      ),
                     ],
                   ),
                 ),
                 style: ElevatedButton.styleFrom(
                     shape: StadiumBorder(), primary: Color(0xFF78D6FF)),
-              )
+              ),
+              Divider(
+                thickness: 1.5,
+                color: Colors.black,
+              ),
+              const Text(
+                'Login With Email and Password',
+                style: TextStyle(color: Colors.white, fontSize: 17),
+              ),
+              TextFormField(
+                decoration: InputDecoration(hintText: "Email"),
+                controller: emailController,
+              ),
+              SizedBox(
+                height: 40,
+              ),
+              TextFormField(
+                decoration: InputDecoration(hintText: "Password"),
+                controller: passwordController,
+                obscureText: true,
+              ),
+              ElevatedButton(
+                child: Text("Log In"),
+                onPressed: () {
+                  controller.login(
+                      emailController.text, passwordController.text);
+                },
+              ),
+              ElevatedButton(
+                child: Text("Sign Up"),
+                onPressed: () {
+                  controller.createUser(
+                      emailController.text, passwordController.text);
+                },
+              ),
             ],
           ),
         )

@@ -48,13 +48,13 @@ class CustomTheme {
       appBarTheme:
           const AppBarTheme(backgroundColor: Color.fromRGBO(255, 255, 255, 1)),
       scaffoldBackgroundColor: Color.fromARGB(255, 255, 255, 255),
-      textTheme: const TextTheme(
-        headline1: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
-        headline3: TextStyle(fontSize: 24),
-        bodyText1: TextStyle(letterSpacing: 1.8),
-        bodyText2: TextStyle(
-            fontSize: 27, letterSpacing: 1.8, fontWeight: FontWeight.bold),
-      ),
+      // textTheme: const TextTheme(
+      //   headline1: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
+      //   headline3: TextStyle(fontSize: 24),
+      //   bodyText1: TextStyle(letterSpacing: 1.8),
+      //   bodyText2: TextStyle(
+      //       fontSize: 27, letterSpacing: 1.8, fontWeight: FontWeight.bold),
+      // ),
       // bottomAppBarColor: const Color(0xFF4784F1)
       // fontFamily: 'Lato', //3,
       // elevatedButtonTheme: ElevatedButtonThemeData(
