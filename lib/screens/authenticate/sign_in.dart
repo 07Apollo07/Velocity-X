@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:velocityx/controllers/authController.dart';
+import 'login_page.dart';
 
 class SignIn extends GetWidget<AuthController> {
   const SignIn({Key? key}) : super(key: key);
@@ -33,12 +34,12 @@ class SignIn extends GetWidget<AuthController> {
                 "Welcome",
                 style: TextStyle(
                     fontFamily: 'Segoe',
-                    fontSize: 38,
+                    fontSize: 45,
                     fontWeight: FontWeight.w400,
                     color: Color(0xFF78D6FF)),
               ),
               const SizedBox(
-                height: 20,
+                height: 15,
               ),
               const Text(
                 "VelocityX next gen document handler ",
@@ -50,7 +51,7 @@ class SignIn extends GetWidget<AuthController> {
                 ),
               ),
               const SizedBox(
-                height: 23,
+                height: 40,
               ),
               ElevatedButton(
                 onPressed: () {
@@ -80,40 +81,68 @@ class SignIn extends GetWidget<AuthController> {
                 style: ElevatedButton.styleFrom(
                     shape: StadiumBorder(), primary: Color(0xFF78D6FF)),
               ),
-              Divider(
-                thickness: 1.5,
-                color: Colors.black,
-              ),
-              const Text(
-                'Login With Email and Password',
-                style: TextStyle(color: Colors.white, fontSize: 17),
-              ),
-              TextFormField(
-                decoration: InputDecoration(hintText: "Email"),
-                controller: emailController,
-              ),
               SizedBox(
-                height: 40,
-              ),
-              TextFormField(
-                decoration: InputDecoration(hintText: "Password"),
-                controller: passwordController,
-                obscureText: true,
+                height: 10,
               ),
               ElevatedButton(
-                child: Text("Log In"),
                 onPressed: () {
-                  controller.login(
-                      emailController.text, passwordController.text);
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) => const Login()));
                 },
-              ),
-              ElevatedButton(
-                child: Text("Sign Up"),
-                onPressed: () {
-                  controller.createUser(
-                      emailController.text, passwordController.text);
-                },
-              ),
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(15, 12, 15, 12),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      const Text(
+                        'Login with Email and password',
+                        style: TextStyle(color: Colors.white, fontSize: 17),
+                      ),
+                    ],
+                  ),
+                ),
+                style: ElevatedButton.styleFrom(
+                    shape: StadiumBorder(
+                        side: BorderSide(width: 5, color: Color(0xFF78D6FF))),
+                    primary: Color.fromARGB(0, 0, 0, 0)),
+              )
+              // Divider(
+              //   thickness: 1.5,
+              //   color: Colors.black,
+              // ),
+              // const Text(
+              //   'Login With Email and Password',
+              //   style: TextStyle(color: Colors.white, fontSize: 17),
+              // ),
+              // TextFormField(
+              //   decoration: InputDecoration(hintText: "Email"),
+              //   controller: emailController,
+              // ),
+              // SizedBox(
+              //   height: 40,
+              // ),
+              // TextFormField(
+              //   decoration: InputDecoration(hintText: "Password"),
+              //   controller: passwordController,
+              //   obscureText: true,
+              // ),
+              // ElevatedButton(
+              //   child: Text("Log In"),
+              //   onPressed: () {
+              //     controller.login(
+              //         emailController.text, passwordController.text);
+              //   },
+              // ),
+              // ElevatedButton(
+              //   child: Text("Sign Up"),
+              //   onPressed: () {
+              //     controller.createUser(
+              //         emailController.text, passwordController.text);
+              //   },
+              // ),
             ],
           ),
         )

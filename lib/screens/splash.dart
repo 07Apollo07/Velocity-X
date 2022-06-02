@@ -6,10 +6,16 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: double.maxFinite,
-      height: double.maxFinite,
-      color: Colors.white,
-      child: CircularProgressIndicator(),
+      
+      decoration: const BoxDecoration(gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Color.fromARGB(255, 0, 7, 12),
+                Color.fromARGB(255, 71, 133, 241),
+              ],
+            )),
+            child: Image.asset('assets/images/VelocityX.png'),
     );
   }
 }
