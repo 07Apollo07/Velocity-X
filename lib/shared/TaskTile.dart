@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:velocityx/models/files.dart';
 
 class TaskTile extends StatelessWidget {
-  final String task_name, assigned_by, due_date;
+  final String assigned_by, due_date;
+  final FilesModel filesModel;
 
+  //TODO fetch username by fileModel.assigned_person_uid and convert it to name and display
   TaskTile(
-      {required this.task_name,
+      {
+      // required this.task_name,
       required this.assigned_by,
-      required this.due_date});
+      required this.due_date,
+      required this.filesModel});
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +43,7 @@ class TaskTile extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    task_name,
+                    filesModel.name,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
