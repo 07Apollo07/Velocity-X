@@ -17,13 +17,17 @@ class SignIn extends GetWidget<AuthController> {
       children: [
         Container(
           decoration: const BoxDecoration(
-              image: DecorationImage(
-            image: AssetImage('assets/images/loginBg.png'),
-            fit: BoxFit.cover,
+              gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Color.fromARGB(255, 0, 7, 12),
+              Color.fromARGB(255, 7, 39, 99),
+            ],
           )),
         ),
         Positioned(
-          top: 300,
+          bottom: (MediaQuery.of(context).size.width > 600) ? 300 : 80,
           left: 30,
           right: 30,
           child: Column(
@@ -59,7 +63,7 @@ class SignIn extends GetWidget<AuthController> {
                   controller.signInWithGoogle();
                 },
                 child: Padding(
-                  padding: const EdgeInsets.fromLTRB(12, 12, 15, 12),
+                  padding: const EdgeInsets.fromLTRB(12, 10, 15, 12),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -79,25 +83,28 @@ class SignIn extends GetWidget<AuthController> {
                   ),
                 ),
                 style: ElevatedButton.styleFrom(
-                    shape: StadiumBorder(), primary: Color(0xFF78D6FF)),
+                  shape: StadiumBorder(),
+                  primary: Color(0xFF78D6FF),
+                  fixedSize: const Size(340, 42),
+                ),
               ),
               SizedBox(
                 height: 10,
               ),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) => const Login()));
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => const Login()));
                 },
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(15, 12, 15, 12),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      const SizedBox(
+                    children: const [
+                      SizedBox(
                         width: 10,
                       ),
-                      const Text(
+                      Text(
                         'Login with Email and password',
                         style: TextStyle(color: Colors.white, fontSize: 17),
                       ),
@@ -105,9 +112,15 @@ class SignIn extends GetWidget<AuthController> {
                   ),
                 ),
                 style: ElevatedButton.styleFrom(
-                    shape: StadiumBorder(
-                        side: BorderSide(width: 5, color: Color(0xFF78D6FF))),
-                    primary: Color.fromARGB(0, 0, 0, 0)),
+                  shape: const StadiumBorder(
+                    side: BorderSide(
+                      width: 3,
+                      color: Color(0xFF78D6FF),
+                    ),
+                  ),
+                  primary: Color.fromARGB(0, 0, 0, 0),
+                  fixedSize: const Size(340, 42),
+                ),
               )
               // Divider(
               //   thickness: 1.5,

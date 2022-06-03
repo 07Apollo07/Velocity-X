@@ -2,10 +2,9 @@ import 'dart:html';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:velocityx/controllers/authController.dart';
-import 'register_page.dart';
 
-class Login extends GetWidget<AuthController> {
-  const Login({Key? key}) : super(key: key);
+class Register extends GetWidget<AuthController> {
+  const Register({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +34,7 @@ class Login extends GetWidget<AuthController> {
               )),
             ),
             Positioned(
-              top: 170,
+              top: 70,
               left: 30,
               right: 30,
               child: Column(
@@ -43,7 +42,7 @@ class Login extends GetWidget<AuthController> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   const Text(
-                    "Login With Email and Password",
+                    "Register With Your details",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontFamily: 'Segoe',
@@ -53,6 +52,28 @@ class Login extends GetWidget<AuthController> {
                     ),
                   ),
                   const SizedBox(
+                    height: 40,
+                  ),
+                  Container(
+                    width: 400,
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                          hintText: "First Name", icon: Icon(Icons.person)),
+                      controller: emailController,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 40,
+                  ),
+                  Container(
+                    width: 400,
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                          hintText: "Last Name", icon: Icon(Icons.person)),
+                      controller: emailController,
+                    ),
+                  ),
+                  SizedBox(
                     height: 40,
                   ),
                   Container(
@@ -71,6 +92,19 @@ class Login extends GetWidget<AuthController> {
                     child: TextFormField(
                       decoration: InputDecoration(
                           hintText: "Password", icon: Icon(Icons.password)),
+                      controller: passwordController,
+                      obscureText: true,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 50,
+                  ),
+                  Container(
+                    width: 400,
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                          hintText: "Confirm Password",
+                          icon: Icon(Icons.password)),
                       controller: passwordController,
                       obscureText: true,
                     ),
@@ -131,8 +165,8 @@ class Login extends GetWidget<AuthController> {
                               ),
                             ),
                             onPressed: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => const Register()));
+                              controller.createUser(emailController.text,
+                                  passwordController.text);
                             },
                           ),
                         ]),
