@@ -1,4 +1,4 @@
-import 'dart:html';
+// import 'dart:html';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:velocityx/controllers/authController.dart';
@@ -12,6 +12,7 @@ class Login extends GetWidget<AuthController> {
     // final AuthController _auth = AuthController();
     final TextEditingController emailController = TextEditingController();
     final TextEditingController passwordController = TextEditingController();
+    final GlobalKey<FormState> _form = GlobalKey<FormState>();
 
     return Scaffold(
         appBar: AppBar(
@@ -19,7 +20,7 @@ class Login extends GetWidget<AuthController> {
             backgroundColor: Color.fromARGB(255, 0, 7, 12),
             leading: IconButton(
               icon: Icon(Icons.arrow_back),
-              onPressed: () => Navigator.pop(context, false),
+              onPressed: () => Get.back(),
             )),
         body: Stack(
           children: [
@@ -38,106 +39,125 @@ class Login extends GetWidget<AuthController> {
               top: 170,
               left: 30,
               right: 30,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const Text(
-                    "Login With Email and Password",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontFamily: 'Segoe',
-                      fontSize: 35,
-                      fontWeight: FontWeight.w400,
-                      color: Color(0xFF78D6FF),
+              child: Form(
+                key: _form,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const Text(
+                      "Login With Email and Password",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontFamily: 'Segoe',
+                        fontSize: 35,
+                        fontWeight: FontWeight.w400,
+                        color: Color(0xFF78D6FF),
+                      ),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 40,
-                  ),
-                  Container(
-                    width: 400,
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                          hintText: "Email", icon: Icon(Icons.email)),
-                      controller: emailController,
+                    const SizedBox(
+                      height: 40,
                     ),
-                  ),
-                  SizedBox(
-                    height: 40,
-                  ),
-                  Container(
-                    width: 400,
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                          hintText: "Password", icon: Icon(Icons.password)),
-                      controller: passwordController,
-                      obscureText: true,
+                    Container(
+                      width: 400,
+                      child: TextFormField(
+                          decoration: InputDecoration(
+                              hintText: "Email", icon: Icon(Icons.email)),
+                          controller: emailController,
+                          validator: (val) {
+                            if (val != null &&
+                                val.isEmpty &&
+                                !val.contains("@"))
+                              return "Enter a Valid Eamil Address";
+                            return null;
+                          }),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 50,
-                  ),
-                  Container(
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              padding: EdgeInsets.fromLTRB(10, 0, 10, 5),
-                              shape: const StadiumBorder(
-                                side: BorderSide(
-                                  width: 3,
+                    SizedBox(
+                      height: 40,
+                    ),
+                    Container(
+                      width: 400,
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                            hintText: "Password", icon: Icon(Icons.password)),
+                        controller: passwordController,
+                        obscureText: true,
+                        validator: (val) {
+                          if (val != null && val.isEmpty) {
+                            return "Please Enter a Password";
+                          } else if (val != null && val.length < 8) {
+                            return "Password must be atleast 8 characters long";
+                          } else {
+                            return null;
+                          }
+                        },
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 50,
+                    ),
+                    Container(
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                padding: EdgeInsets.fromLTRB(10, 0, 10, 5),
+                                shape: const StadiumBorder(
+                                  side: BorderSide(
+                                    width: 3,
+                                    color: Color(0xFF78D6FF),
+                                  ),
+                                ),
+                                primary: Color.fromARGB(0, 120, 215, 255),
+                              ),
+                              child: const Text(
+                                "Log In",
+                                style: TextStyle(
+                                  fontFamily: 'Segoe',
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w400,
                                   color: Color(0xFF78D6FF),
                                 ),
                               ),
-                              primary: Color.fromARGB(0, 120, 215, 255),
+                              onPressed: () {
+                                if (_form.currentState!.validate()) {
+                                  controller.login(emailController.text,
+                                      passwordController.text);
+                                }
+                              },
                             ),
-                            child: const Text(
-                              "Log In",
-                              style: TextStyle(
-                                fontFamily: 'Segoe',
-                                fontSize: 20,
-                                fontWeight: FontWeight.w400,
-                                color: Color(0xFF78D6FF),
+                            SizedBox(
+                              width: 40,
+                            ),
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                padding: EdgeInsets.fromLTRB(10, 0, 10, 5),
+                                shape: const StadiumBorder(
+                                  side: BorderSide(
+                                    width: 3,
+                                    color: Color(0xFF78D6FF),
+                                  ),
+                                ),
+                                primary: Color.fromARGB(0, 120, 215, 255),
                               ),
-                            ),
-                            onPressed: () {
-                              controller.login(emailController.text,
-                                  passwordController.text);
-                            },
-                          ),
-                          SizedBox(
-                            width: 40,
-                          ),
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              padding: EdgeInsets.fromLTRB(10, 0, 10, 5),
-                              shape: const StadiumBorder(
-                                side: BorderSide(
-                                  width: 3,
+                              child: Text(
+                                "Sign Up",
+                                style: TextStyle(
+                                  fontFamily: 'Segoe',
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w400,
                                   color: Color(0xFF78D6FF),
                                 ),
                               ),
-                              primary: Color.fromARGB(0, 120, 215, 255),
+                              onPressed: () {
+                                Get.to(() => Register());
+                              },
                             ),
-                            child: Text(
-                              "Sign Up",
-                              style: TextStyle(
-                                fontFamily: 'Segoe',
-                                fontSize: 20,
-                                fontWeight: FontWeight.w400,
-                                color: Color(0xFF78D6FF),
-                              ),
-                            ),
-                            onPressed: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => const Register()));
-                            },
-                          ),
-                        ]),
-                  ),
-                ],
+                          ]),
+                    ),
+                  ],
+                ),
               ),
             )
           ],
