@@ -11,6 +11,8 @@ import 'package:velocityx/screens/authenticate/sign_in.dart';
 import 'package:velocityx/screens/metadata/meta_data.dart';
 import 'package:velocityx/controllers/authController.dart';
 
+import 'Profile/profile.dart';
+
 class Wrapper extends StatelessWidget {
   final iconList = <IconData>[
     CustomIcons.home,
@@ -23,7 +25,8 @@ class Wrapper extends StatelessWidget {
     Home(),
     FileInformation(),
     MetaDataPage(),
-    Scanner(),
+    // Scanner(),
+    Profile()
     // Scanner(),
   ];
 
@@ -78,8 +81,8 @@ class Wrapper extends StatelessWidget {
               Home(),
               FileInformation(),
               MetaDataPage(),
-              Scanner(),
-              Scanner(),
+              // Scanner(),
+              Profile(),
             ],
           ),
         ),
