@@ -6,20 +6,21 @@ class FileInformation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
     return Container(
       child: Scaffold(
         // backgroundColor: Color.fromRGBO(36, 36, 36, 1.0),
         body: Padding(
-          padding: const EdgeInsets.fromLTRB(25.0, 70, 25, 40),
+          padding: const EdgeInsets.fromLTRB(25.0, 20, 25, 40),
           child: Container(
-              height: 580.0,
-              width: 340.0,
+              height: 640.0,
+              width: width,
               decoration: BoxDecoration(
                 border: Border.all(
                   width: 4,
                   color: Theme.of(context).primaryColor,
                 ),
-                borderRadius: BorderRadius.all(Radius.circular(45)),
+                borderRadius: const BorderRadius.all(Radius.circular(45)),
               ),
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(0, 0, 0, 5),
@@ -27,8 +28,8 @@ class FileInformation extends StatelessWidget {
                     child: Column(
                   children: [
                     Container(
-                        height: 70.0,
-                        width: 400.0,
+                        height: 50.0,
+                        width: width,
                         decoration: BoxDecoration(
                           // color: Color(0xFF4784F1),
                           color: Theme.of(context).primaryColor,
@@ -36,20 +37,30 @@ class FileInformation extends StatelessWidget {
                             width: 4,
                             color: Theme.of(context).primaryColor,
                           ),
-                          borderRadius: BorderRadius.only(
+                          borderRadius: const BorderRadius.only(
                               topLeft: Radius.circular(40),
                               topRight: Radius.circular(40)),
                         ),
                         child: Padding(
-                          padding: const EdgeInsets.fromLTRB(8.0, 15, 8, 5),
+                          padding: EdgeInsets.fromLTRB(8.0, 8, 8, 5),
                           child: Center(
-                            child: Text(
-                              'File Tracking Information',
-                              style: TextStyle(
-                                  // color: Colors.white,
-                                  letterSpacing: 1.8,
-                                  fontSize: 17),
-                            ),
+                            child: (width > 800)
+                                ? const Text(
+                                    'File Tracking Information',
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        letterSpacing: 1.8,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w700),
+                                  )
+                                : const Text(
+                                    'File Tracking Information: File Name ',
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        letterSpacing: 1.8,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w700),
+                                  ),
                           ),
                         )),
                     Column(
