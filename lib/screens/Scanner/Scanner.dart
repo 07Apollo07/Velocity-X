@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:velocityx/assets/custom_icons_icons.dart';
+import 'package:velocityx/controllers/authController.dart';
 import 'package:velocityx/screens/Scanner/qr_scan_page.dart';
 
 class Scanner extends StatefulWidget {
@@ -34,8 +36,48 @@ class _ScannerState extends State<Scanner> {
       child: Container(
         child: Scaffold(
           appBar: AppBar(
-            title: Text('QR Code Scanner'),
-            backgroundColor: Color.fromRGBO(36, 36, 36, 1.0),
+            title: Text(
+              "QR Scanner",
+              style: TextStyle(color: Theme.of(context).primaryColor),
+            ),
+            elevation: 0.0,
+            actions: <Widget>[
+              Container(
+                  margin: EdgeInsets.only(right: 15.0),
+                  decoration: BoxDecoration(
+                      color: Theme.of(context).scaffoldBackgroundColor,
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Theme.of(context).primaryColor,
+                          blurRadius: 5.0,
+                        ),
+                      ]),
+                  child: IconButton(
+                      onPressed: () {
+                        // Navigator.pushNamed(context, '/MetaData');
+                      },
+                      icon: Icon(CustomIcons.search_1),
+                      color: Theme.of(context).primaryColor)),
+              Container(
+                margin: EdgeInsets.only(right: 15.0),
+                decoration: BoxDecoration(
+                    color: Theme.of(context).scaffoldBackgroundColor,
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Theme.of(context).primaryColor,
+                        blurRadius: 5.0,
+                      ),
+                    ]),
+                child: IconButton(
+                    onPressed: () {
+                      AuthController.instance.signOut();
+                    },
+                    icon: Icon(CustomIcons.bell),
+                    color: Theme.of(context).primaryColor),
+              ),
+            ],
           ),
           // backgroundColor: Color.fromRGBO(36, 36, 36, 1.0),
           body: Column(

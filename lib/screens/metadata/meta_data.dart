@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:velocityx/assets/custom_icons_icons.dart';
+import 'package:velocityx/controllers/authController.dart';
 import 'package:velocityx/shared/icon_logo.dart';
 
 class MetaDataPage extends StatelessWidget {
@@ -10,6 +11,53 @@ class MetaDataPage extends StatelessWidget {
     return Container(
       child: Scaffold(
         // backgroundColor: Color.fromRGBO(36, 36, 36, 1.0),
+        appBar: AppBar(
+          leading: BackButton(
+            color: Theme.of(context).primaryColor,
+          ),
+          title: Text(
+            "File Information",
+            style: TextStyle(color: Theme.of(context).primaryColor),
+          ),
+          elevation: 0.0,
+          actions: <Widget>[
+            Container(
+                margin: EdgeInsets.only(right: 15.0),
+                decoration: BoxDecoration(
+                    color: Theme.of(context).scaffoldBackgroundColor,
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Theme.of(context).primaryColor,
+                        blurRadius: 5.0,
+                      ),
+                    ]),
+                child: IconButton(
+                    onPressed: () {
+                      // Navigator.pushNamed(context, '/MetaData');
+                    },
+                    icon: Icon(CustomIcons.search_1),
+                    color: Theme.of(context).primaryColor)),
+            Container(
+              margin: EdgeInsets.only(right: 15.0),
+              decoration: BoxDecoration(
+                  color: Theme.of(context).scaffoldBackgroundColor,
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Theme.of(context).primaryColor,
+                      blurRadius: 5.0,
+                    ),
+                  ]),
+              child: IconButton(
+                  onPressed: () {
+                    AuthController.instance.signOut();
+                  },
+                  icon: Icon(CustomIcons.bell),
+                  color: Theme.of(context).primaryColor),
+            ),
+          ],
+        ),
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.fromLTRB(20, 70, 10, 70),

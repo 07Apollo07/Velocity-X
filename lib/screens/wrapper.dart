@@ -4,7 +4,9 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:velocityx/assets/custom_icons_icons.dart';
 import 'package:velocityx/controllers/wrapperController.dart';
+import 'package:velocityx/routes/app_pages.dart';
 import 'package:velocityx/screens/FileInformation/file_information.dart';
+import 'package:velocityx/screens/Home/HomeWrapper.dart';
 import 'package:velocityx/screens/Home/home.dart';
 import 'package:velocityx/screens/Scanner/Scanner.dart';
 import 'package:velocityx/screens/authenticate/sign_in.dart';
@@ -19,63 +21,23 @@ class Wrapper extends StatelessWidget {
     CustomIcons.profile,
   ];
 
-  final screen = [
-    Home(),
-    FileInformation(),
-    MetaDataPage(),
-    Scanner(),
-    // Scanner(),
-  ];
+  // final screen = [
+  //   Home(),
+  //   FileInformation(),
+  //   MetaDataPage(),
+  //   Scanner(),
+  //   // Scanner(),
+  // ];
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<WrapperController>(builder: (controller) {
       return Scaffold(
-        appBar: AppBar(
-          elevation: 0.0,
-          actions: <Widget>[
-            Container(
-                margin: EdgeInsets.only(right: 15.0),
-                decoration: BoxDecoration(
-                    color: Theme.of(context).scaffoldBackgroundColor,
-                    shape: BoxShape.circle,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Theme.of(context).primaryColor,
-                        blurRadius: 5.0,
-                      ),
-                    ]),
-                child: IconButton(
-                    onPressed: () {
-                      // Navigator.pushNamed(context, '/MetaData');
-                    },
-                    icon: Icon(CustomIcons.search_1),
-                    color: Theme.of(context).primaryColor)),
-            Container(
-              margin: EdgeInsets.only(right: 15.0),
-              decoration: BoxDecoration(
-                  color: Theme.of(context).scaffoldBackgroundColor,
-                  shape: BoxShape.circle,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Theme.of(context).primaryColor,
-                      blurRadius: 5.0,
-                    ),
-                  ]),
-              child: IconButton(
-                  onPressed: () {
-                    AuthController.instance.signOut();
-                  },
-                  icon: Icon(CustomIcons.bell),
-                  color: Theme.of(context).primaryColor),
-            ),
-          ],
-        ),
         body: SafeArea(
           child: IndexedStack(
             index: controller.tabIndex,
             children: [
-              Home(),
+              HomeWrapper(),
               FileInformation(),
               MetaDataPage(),
               Scanner(),
@@ -90,8 +52,8 @@ class Wrapper extends StatelessWidget {
             color: controller.floatingActive ? Colors.white : Colors.black,
           ),
           onPressed: () {
-            controller.tabIndex = 5;
-            controller.floatingActive = !controller.floatingActive;
+            controller.changeTabIndex(4);
+            controller.changeFloatingActive(true);
           },
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -138,7 +100,10 @@ class Wrapper extends StatelessWidget {
             notchSmoothness: NotchSmoothness.softEdge,
             leftCornerRadius: 32,
             rightCornerRadius: 32,
-            onTap: (index) => {controller.changeTabIndex(index)}),
+            onTap: (index) => {
+                  controller.changeTabIndex(index),
+                  controller.changeFloatingActive(false)
+                }),
       );
     });
   }
