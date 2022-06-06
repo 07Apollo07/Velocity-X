@@ -85,7 +85,7 @@ class ProfileDoc extends StatelessWidget {
     return ListView(
       children: <Widget>[
         ListTile(
-          leading: Icon(Icons.text_format),
+          leading: Icon(Icons.picture_as_pdf_rounded),
           title: Text("Document_1"),
           subtitle: Text("Assigned By : User_2"),
           onTap: () {},

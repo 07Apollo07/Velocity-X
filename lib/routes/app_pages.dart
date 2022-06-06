@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 import 'package:velocityx/binding/bindings.dart';
+import 'package:velocityx/controllers/metaDataController.dart';
+import 'package:velocityx/models/files.dart';
 import 'package:velocityx/screens/FileInformation/file_information.dart';
 import 'package:velocityx/screens/Home/HomeWrapper.dart';
 import 'package:velocityx/screens/Home/home.dart';
@@ -50,8 +52,8 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.METADATA,
-      page: () => MetaDataPage(),
-      // binding: HomeBinding(),
+      page: () => MetaDataPage(File: FilesModel()),
+      // binding: MetaDataController(),
     ),
     GetPage(
       name: _Paths.SCANNER,

@@ -30,6 +30,7 @@ class _HomeState extends State<Home> {
       // backgroundColor: Color.fromRGBO(36, 36, 36, 1.0),
 
       appBar: AppBar(
+        elevation: 0.0,
         title: Image.asset(
           'assets/images/VelocityX.png',
           width: 120,
@@ -132,7 +133,11 @@ class _HomeState extends State<Home> {
                     itemBuilder: (_, index) {
                       return GestureDetector(
                         onTap: () {
-                          Get.toNamed(Routes.METADATA, id: Constants.homeId);
+                          Get.toNamed(Routes.METADATA,
+                              id: Constants.homeId,
+                              arguments: filesController.files[index]);
+                          // print("sending data");
+                          // print(filesController.files[index].files_uniqueId);
                         },
                         child: TaskTile(
                             //TODO remove assigned_by and due_date after changes to TaskTile

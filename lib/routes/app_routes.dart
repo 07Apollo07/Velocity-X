@@ -18,7 +18,7 @@ abstract class _Paths {
   static const REGISTER = '/register';
   static const SIGNIN = '/sign_in';
   static const HOME = '/home';
-  static const FILE_INFORMATION = "/File_information";
+  static const FILE_INFORMATION = "/file_information";
   static const METADATA = '/metadata';
   static const SCANNER = '/scanner';
   // static const METADATA = '/metadata';

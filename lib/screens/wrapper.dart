@@ -9,10 +9,10 @@ import 'package:velocityx/screens/FileInformation/file_information.dart';
 import 'package:velocityx/screens/Home/HomeWrapper.dart';
 import 'package:velocityx/screens/Home/home.dart';
 import 'package:velocityx/screens/Scanner/Scanner.dart';
+import 'package:velocityx/screens/UserProfile/profile.dart';
 import 'package:velocityx/screens/authenticate/sign_in.dart';
 import 'package:velocityx/screens/metadata/meta_data.dart';
 import 'package:velocityx/controllers/authController.dart';
-import 'package:velocityx/screens/UserProfie/profile.dart';
 
 class Wrapper extends StatelessWidget {
   final iconList = <IconData>[
@@ -40,7 +40,8 @@ class Wrapper extends StatelessWidget {
             children: [
               HomeWrapper(),
               FileInformation(),
-              MetaDataPage(),
+              // MetaDataPage(),
+              FileInformation(),
               Profile(),
               Scanner(),
             ],
