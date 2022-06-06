@@ -30,7 +30,11 @@ class _HomeState extends State<Home> {
       // backgroundColor: Color.fromRGBO(36, 36, 36, 1.0),
 
       appBar: AppBar(
-        elevation: 0.0,
+        title: Image.asset(
+          'assets/images/VelocityX.png',
+          width: 120,
+          fit: BoxFit.fitWidth,
+        ),
         actions: <Widget>[
           Container(
               margin: EdgeInsets.only(right: 15.0),
