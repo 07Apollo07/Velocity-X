@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:velocityx/assets/custom_icons_icons.dart';
 import 'package:velocityx/shared/icon_logo.dart';
 
-class Profile extends StatelessWidget {
-  const Profile({Key? key}) : super(key: key);
+class Document extends StatelessWidget {
+  const Document({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -14,7 +14,7 @@ class Profile extends StatelessWidget {
           icon: Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Navigator.of(context).pop(),
         ),
-        title: Text('User Information'),
+        title: Text('Add Document'),
         centerTitle: true,
         backgroundColor: Color.fromRGBO(36, 36, 36, 1.0),
       ),
