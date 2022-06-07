@@ -34,7 +34,7 @@ class FilesDb {
   }
 
   Stream<List<FilesModel>> filesStream(String uid) {
-    print("Accessing Stream");
+    print("Accessing Files Stream method in FilesDb");
     return _firestore
         .collection("Files")
         //TODO change array Contains value to logged in users's Uid
@@ -42,7 +42,6 @@ class FilesDb {
         // .orderBy("name", descending: true)
         .snapshots()
         .map((QuerySnapshot query) {
-      print("query");
       print(query.docs);
       List<FilesModel> retVal = List.empty(growable: true);
       query.docs.forEach((element) {

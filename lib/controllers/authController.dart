@@ -88,8 +88,8 @@ class AuthController extends GetxController {
             // Once signed in, return the UserCredential
             UserCredential _authResult =
                 await FirebaseAuth.instance.signInWithCredential(credential);
+            print("Google Android Sign In Auth Result");
             print(await _authResult);
-            print(_authResult.additionalUserInfo?.profile!['given_name']);
             UserModel _user = UserModel(
               id: _authResult.user?.uid,
               f_name: _authResult.additionalUserInfo?.profile!['given_name'],
@@ -159,6 +159,7 @@ class AuthController extends GetxController {
   // sign out
   Future signOut() async {
     try {
+      print("Signing Out");
       print(_firebaseUser);
       return await _auth.signOut();
     } catch (error) {

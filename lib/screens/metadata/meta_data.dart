@@ -14,7 +14,6 @@ class MetaDataPage extends GetWidget<MetaDataController> {
 
   @override
   Widget build(BuildContext context) {
-    print(File.toString());
     return Container(
       child: Scaffold(
         // backgroundColor: Color.fromRGBO(36, 36, 36, 1.0),

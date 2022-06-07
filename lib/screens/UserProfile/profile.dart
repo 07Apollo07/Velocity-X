@@ -4,11 +4,6 @@ import 'package:velocityx/assets/custom_icons_icons.dart';
 import 'package:velocityx/controllers/authController.dart';
 import 'package:velocityx/controllers/filesController.dart';
 import 'package:velocityx/controllers/userController.dart';
-import 'package:velocityx/routes/app_pages.dart';
-import 'package:velocityx/screens/FileInformation/file_information.dart';
-import 'package:velocityx/screens/Home/constants.dart';
-import 'package:velocityx/shared/TaskTile.dart';
-import 'package:velocityx/shared/category_tile.dart';
 
 // class Profile extends StatefulWidget {
 //   @override
@@ -65,8 +60,12 @@ class Profile extends GetWidget<AuthController> {
             ],
             bottom: TabBar(
               tabs: [
-                Text('Informations',),
-                Text('Documents',),
+                Text(
+                  'Informations',
+                ),
+                Text(
+                  'Documents',
+                ),
               ],
             ),
           ),
@@ -104,7 +103,6 @@ class UserInfo extends GetWidget<UserController> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-
         SizedBox(
           height: 15,
         ),
@@ -116,21 +114,43 @@ class UserInfo extends GetWidget<UserController> {
           height: 10,
         ),
         GetX<UserController>(
-          builder: (_){
-
+          // initState: (_) async {
+          //   print("printing user");
+          //   print(Get.find<UserController>().user.email);
+          // },
+          builder: (_) {
+            // print();
 
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                  Text("Name : ${_.user.f_name} ${_.user.l_name}",textAlign: TextAlign.left, style: TextStyle(color: Colors.white, fontSize: 16),),
-                  Text("Email: ${_.user.email}",textAlign: TextAlign.left, style: TextStyle(color: Colors.white, fontSize: 16),),
-                  Text("Phone: ${_.user.phone}",textAlign: TextAlign.left, style: TextStyle(color: Colors.white, fontSize: 16),),
-                  Text("Designation: ${_.user.designation}",textAlign: TextAlign.left, style: TextStyle(color: Colors.white, fontSize: 16),),
-                  Text("Designation: ${_.user.joining_date}",textAlign: TextAlign.left, style: TextStyle(color: Colors.white, fontSize: 16),),
-
+                Text(
+                  "Name : ${_.user.f_name} ${_.user.l_name}",
+                  textAlign: TextAlign.left,
+                  style: TextStyle(color: Colors.white, fontSize: 16),
+                ),
+                Text(
+                  "Email: ${_.user.email}",
+                  textAlign: TextAlign.left,
+                  style: TextStyle(color: Colors.white, fontSize: 16),
+                ),
+                Text(
+                  "Phone: ${_.user.phone}",
+                  textAlign: TextAlign.left,
+                  style: TextStyle(color: Colors.white, fontSize: 16),
+                ),
+                Text(
+                  "Designation: ${_.user.designation}",
+                  textAlign: TextAlign.left,
+                  style: TextStyle(color: Colors.white, fontSize: 16),
+                ),
+                Text(
+                  "Designation: ${_.user.joining_date}",
+                  textAlign: TextAlign.left,
+                  style: TextStyle(color: Colors.white, fontSize: 16),
+                ),
               ],
-            ) ;
-
+            );
           },
         ),
 //         Text(

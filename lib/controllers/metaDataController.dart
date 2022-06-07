@@ -10,7 +10,6 @@ class MetaDataController extends GetxController {
     int time = int.parse(timestamp);
     DateTime date = DateTime.fromMillisecondsSinceEpoch(time * 1000);
     String formattedDate = DateFormat('M/d/y -- E -- HH:mm:ss a ').format(date);
-    print(formattedDate);
     return formattedDate;
   }
 }

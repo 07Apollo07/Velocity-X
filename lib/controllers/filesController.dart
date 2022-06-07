@@ -12,7 +12,7 @@ class FilesController extends GetxController {
   @override
   void onInit() {
     String uid = Get.find<AuthController>().user!.uid;
-    print("Accessing Stream on init");
+    print("Accessing FilesStream on init");
     filesList
         .bindStream(FilesDb().filesStream(uid)); //stream coming from firebase
   }

@@ -20,7 +20,7 @@ class UserDb {
         "designation": user.designation,
         "joining_date": user.joining_date,
       });
-      print("Adding Data to Database");
+      print("Adding User information in User Collection");
       return true;
     } catch (e) {
       print(e);
@@ -64,5 +64,16 @@ class UserDb {
     }
 
     // return allData;
+  }
+
+  Stream<UserModel> userStream(String uid) {
+    print("Accessing user Stream");
+    return _firestore
+        .collection("Users")
+        .doc(uid)
+        .snapshots()
+        .map((DocumentSnapshot query) {
+      return UserModel.fromDocumentSnapshot(documentSnapshot: query);
+    });
   }
 }

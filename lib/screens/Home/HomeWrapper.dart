@@ -24,6 +24,7 @@ class HomeWrapper extends StatelessWidget {
         // },
         onGenerateRoute: (routeSettings) {
           // print("inside HomeWrapper");
+          print("HomeWrapper route stack");
           print(routeSettings.name);
           if (routeSettings.name.toString() == Routes.HOME) {
             return GetPageRoute(

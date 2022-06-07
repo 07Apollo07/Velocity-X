@@ -2,10 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserModel {
   late String? id;
-  late String? f_name;
-  late String? l_name;
+  late String f_name = "Default";
+  late String l_name = "Default";
   int phone = 0000000000;
-  late String? email;
+  late String? email = "null@null.com";
   String organization_emp_no = "No Organization";
   String organization_no = "00";
   String designation = "No Designation";
@@ -13,8 +13,8 @@ class UserModel {
 
   UserModel(
       {this.id,
-      this.f_name,
-      this.l_name,
+      this.f_name = "Default",
+      this.l_name = "Default",
       int phone = 0000000000,
       this.email,
       String organization_emp_no = "No Organization",
