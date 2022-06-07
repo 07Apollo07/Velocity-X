@@ -13,6 +13,7 @@ import 'package:velocityx/screens/UserProfile/profile.dart';
 import 'package:velocityx/screens/authenticate/sign_in.dart';
 import 'package:velocityx/screens/metadata/meta_data.dart';
 import 'package:velocityx/controllers/authController.dart';
+import 'package:velocityx/screens/Organization/Orgdirectory.dart';
 
 class Wrapper extends StatelessWidget {
   final iconList = <IconData>[
@@ -39,7 +40,7 @@ class Wrapper extends StatelessWidget {
             index: controller.tabIndex,
             children: [
               HomeWrapper(),
-              FileInformation(),
+              Organization(),
               // MetaDataPage(),
               FileInformation(),
               Profile(),
@@ -80,7 +81,7 @@ class Wrapper extends StatelessWidget {
                         if (index == 0) {
                           return "Home";
                         } else if (index == 1) {
-                          return "Saved";
+                          return "Organization";
                         } else if (index == 2) {
                           return "Folder";
                         } else if (index == 3) {
