@@ -3,18 +3,19 @@ import 'package:get/get.dart';
 import 'package:velocityx/assets/custom_icons_icons.dart';
 import 'package:velocityx/controllers/authController.dart';
 import 'package:velocityx/controllers/filesController.dart';
+import 'package:velocityx/controllers/userController.dart';
 import 'package:velocityx/routes/app_pages.dart';
 import 'package:velocityx/screens/FileInformation/file_information.dart';
 import 'package:velocityx/screens/Home/constants.dart';
 import 'package:velocityx/shared/TaskTile.dart';
 import 'package:velocityx/shared/category_tile.dart';
 
-class Profile extends StatefulWidget {
-  @override
-  State<Profile> createState() => _ProfileState();
-}
+// class Profile extends StatefulWidget {
+//   @override
+//   State<Profile> createState() => _ProfileState();
+// }
 
-class _ProfileState extends State<Profile> {
+class Profile extends GetWidget<AuthController> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -64,8 +65,8 @@ class _ProfileState extends State<Profile> {
             ],
             bottom: TabBar(
               tabs: [
-                Tab(text: 'Informations'),
-                Tab(text: 'Documents'),
+                Text('Informations',),
+                Text('Documents',),
               ],
             ),
           ),
@@ -95,7 +96,7 @@ class ProfileDoc extends StatelessWidget {
   }
 }
 
-class UserInfo extends StatelessWidget {
+class UserInfo extends GetWidget<UserController> {
   const UserInfo({Key? key}) : super(key: key);
 
   @override
@@ -103,6 +104,7 @@ class UserInfo extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+
         SizedBox(
           height: 15,
         ),
@@ -113,16 +115,33 @@ class UserInfo extends StatelessWidget {
         SizedBox(
           height: 10,
         ),
-        Text(
-          '''Name : Document_1.pdf,
-Size : 246kb ,
-File Owner : User_example
-Created : Jan 31, 2021
-Modified : Jun 24, 2021
-Permission : User1, user2 .''',
-          textAlign: TextAlign.left,
-          style: TextStyle(color: Colors.white, fontSize: 16),
+        GetX<UserController>(
+          builder: (_){
+
+
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                  Text("Name : ${_.user.f_name} ${_.user.l_name}",textAlign: TextAlign.left, style: TextStyle(color: Colors.white, fontSize: 16),),
+                  Text("Email: ${_.user.email}",textAlign: TextAlign.left, style: TextStyle(color: Colors.white, fontSize: 16),),
+                  Text("Phone: ${_.user.phone}",textAlign: TextAlign.left, style: TextStyle(color: Colors.white, fontSize: 16),),
+                  Text("Designation: ${_.user.designation}",textAlign: TextAlign.left, style: TextStyle(color: Colors.white, fontSize: 16),),
+                  Text("Designation: ${_.user.joining_date}",textAlign: TextAlign.left, style: TextStyle(color: Colors.white, fontSize: 16),),
+
+              ],
+            ) ;
+
+          },
         ),
+//         Text(
+//           '''Name : Document_1.pdf,
+// Size : 246kb ,
+// File Owner : User_example
+// Created : Jan 31, 2021
+// Modified : Jun 24, 2021
+// Permission : User1, user2 .''',
+//           textAlign: TextAlign.left, style: TextStyle(color: Colors.white, fontSize: 16),
+//         ),
       ],
     );
   }
