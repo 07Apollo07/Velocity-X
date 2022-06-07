@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:timeline_tile/timeline_tile.dart';
+import 'package:velocityx/assets/custom_icons_icons.dart';
+import 'package:velocityx/controllers/authController.dart';
 
 class FileInformation extends StatelessWidget {
   const FileInformation({Key? key}) : super(key: key);
@@ -9,6 +11,53 @@ class FileInformation extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
     return Container(
       child: Scaffold(
+        appBar: AppBar(
+          leading: BackButton(
+            color: Theme.of(context).primaryColor,
+          ),
+          title: Text(
+            "File Tracking",
+            style: TextStyle(color: Theme.of(context).primaryColor),
+          ),
+          elevation: 0.0,
+          actions: <Widget>[
+            Container(
+                margin: EdgeInsets.only(right: 15.0),
+                decoration: BoxDecoration(
+                    color: Theme.of(context).scaffoldBackgroundColor,
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Theme.of(context).primaryColor,
+                        blurRadius: 5.0,
+                      ),
+                    ]),
+                child: IconButton(
+                    onPressed: () {
+                      // Navigator.pushNamed(context, '/MetaData');
+                    },
+                    icon: Icon(CustomIcons.search_1),
+                    color: Theme.of(context).primaryColor)),
+            Container(
+              margin: EdgeInsets.only(right: 15.0),
+              decoration: BoxDecoration(
+                  color: Theme.of(context).scaffoldBackgroundColor,
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Theme.of(context).primaryColor,
+                      blurRadius: 5.0,
+                    ),
+                  ]),
+              child: IconButton(
+                  onPressed: () {
+                    AuthController.instance.signOut();
+                  },
+                  icon: Icon(CustomIcons.bell),
+                  color: Theme.of(context).primaryColor),
+            ),
+          ],
+        ),
         // backgroundColor: Color.fromRGBO(36, 36, 36, 1.0),
         body: Padding(
           padding: const EdgeInsets.fromLTRB(25.0, 20, 25, 40),

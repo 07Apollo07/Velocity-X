@@ -4,23 +4,23 @@ class FilesModel {
   late String creator_uid;
   late String designation;
   late Timestamp? creation_datetime;
-  late String? files_uniqueId;
-  late String? final_approver;
+  late String files_uniqueId;
+  late String final_approver;
   late String name;
   late String? organization_no;
   late String? storage_link;
-  late List<dynamic>? assigned_person_uid;
+  late List<dynamic> assigned_person_uid;
 
   FilesModel(
       {this.creator_uid = "No Uid",
       this.designation = "No Designation",
       this.creation_datetime,
-      this.files_uniqueId,
-      this.final_approver,
+      this.files_uniqueId = "No Unique Id",
+      this.final_approver = "No Final Approver Set",
       this.name = "No Name",
       this.organization_no,
       this.storage_link,
-      this.assigned_person_uid});
+      this.assigned_person_uid = const [0, 1]});
 
   FilesModel.fromDocumentSnapshot({DocumentSnapshot? documentSnapshot}) {
     creator_uid = documentSnapshot!["creator_uid"];

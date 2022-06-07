@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:velocityx/binding/bindings.dart';
 import 'package:velocityx/models/user.dart';
+import 'package:velocityx/routes/app_pages.dart';
 import 'package:velocityx/screens/splash.dart';
 import 'package:velocityx/screens/root.dart';
 import 'package:velocityx/screens/wrapper.dart';
@@ -35,8 +36,9 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       initialBinding: StoreBindings(),
       debugShowCheckedModeBanner: false,
-      home: SplashScreen(),
-      // getPages: AppPages.routes,
+      // home: SplashScreen(),
+      initialRoute: AppPages.INITIAL,
+      getPages: AppPages.routes,
       theme: CustomTheme.lightTheme,
       darkTheme: CustomTheme.darkTheme,
       themeMode: ThemeMode.system,
