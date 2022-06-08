@@ -6,21 +6,21 @@ class UserModel {
   late String l_name = "Default";
   int phone = 0000000000;
   late String? email = "null@null.com";
-  String organization_emp_no = "No Organization";
+  String organization_emp_id = "No Organization";
   String organization_no = "00";
   String designation = "No Designation";
-  String joining_date = "No Joining Date";
+  late Timestamp? joining_date;
 
   UserModel(
       {this.id,
       this.f_name = "Default",
       this.l_name = "Default",
-      int phone = 0000000000,
+      this.phone = 0000000000,
       this.email,
-      String organization_emp_no = "No Organization",
-      String organization_no = "00",
-      String designation = "No Designation",
-      String joining_date = "No Joining Date"}); // UserModel();
+      this.organization_emp_id = "No Organization",
+      this.organization_no = "00",
+      this.designation = "No Designation",
+      this.joining_date}); // UserModel();
 
   UserModel.fromDocumentSnapshot({DocumentSnapshot? documentSnapshot}) {
     id = documentSnapshot!.id;
@@ -28,9 +28,9 @@ class UserModel {
     l_name = documentSnapshot["l_name"];
     phone = documentSnapshot["phone"];
     email = documentSnapshot["email"];
-    organization_emp_no = documentSnapshot["organization_emp_no"];
+    organization_emp_id = documentSnapshot["organization_emp_id"];
     organization_no = documentSnapshot["organization_no"];
     designation = documentSnapshot["designation"];
-    joining_date = documentSnapshot["joining_date"];
+    joining_date = documentSnapshot["joining_date"] as Timestamp;
   }
 }

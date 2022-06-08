@@ -15,10 +15,10 @@ class UserDb {
         "l_name": user.l_name,
         "phone": user.phone,
         "email": user.email,
-        "organization_emp_no": user.organization_emp_no,
+        "organization_emp_id": user.organization_emp_id,
         "organization_no": user.organization_no,
         "designation": user.designation,
-        "joining_date": user.joining_date,
+        "joining_date": user.joining_date as Timestamp,
       });
       print("Adding User information in User Collection");
       return true;
@@ -67,13 +67,32 @@ class UserDb {
   }
 
   Stream<UserModel> userStream(String uid) {
-    print("Accessing user Stream");
+    print("Accessing Current Signed in user Stream");
     return _firestore
         .collection("Users")
         .doc(uid)
         .snapshots()
         .map((DocumentSnapshot query) {
       return UserModel.fromDocumentSnapshot(documentSnapshot: query);
+    });
+  }
+
+  Stream<List<UserModel>> userListStream(String organizationNo) {
+    print("Accessing UserList Stream in UserDb");
+    return _firestore
+        .collection("Users")
+        //TODO change array Contains value to logged in users's Uid
+        .where('organization_no', isEqualTo: organizationNo)
+        // .orderBy("name", descending: true)
+        .snapshots()
+        .map((QuerySnapshot query) {
+      print(query.docs);
+      List<UserModel> retVal = List.empty(growable: true);
+      query.docs.forEach((element) {
+        print(element.data());
+        retVal.add(UserModel.fromDocumentSnapshot(documentSnapshot: element));
+      });
+      return retVal;
     });
   }
 }

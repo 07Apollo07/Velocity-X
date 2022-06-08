@@ -4,40 +4,43 @@ import 'package:velocityx/assets/custom_icons_icons.dart';
 import 'package:velocityx/controllers/authController.dart';
 import 'package:velocityx/controllers/filesController.dart';
 import 'package:velocityx/controllers/userController.dart';
+import 'package:velocityx/routes/app_pages.dart';
+import 'package:velocityx/shared/constants.dart';
 
 // class Profile extends StatefulWidget {
 //   @override
 //   State<Profile> createState() => _ProfileState();
 // }
 
-class Profile extends GetWidget<AuthController> {
+class Profile extends GetWidget<UserController> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
         length: 2,
         child: Scaffold(
           appBar: AppBar(
-            leading: Icon(Icons.arrow_back_ios_new_rounded),
+            leading: Icon(Icons.edit),
             title: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Column(
-                  children: [
-                    new Text(
-                      "User Name",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    new Text(
-                      "User info",
-                      style: TextStyle(fontSize: 13),
-                    ),
-                  ],
-                ),
-              ],
-            ),
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  GetX<UserController>(
+                    builder: (_) {
+                      return Column(children: [
+                        new Text(
+                          _.user.f_name + " " + _.user.l_name,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                        new Text(
+                          _.user.designation,
+                          style: TextStyle(fontSize: 13),
+                        ),
+                      ]);
+                    },
+                  )
+                ]),
             actions: <Widget>[
               Container(
                 margin: EdgeInsets.only(right: 15.0),
@@ -54,7 +57,7 @@ class Profile extends GetWidget<AuthController> {
                     onPressed: () {
                       AuthController.instance.signOut();
                     },
-                    icon: Icon(CustomIcons.bell),
+                    icon: Icon(Icons.logout),
                     color: Theme.of(context).primaryColor),
               ),
             ],
@@ -82,14 +85,49 @@ class ProfileDoc extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: <Widget>[
-        ListTile(
-          leading: Icon(Icons.picture_as_pdf_rounded),
-          title: Text("Document_1"),
-          subtitle: Text("Assigned By : User_2"),
-          onTap: () {},
-        )
+    // return ListView(
+    //   children: <Widget>[
+    //     ListTile(
+    //       leading: Icon(Icons.picture_as_pdf_rounded),
+    //       title: Text("Document_1"),
+    //       subtitle: Text("Assigned By : User_2"),
+    //       onTap: () {},
+    //     )
+    //   ],
+    // );
+    return Column(
+      children: [
+        Expanded(
+          child: GetX<FilesController>(
+            init: Get.put<FilesController>(FilesController()),
+            builder: (FilesController filesController) {
+              if (filesController != null &&
+                  filesController.assignedFiles.length > 0) {
+                return ListView.builder(
+                  itemCount: filesController.createdFiles.length,
+                  itemBuilder: (_, index) {
+                    return ListTile(
+                      //TODO remove assigned_by and due_date after changes to TaskTile
+                      leading: Icon(Icons.account_circle_outlined),
+                      title: Text(filesController.createdFiles[index].name),
+                      subtitle: Text(filesController
+                          .createdFiles[index].assigned_person_uid
+                          .toString()),
+                      onTap: () {
+                        Get.toNamed(
+                          Routes.FILE_INFORMATION,
+                          id: Constants.profileId,
+                        );
+                      },
+                    );
+                  },
+                );
+              } else {
+                return Center(child: CircularProgressIndicator());
+              }
+            },
+          ),
+        ),
       ],
     );
   }
@@ -114,13 +152,7 @@ class UserInfo extends GetWidget<UserController> {
           height: 10,
         ),
         GetX<UserController>(
-          // initState: (_) async {
-          //   print("printing user");
-          //   print(Get.find<UserController>().user.email);
-          // },
           builder: (_) {
-            // print();
-
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -144,11 +176,13 @@ class UserInfo extends GetWidget<UserController> {
                   textAlign: TextAlign.left,
                   style: TextStyle(color: Colors.white, fontSize: 16),
                 ),
-                Text(
-                  "Designation: ${_.user.joining_date}",
-                  textAlign: TextAlign.left,
-                  style: TextStyle(color: Colors.white, fontSize: 16),
-                ),
+                _.user.joining_date != null
+                    ? Text(
+                        "Joining Date: ${_.getDateFromTimeStamp(_.user.joining_date!.seconds.toString())}",
+                        textAlign: TextAlign.left,
+                        style: TextStyle(color: Colors.white, fontSize: 16),
+                      )
+                    : Text("Joining Date : ")
               ],
             );
           },
