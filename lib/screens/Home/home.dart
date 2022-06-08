@@ -5,6 +5,7 @@ import 'package:velocityx/controllers/authController.dart';
 import 'package:velocityx/controllers/filesController.dart';
 import 'package:velocityx/routes/app_pages.dart';
 import 'package:velocityx/screens/FileInformation/file_information.dart';
+import 'package:velocityx/shared/animatednavbar.dart';
 import 'package:velocityx/shared/constants.dart';
 import 'package:velocityx/shared/TaskTile.dart';
 import 'package:velocityx/shared/category_tile.dart';
@@ -25,6 +26,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController textController = TextEditingController();
     return Container(
         child: Scaffold(
       // backgroundColor: Color.fromRGBO(36, 36, 36, 1.0),
@@ -39,22 +41,23 @@ class _HomeState extends State<Home> {
               ),
               actions: <Widget>[
                 Container(
-                    margin: EdgeInsets.only(right: 15.0),
-                    decoration: BoxDecoration(
-                        color: Theme.of(context).scaffoldBackgroundColor,
-                        shape: BoxShape.circle,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Theme.of(context).primaryColor,
-                            blurRadius: 5.0,
-                          ),
-                        ]),
-                    child: IconButton(
-                        onPressed: () {
-                          // Navigator.pushNamed(context, '/MetaData');
-                        },
-                        icon: Icon(CustomIcons.search_1),
-                        color: Theme.of(context).primaryColor)),
+                  margin: EdgeInsets.only(right: 15.0),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).scaffoldBackgroundColor,
+                    shape: BoxShape.circle,
+                  ),
+                  child: AnimSearchBar(
+                    width: 200,
+                    color: Color.fromRGBO(36, 36, 36, 1.0),
+                    style: TextStyle(),
+                    textController: textController,
+                    onSuffixTap: () {
+                      setState(() {
+                        textController.clear();
+                      });
+                    },
+                  ),
+                ),
                 Container(
                   margin: EdgeInsets.only(right: 15.0),
                   decoration: BoxDecoration(

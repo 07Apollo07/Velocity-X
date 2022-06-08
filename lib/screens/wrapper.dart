@@ -1,3 +1,5 @@
+import 'dart:html';
+import 'package:velocityx/shared/animatednavbar.dart';
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:flutter/material.dart';
@@ -20,8 +22,14 @@ import 'package:velocityx/screens/Organization/Orgdirectory.dart';
 
 import 'DocumentCreation/document_creation.dart';
 
-class Wrapper extends StatelessWidget {
+class Wrapper extends StatefulWidget {
+  @override
+  State<Wrapper> createState() => _WrapperState();
+}
+
+class _WrapperState extends State<Wrapper> {
   PageController page = PageController();
+
   final iconList = <IconData>[
     CustomIcons.home,
     CustomIcons.bookmark,
@@ -30,15 +38,9 @@ class Wrapper extends StatelessWidget {
   ];
 
   // final screen = [
-  //   Home(),
-  //   FileInformation(),
-  //   MetaDataPage(),
-  //   Scanner(),
-  //   // Scanner(),
-  // ];
-
   @override
   Widget build(BuildContext context) {
+    TextEditingController textController = TextEditingController();
     return GetBuilder<WrapperController>(builder: (controller) {
       return (MediaQuery.of(context).size.width < 600)
           ? Scaffold(
@@ -127,22 +129,23 @@ class Wrapper extends StatelessWidget {
                 ),
                 actions: <Widget>[
                   Container(
-                      margin: EdgeInsets.only(right: 15.0),
-                      decoration: BoxDecoration(
-                          color: Theme.of(context).scaffoldBackgroundColor,
-                          shape: BoxShape.circle,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Theme.of(context).primaryColor,
-                              blurRadius: 5.0,
-                            ),
-                          ]),
-                      child: IconButton(
-                          onPressed: () {
-                            // Navigator.pushNamed(context, '/MetaData');
-                          },
-                          icon: Icon(CustomIcons.search_1),
-                          color: Theme.of(context).primaryColor)),
+                    margin: EdgeInsets.only(right: 15.0),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).scaffoldBackgroundColor,
+                      shape: BoxShape.circle,
+                    ),
+                    child: AnimSearchBar(
+                      width: 500,
+                      color: Color.fromRGBO(36, 36, 36, 1.0),
+                      style: TextStyle(),
+                      textController: textController,
+                      onSuffixTap: () {
+                        setState(() {
+                          textController.clear();
+                        });
+                      },
+                    ),
+                  ),
                   Container(
                     margin: EdgeInsets.only(right: 15.0),
                     decoration: BoxDecoration(
