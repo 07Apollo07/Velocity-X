@@ -16,6 +16,8 @@ import 'package:velocityx/screens/metadata/meta_data.dart';
 import 'package:velocityx/controllers/authController.dart';
 import 'package:velocityx/screens/Organization/Orgdirectory.dart';
 
+import 'DocumentCreation/document_creation.dart';
+
 class Wrapper extends StatelessWidget {
   PageController page = PageController();
   final iconList = <IconData>[
@@ -45,7 +47,7 @@ class Wrapper extends StatelessWidget {
                     HomeWrapper(),
                     Organization(),
                     // MetaDataPage(),
-                    FileInformation(),
+                    DocumentCreation(),
                     Profile(),
                     Scanner(),
                   ],
