@@ -119,61 +119,77 @@ class Wrapper extends StatelessWidget {
             )
           : Scaffold(
               appBar: AppBar(
-                title: Text("widget"),
-                centerTitle: true,
+                elevation: 0.0,
+                title: Image.asset(
+                  'assets/images/VelocityX.png',
+                  width: 120,
+                  fit: BoxFit.fitWidth,
+                ),
+                actions: <Widget>[
+                  Container(
+                      margin: EdgeInsets.only(right: 15.0),
+                      decoration: BoxDecoration(
+                          color: Theme.of(context).scaffoldBackgroundColor,
+                          shape: BoxShape.circle,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Theme.of(context).primaryColor,
+                              blurRadius: 5.0,
+                            ),
+                          ]),
+                      child: IconButton(
+                          onPressed: () {
+                            // Navigator.pushNamed(context, '/MetaData');
+                          },
+                          icon: Icon(CustomIcons.search_1),
+                          color: Theme.of(context).primaryColor)),
+                  Container(
+                    margin: EdgeInsets.only(right: 15.0),
+                    decoration: BoxDecoration(
+                        color: Theme.of(context).scaffoldBackgroundColor,
+                        shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Theme.of(context).primaryColor,
+                            blurRadius: 5.0,
+                          ),
+                        ]),
+                    child: IconButton(
+                        onPressed: () {
+                          AuthController.instance.signOut();
+                        },
+                        icon: Icon(CustomIcons.bell),
+                        color: Theme.of(context).primaryColor),
+                  ),
+                ],
               ),
               body: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   SideMenu(
                     controller: page,
-                    onDisplayModeChanged: (mode) {
-                      print(mode);
-                    },
+                    // onDisplayModeChanged: (mode) {
+                    //   print(mode);
+                    // },
                     style: SideMenuStyle(
-                      displayMode: SideMenuDisplayMode.auto,
-                      hoverColor: Colors.blue[100],
-                      selectedColor: Colors.lightBlue,
-                      selectedTitleTextStyle:
-                          const TextStyle(color: Colors.white),
-                      selectedIconColor: Colors.white,
-                      // decoration: BoxDecoration(
-                      //   borderRadius: BorderRadius.all(Radius.circular(10)),
-                      // ),
-                      // backgroundColor: Colors.blueGrey[700]
-                    ),
-                    title: Column(
-                      children: [
-                        ConstrainedBox(
-                          constraints: const BoxConstraints(
-                            maxHeight: 150,
-                            maxWidth: 150,
-                          ),
-                          child: Image.asset(
-                            'assets/images/easy_sidemenu.png',
-                          ),
+                        displayMode: SideMenuDisplayMode.compact,
+                        hoverColor: Colors.blue[100],
+                        selectedColor: Colors.lightBlue,
+                        selectedTitleTextStyle:
+                            const TextStyle(color: Colors.white),
+                        selectedIconColor: Colors.white,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
                         ),
-                        const Divider(
-                          indent: 8.0,
-                          endIndent: 8.0,
-                        ),
-                      ],
-                    ),
-                    footer: const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text(
-                        'mohada',
-                        style: TextStyle(fontSize: 15),
-                      ),
-                    ),
+                        backgroundColor: Theme.of(context).primaryColor),
                     items: [
                       SideMenuItem(
                         priority: 0,
-                        title: 'Dashboard',
+                        title: 'Home',
                         onTap: () {
                           page.jumpToPage(0);
                         },
-                        icon: const Icon(Icons.home),
+                        icon: const Icon(CustomIcons.home),
                         badgeContent: const Text(
                           '3',
                           style: TextStyle(color: Colors.white),
@@ -181,27 +197,27 @@ class Wrapper extends StatelessWidget {
                       ),
                       SideMenuItem(
                         priority: 1,
-                        title: 'Users',
+                        title: 'Organization',
                         onTap: () {
                           page.jumpToPage(1);
                         },
-                        icon: const Icon(Icons.supervisor_account),
+                        icon: const Icon(CustomIcons.bookmark),
                       ),
                       SideMenuItem(
                         priority: 2,
-                        title: 'Files',
+                        title: 'Folder',
                         onTap: () {
                           page.jumpToPage(2);
                         },
-                        icon: const Icon(Icons.file_copy_rounded),
+                        icon: const Icon(CustomIcons.folder),
                       ),
                       SideMenuItem(
                         priority: 3,
-                        title: 'Download',
+                        title: 'Profile',
                         onTap: () {
                           page.jumpToPage(3);
                         },
-                        icon: const Icon(Icons.download),
+                        icon: const Icon(CustomIcons.profile),
                       ),
                       SideMenuItem(
                         priority: 4,
@@ -211,63 +227,18 @@ class Wrapper extends StatelessWidget {
                         },
                         icon: const Icon(Icons.settings),
                       ),
-                      SideMenuItem(
-                        priority: 6,
-                        title: 'Exit',
-                        onTap: () async {},
-                        icon: const Icon(Icons.exit_to_app),
-                      ),
                     ],
                   ),
                   Expanded(
                     child: PageView(
                       controller: page,
                       children: [
-                        Container(
-                          color: Colors.white,
-                          child: const Center(
-                            child: Text(
-                              'Dashboard',
-                              style: TextStyle(fontSize: 35),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          color: Colors.white,
-                          child: const Center(
-                            child: Text(
-                              'Users',
-                              style: TextStyle(fontSize: 35),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          color: Colors.white,
-                          child: const Center(
-                            child: Text(
-                              'Files',
-                              style: TextStyle(fontSize: 35),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          color: Colors.white,
-                          child: const Center(
-                            child: Text(
-                              'Download',
-                              style: TextStyle(fontSize: 35),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          color: Colors.white,
-                          child: const Center(
-                            child: Text(
-                              'Settings',
-                              style: TextStyle(fontSize: 35),
-                            ),
-                          ),
-                        ),
+                        HomeWrapper(),
+                        OrgDirectoryWrapper(),
+                        // MetaDataPage(),
+                        DocumentCreation(),
+                        Profile(),
+                        Scanner(),
                       ],
                     ),
                   ),
