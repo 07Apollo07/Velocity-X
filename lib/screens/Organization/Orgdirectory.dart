@@ -3,9 +3,10 @@ import 'package:get/get.dart';
 import 'package:velocityx/assets/custom_icons_icons.dart';
 import 'package:velocityx/controllers/authController.dart';
 import 'package:velocityx/controllers/filesController.dart';
+import 'package:velocityx/controllers/userController.dart';
 import 'package:velocityx/routes/app_pages.dart';
 import 'package:velocityx/screens/FileInformation/file_information.dart';
-import 'package:velocityx/screens/Home/constants.dart';
+import 'package:velocityx/shared/constants.dart';
 import 'package:velocityx/shared/TaskTile.dart';
 import 'package:velocityx/shared/category_tile.dart';
 
@@ -21,7 +22,7 @@ class _OrganizationState extends State<Organization> {
         length: 2,
         child: Scaffold(
           appBar: AppBar(
-            leading: Icon(Icons.arrow_back_ios_new_rounded),
+            // leading: Icon(Icons.arrow_back_ios_new_rounded),
             title: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -42,30 +43,10 @@ class _OrganizationState extends State<Organization> {
                 ),
               ],
             ),
-            actions: <Widget>[
-              Container(
-                margin: EdgeInsets.only(right: 15.0),
-                decoration: BoxDecoration(
-                    color: Theme.of(context).scaffoldBackgroundColor,
-                    shape: BoxShape.circle,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Theme.of(context).primaryColor,
-                        blurRadius: 5.0,
-                      ),
-                    ]),
-                child: IconButton(
-                    onPressed: () {
-                      AuthController.instance.signOut();
-                    },
-                    icon: Icon(CustomIcons.bell),
-                    color: Theme.of(context).primaryColor),
-              ),
-            ],
             bottom: TabBar(
               tabs: [
                 Tab(text: 'Informations'),
-                Tab(text: 'Participants'),
+                Tab(text: 'Employees'),
               ],
             ),
           ),
@@ -82,14 +63,38 @@ class OrganizationDoc extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: <Widget>[
-        ListTile(
-          leading: Icon(Icons.account_circle_outlined),
-          title: Text("User_1"),
-          subtitle: Text("Position : Juniour Software Developer"),
-          onTap: () {},
-        )
+    return Column(
+      children: [
+        Expanded(
+          child: GetX<UserController>(
+            init: Get.put<UserController>(UserController()),
+            builder: (UserController userController) {
+              if (userController != null && userController.users.length > 0) {
+                return ListView.builder(
+                  itemCount: userController.users.length,
+                  itemBuilder: (_, index) {
+                    return ListTile(
+                      //TODO remove assigned_by and due_date after changes to TaskTile
+                      leading: Icon(Icons.account_circle_outlined),
+                      title: Text(userController.users[index].f_name +
+                          " " +
+                          userController.users[index].l_name),
+                      subtitle: Text(userController.users[index].designation),
+                      onTap: () {
+                        Get.toNamed(
+                          Routes.FILE_INFORMATION,
+                          id: Constants.orgDirectoryId,
+                        );
+                      },
+                    );
+                  },
+                );
+              } else {
+                return Center(child: CircularProgressIndicator());
+              }
+            },
+          ),
+        ),
       ],
     );
   }

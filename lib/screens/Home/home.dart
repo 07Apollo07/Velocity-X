@@ -5,7 +5,7 @@ import 'package:velocityx/controllers/authController.dart';
 import 'package:velocityx/controllers/filesController.dart';
 import 'package:velocityx/routes/app_pages.dart';
 import 'package:velocityx/screens/FileInformation/file_information.dart';
-import 'package:velocityx/screens/Home/constants.dart';
+import 'package:velocityx/shared/constants.dart';
 import 'package:velocityx/shared/TaskTile.dart';
 import 'package:velocityx/shared/category_tile.dart';
 
@@ -127,15 +127,15 @@ class _HomeState extends State<Home> {
               init: Get.put<FilesController>(FilesController()),
               builder: (FilesController filesController) {
                 if (filesController != null &&
-                    filesController.files.length > 0) {
+                    filesController.assignedFiles.length > 0) {
                   return ListView.builder(
-                    itemCount: filesController.files.length,
+                    itemCount: filesController.assignedFiles.length,
                     itemBuilder: (_, index) {
                       return GestureDetector(
                         onTap: () {
                           Get.toNamed(Routes.METADATA,
                               id: Constants.homeId,
-                              arguments: filesController.files[index]);
+                              arguments: filesController.assignedFiles[index]);
                           // print("sending data");
                           // print(filesController.files[index].files_uniqueId);
                         },
@@ -143,7 +143,7 @@ class _HomeState extends State<Home> {
                             //TODO remove assigned_by and due_date after changes to TaskTile
                             assigned_by: "Random Person",
                             due_date: "Random date",
-                            filesModel: filesController.files[index]),
+                            filesModel: filesController.assignedFiles[index]),
                       );
                     },
                   );

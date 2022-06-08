@@ -5,7 +5,7 @@ import 'package:velocityx/controllers/authController.dart';
 import 'package:velocityx/controllers/metaDataController.dart';
 import 'package:velocityx/models/files.dart';
 import 'package:velocityx/routes/app_pages.dart';
-import 'package:velocityx/screens/Home/constants.dart';
+import 'package:velocityx/shared/constants.dart';
 import 'package:velocityx/shared/icon_logo.dart';
 
 class MetaDataPage extends GetWidget<MetaDataController> {

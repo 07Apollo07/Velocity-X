@@ -10,6 +10,8 @@ abstract class Routes {
   static const FILE_INFORMATION = _Paths.FILE_INFORMATION;
   static const METADATA = _Paths.METADATA;
   static const SCANNER = _Paths.SCANNER;
+  static const ORGDIRECTORY = _Paths.ORGDIRECTORY;
+  static const PROFILEPAGE = _Paths.PROFILEPAGE;
 }
 
 abstract class _Paths {
@@ -21,6 +23,6 @@ abstract class _Paths {
   static const FILE_INFORMATION = "/file_information";
   static const METADATA = '/metadata';
   static const SCANNER = '/scanner';
-  // static const METADATA = '/metadata';
-  // static const METADATA = '/metadata';
+  static const ORGDIRECTORY = '/organization_directory';
+  static const PROFILEPAGE = '/profile';
 }

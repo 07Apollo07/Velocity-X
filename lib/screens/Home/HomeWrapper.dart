@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:velocityx/models/files.dart';
 import 'package:velocityx/routes/app_pages.dart';
 import 'package:velocityx/screens/FileInformation/file_information.dart';
-import 'package:velocityx/screens/Home/constants.dart';
+import 'package:velocityx/shared/constants.dart';
 import 'package:velocityx/screens/Home/home.dart';
 import 'package:velocityx/screens/metadata/meta_data.dart';
 
@@ -15,13 +15,6 @@ class HomeWrapper extends StatelessWidget {
     return Navigator(
         key: Get.nestedKey(Constants.homeId),
         initialRoute: Routes.HOME,
-        // onUnknownRoute: (RouteSettings settings) {
-        //   GetPageRoute(
-        //     routeName: Routes.FILE_INFORMATION,
-        //     page: () => FileInformation(),
-        //     maintainState: false,
-        //   );
-        // },
         onGenerateRoute: (routeSettings) {
           // print("inside HomeWrapper");
           print("HomeWrapper route stack");

@@ -9,8 +9,10 @@ import 'package:velocityx/routes/app_pages.dart';
 import 'package:velocityx/screens/FileInformation/file_information.dart';
 import 'package:velocityx/screens/Home/HomeWrapper.dart';
 import 'package:velocityx/screens/Home/home.dart';
+import 'package:velocityx/screens/Organization/OrgdirectoryWrapper.dart';
 import 'package:velocityx/screens/Scanner/Scanner.dart';
 import 'package:velocityx/screens/UserProfile/profile.dart';
+import 'package:velocityx/screens/UserProfile/profileWrapper.dart';
 import 'package:velocityx/screens/authenticate/sign_in.dart';
 import 'package:velocityx/screens/metadata/meta_data.dart';
 import 'package:velocityx/controllers/authController.dart';
@@ -45,7 +47,7 @@ class Wrapper extends StatelessWidget {
                   index: controller.tabIndex,
                   children: [
                     HomeWrapper(),
-                    Organization(),
+                    OrgDirectoryWrapper(),
                     // MetaDataPage(),
                     DocumentCreation(),
                     Profile(),

@@ -5,7 +5,11 @@ import 'package:velocityx/models/files.dart';
 import 'package:velocityx/screens/FileInformation/file_information.dart';
 import 'package:velocityx/screens/Home/HomeWrapper.dart';
 import 'package:velocityx/screens/Home/home.dart';
+import 'package:velocityx/screens/Organization/Orgdirectory.dart';
+import 'package:velocityx/screens/Organization/OrgdirectoryWrapper.dart';
 import 'package:velocityx/screens/Scanner/Scanner.dart';
+import 'package:velocityx/screens/UserProfile/profile.dart';
+import 'package:velocityx/screens/UserProfile/profileWrapper.dart';
 import 'package:velocityx/screens/authenticate/login_page.dart';
 import 'package:velocityx/screens/authenticate/register_page.dart';
 import 'package:velocityx/screens/authenticate/sign_in.dart';
@@ -58,6 +62,16 @@ class AppPages {
     GetPage(
       name: _Paths.SCANNER,
       page: () => Scanner(),
+      // binding: HomeBinding(),
+    ),
+    GetPage(
+      name: _Paths.ORGDIRECTORY,
+      page: () => OrgDirectoryWrapper(),
+      // binding: HomeBinding(),
+    ),
+    GetPage(
+      name: _Paths.PROFILEPAGE,
+      page: () => ProfileWrapper(),
       // binding: HomeBinding(),
     ),
   ];

@@ -33,12 +33,31 @@ class FilesDb {
     return allData;
   }
 
-  Stream<List<FilesModel>> filesStream(String uid) {
+  Stream<List<FilesModel>> assignedFilesStream(String uid) {
     print("Accessing Files Stream method in FilesDb");
     return _firestore
         .collection("Files")
         //TODO change array Contains value to logged in users's Uid
-        // .where('assigned_person_uid', arrayContains: "hwjks")
+        .where('assigned_person_uid', arrayContains: uid)
+        // .orderBy("name", descending: true)
+        .snapshots()
+        .map((QuerySnapshot query) {
+      print(query.docs);
+      List<FilesModel> retVal = List.empty(growable: true);
+      query.docs.forEach((element) {
+        print(element.data());
+        retVal.add(FilesModel.fromDocumentSnapshot(documentSnapshot: element));
+      });
+      return retVal;
+    });
+  }
+
+  Stream<List<FilesModel>> createdFilesStream(String uid) {
+    print("Accessing Files Stream method in FilesDb");
+    return _firestore
+        .collection("Files")
+        //TODO change array Contains value to logged in users's Uid
+        .where('creator_uid', isEqualTo: uid)
         // .orderBy("name", descending: true)
         .snapshots()
         .map((QuerySnapshot query) {
