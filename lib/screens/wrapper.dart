@@ -1,3 +1,4 @@
+import 'package:velocityx/screens/PdfViewer/pdf_viewer.dart';
 import 'package:velocityx/shared/animatednavbar.dart';
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:easy_sidemenu/easy_sidemenu.dart';
@@ -57,6 +58,7 @@ class _WrapperState extends State<Wrapper> {
                 // MetaDataPage(),
                 DocumentCreation(),
                 ProfileWrapper(),
+                // Viewer(),
                 Scanner(),
               ],
             ),

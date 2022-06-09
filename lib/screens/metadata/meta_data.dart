@@ -138,7 +138,13 @@ class MetaDataPage extends GetWidget<MetaDataController> {
                     IconButton(
                       color: Theme.of(context).primaryColor,
                       icon: Icon(CustomIcons.bookmark),
-                      onPressed: () {},
+                      onPressed: () {
+                        Get.toNamed(
+                          Routes.PDFVIEWER,
+                          id: Constants.homeId,
+                          // arguments: filesController.files[index],
+                        );
+                      },
                     ),
                     IconLogo(
                         color: Theme.of(context).primaryColor,

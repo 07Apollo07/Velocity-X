@@ -1,9 +1,23 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.velocityx">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
    <application
+
+        android:largeHeap="true"
+        android:usesCleartextTraffic="true">
+
         android:label="velocityx"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+
+       <meta-data
+           android:name="pdftron_license_key"
+           android:value="${pdftronLicenseKey}"/>
+
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
