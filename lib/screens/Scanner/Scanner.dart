@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:get/get.dart';
 import 'package:velocityx/assets/custom_icons_icons.dart';
 import 'package:velocityx/controllers/authController.dart';
+import 'package:velocityx/screens/Scanner/ScannerV2.dart';
 import 'package:velocityx/screens/Scanner/qr_scan_page.dart';
 
 class Scanner extends StatefulWidget {
@@ -83,7 +85,11 @@ class _ScannerState extends State<Scanner> {
           body: Column(
             children: [
               Text('$qrResult', style: TextStyle(color: Colors.white)),
-              ElevatedButton(onPressed: scanQR, child: Text("Scan Code")),
+              ElevatedButton(
+                  onPressed: () {
+                    Get.to(ScannerV2());
+                  },
+                  child: Text("Scan Code")),
               Row(
                 // mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center,

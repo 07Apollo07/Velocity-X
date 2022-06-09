@@ -47,7 +47,9 @@ dependencies:
   easy_sidemenu: ^0.3.1
   ai_barcode: ^3.2.0
   pdftron_flutter: ^1.0.0-beta.26
+  permission_handler: ^9.2.0
   side_navigation: ^1.0.2
+  jsqr: ^0.1.4
 
 dev_dependencies:
   flutter_test:
