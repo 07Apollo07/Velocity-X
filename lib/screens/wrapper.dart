@@ -54,12 +54,13 @@ class _WrapperState extends State<Wrapper> {
   @override
   Widget build(BuildContext context) {
     TextEditingController textController = TextEditingController();
-    if ((context.width <= 500)) {
+    if ((context.width <= 800)) {
       print("saw them");
       return GetBuilder<WrapperController>(builder: (controller) {
         final _wrapperId = GlobalKey<ScaffoldState>();
         print("Screen Created small");
         return Scaffold(
+          resizeToAvoidBottomInset: false,
           key: _wrapperId,
           body: SafeArea(
             child: IndexedStack(

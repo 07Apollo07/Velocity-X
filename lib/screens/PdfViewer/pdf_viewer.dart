@@ -3,7 +3,9 @@ import 'dart:io' show Platform;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:pdftron_flutter/pdftron_flutter.dart';
+import 'package:velocityx/routes/app_pages.dart';
 // Uncomment this if you are using local files
 // import 'package:permission_handler/permission_handler.dart';
 //
@@ -158,16 +160,26 @@ class _ViewerState extends State<Viewer> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        leading: BackButton(),
+        title: Text("Document Viewer"),
+      ),
       body: Container(
         width: double.infinity,
         height: double.infinity,
         child:
-        // Uncomment this to use Widget version of the viewer.
-        // _showViewer
-        // ? DocumentView(
-        //     onCreated: _onDocumentViewCreated,
-        //   ):
-        Container(),
+            // Uncomment this to use Widget version of the viewer.
+            _showViewer
+                ? DocumentView(
+                    onCreated: _onDocumentViewCreated,
+                  )
+                : Center(
+                    child: ElevatedButton(
+                        onPressed: () {
+                          Get.offAll(Routes.HOME);
+                        },
+                        child: Text("Press to go back Home")),
+                  ),
       ),
     );
   }

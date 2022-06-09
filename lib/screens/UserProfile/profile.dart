@@ -26,6 +26,7 @@ class Profile extends StatelessWidget {
                 children: [
                   Expanded(
                     child: GetX<UserController>(
+                      init: Get.put<UserController>(UserController()),
                       builder: (_) {
                         return Column(children: [
                           new Text(
@@ -65,12 +66,8 @@ class Profile extends StatelessWidget {
             ],
             bottom: TabBar(
               tabs: [
-                Text(
-                  'Informations',
-                ),
-                Text(
-                  'Documents',
-                ),
+                Tab(text: 'Informations'),
+                Tab(text: 'Documents'),
               ],
             ),
           ),
