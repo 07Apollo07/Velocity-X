@@ -12,7 +12,7 @@ import 'package:velocityx/shared/constants.dart';
 //   State<Profile> createState() => _ProfileState();
 // }
 
-class Profile extends GetWidget<UserController> {
+class Profile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -24,21 +24,23 @@ class Profile extends GetWidget<UserController> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  GetX<UserController>(
-                    builder: (_) {
-                      return Column(children: [
-                        new Text(
-                          _.user.f_name + " " + _.user.l_name,
-                          style: TextStyle(
-                            fontWeight: FontWeight.w400,
+                  Expanded(
+                    child: GetX<UserController>(
+                      builder: (_) {
+                        return Column(children: [
+                          new Text(
+                            _.user.f_name + " " + _.user.l_name,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w400,
+                            ),
                           ),
-                        ),
-                        new Text(
-                          _.user.designation,
-                          style: TextStyle(fontSize: 13),
-                        ),
-                      ]);
-                    },
+                          new Text(
+                            _.user.designation,
+                            style: TextStyle(fontSize: 13),
+                          ),
+                        ]);
+                      },
+                    ),
                   )
                 ]),
             actions: <Widget>[
@@ -152,6 +154,7 @@ class UserInfo extends GetWidget<UserController> {
           height: 10,
         ),
         GetX<UserController>(
+          init: Get.put<UserController>(UserController()),
           builder: (_) {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,

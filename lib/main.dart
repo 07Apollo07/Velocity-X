@@ -36,10 +36,10 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       initialBinding: StoreBindings(),
       debugShowCheckedModeBanner: false,
-      // home: SplashScreen(),
-      initialRoute: AppPages.INITIAL,
+      home: SplashScreen(),
+      // initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,
-      theme: CustomTheme.darkTheme,
+      theme: CustomTheme.lightTheme,
       darkTheme: CustomTheme.darkTheme,
       themeMode: ThemeMode.system,
     );
