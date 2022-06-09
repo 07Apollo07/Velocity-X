@@ -1,3 +1,4 @@
+import 'package:side_navigation/side_navigation.dart';
 import 'package:velocityx/screens/PdfViewer/pdf_viewer.dart';
 import 'package:velocityx/shared/animatednavbar.dart';
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
@@ -37,7 +38,18 @@ class _WrapperState extends State<Wrapper> {
     CustomIcons.folder,
     CustomIcons.profile,
   ];
+  List<Widget> views = [
+    HomeWrapper(),
+    OrgDirectoryWrapper(),
+    // MetaDataPage(),
+    DocumentCreation(),
+    ProfileWrapper(),
+    // Viewer(),
+    Scanner(),
+  ];
 
+  /// The currently selected index of the bar
+  int selectedIndex = 0;
   // final screen = [
   @override
   Widget build(BuildContext context) {
@@ -130,91 +142,45 @@ class _WrapperState extends State<Wrapper> {
         final _wrapperId = GlobalKey<ScaffoldState>();
         print("Screen Created big");
         return Scaffold(
-          key: _wrapperId,
-          body: SafeArea(
-            child: Row(
-              // mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                SideMenu(
-                  controller: page,
-                  title: Image.asset('assets/images/VelocityX.png'),
-                  onDisplayModeChanged: (mode) {
-                    print(mode);
-                  },
-                  style: SideMenuStyle(
-                      openSideMenuWidth: 200,
-                      displayMode: SideMenuDisplayMode.open,
-                      hoverColor: Colors.blue[100],
-                      selectedColor: Colors.lightBlue,
-                      selectedTitleTextStyle:
-                          const TextStyle(color: Colors.white),
-                      selectedIconColor: Colors.white,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                      ),
-                      backgroundColor: Color.fromRGBO(71, 132, 241, 0.4)),
-                  items: [
-                    SideMenuItem(
-                      priority: 0,
-                      title: 'Home',
-                      onTap: () {
-                        page.jumpToPage(0);
-                      },
-                      icon: const Icon(CustomIcons.home),
-                      badgeContent: const Text(
-                        '3',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                    SideMenuItem(
-                      priority: 1,
-                      title: 'Organization',
-                      onTap: () {
-                        page.jumpToPage(1);
-                      },
-                      icon: const Icon(CustomIcons.bookmark),
-                    ),
-                    SideMenuItem(
-                      priority: 2,
-                      title: 'Folder',
-                      onTap: () {
-                        page.jumpToPage(2);
-                      },
-                      icon: const Icon(CustomIcons.folder),
-                    ),
-                    SideMenuItem(
-                      priority: 3,
-                      title: 'Profile',
-                      onTap: () {
-                        page.jumpToPage(3);
-                      },
-                      icon: const Icon(CustomIcons.profile),
-                    ),
-                    SideMenuItem(
-                      priority: 4,
-                      title: 'Settings',
-                      onTap: () {
-                        page.jumpToPage(4);
-                      },
-                      icon: const Icon(Icons.settings),
-                    ),
-                  ],
-                ),
-                Expanded(
-                  child: PageView(
-                    controller: page,
-                    children: [
-                      HomeWrapper(),
-                      OrgDirectoryWrapper(),
-                      // MetaDataPage(),
-                      DocumentCreation(),
-                      ProfileWrapper(),
-                      Scanner(),
-                    ],
+          body: Row(
+            children: [
+              /// Pretty similar to the BottomNavigationBar!
+              SideNavigationBar(
+                selectedIndex: selectedIndex,
+                items: const [
+                  SideNavigationBarItem(
+                    icon: CustomIcons.home,
+                    label: 'Dashboard',
                   ),
-                ),
-              ],
-            ),
+                  SideNavigationBarItem(
+                    icon: CustomIcons.bookmark,
+                    label: 'Account',
+                  ),
+                  SideNavigationBarItem(
+                    icon: CustomIcons.folder,
+                    label: 'Settings',
+                  ),
+                  SideNavigationBarItem(
+                    icon: CustomIcons.profile,
+                    label: 'Settings',
+                  ),
+                  SideNavigationBarItem(
+                    icon: Icons.qr_code_scanner_sharp,
+                    label: 'Settings',
+                  ),
+                ],
+                onTap: (index) {
+                  setState(() {
+                    selectedIndex = index;
+                  });
+                },
+              ),
+
+              /// Make it take the rest of the available width
+              Expanded(
+                child: views.elementAt(selectedIndex),
+              )
+            ],
           ),
         );
       });

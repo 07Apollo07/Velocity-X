@@ -1,7 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:babstrap_settings_screen/babstrap_settings_screen.dart';
-import 'package:settings_ui/settings_ui.dart';
 
 class Settings extends StatelessWidget {
   const Settings({Key? key}) : super(key: key);
