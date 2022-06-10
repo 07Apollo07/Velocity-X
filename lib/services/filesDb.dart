@@ -73,11 +73,12 @@ class FilesDb {
 
   Future<bool> createNewFile(FilesModel file) async {
     try {
-      await _firestore.collection("Files").doc(file.files_uniqueId).set({
+      final FileRef = _firestore.collection("Files").doc();
+      await FileRef.set({
         "creator_uid": file.creator_uid,
         "designation": file.designation,
         "creation_datetime": file.creation_datetime,
-        "files_uniqueId": file.files_uniqueId,
+        "files_uniqueId": FileRef.id,
         "final_approver": file.final_approver,
         "name": file.name,
         "organization_no": file.organization_no,
