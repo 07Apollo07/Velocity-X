@@ -18,12 +18,50 @@ class DocCreationController extends GetxController {
   Rx<List<String?>> assignedUserIdList =
       Rx<List<String?>>(List.empty(growable: true));
 
+  Rx<List<UserModel>> finalApproverList =
+      Rx<List<UserModel>>(List.empty(growable: true));
+
+  Rx<List<String?>> finalApproverIdList =
+      Rx<List<String?>>(List.empty(growable: true));
+
   List<UserModel> get assignedList => assignedUserList.value;
   List<String?> get assignedIdList => assignedUserIdList.value;
+  List<UserModel> get finApproverList => finalApproverList.value;
+  List<String?> get finApproverIdList => finalApproverIdList.value;
+
+  void setFinalApprover(String email) async {
+    print("reached here to add");
+    List<UserModel> _userList = Get.find<UserController>().users;
+    if (_userList.length > 0) {
+      print(email.trim());
+      print("there are items in userList");
+      for (var user in _userList) {
+        print(user.email);
+        if (user.email == email.trim()) {
+          print("eligible to go in");
+          if (finApproverList.length > 0) {
+            finApproverList.removeLast();
+            finApproverList.add(user);
+            finApproverIdList.removeLast();
+            finApproverIdList.add(user.id);
+          } else {
+            finApproverList.add(user);
+            finApproverIdList.add(user.id);
+          }
+          print("added");
+          update();
+          print(user);
+        }
+      }
+    } else {
+      (Get.snackbar("title", "userList empty"));
+      print(finApproverList.toString());
+    }
+  }
 
   void addToAssignedList(String email) async {
     print("reached here to add");
-    List<UserModel> _userList = Get.put<UserController>(UserController()).users;
+    List<UserModel> _userList = Get.find<UserController>().users;
     if (_userList.length > 0) {
       print(email.trim());
       print("there are items in userList");
@@ -63,8 +101,12 @@ class DocCreationController extends GetxController {
     update();
   }
 
-  void createDocument(String docName, List<String?> assignedPerson,
-      bool download, bool finalApprover, String finalApproverName) async {
+  void createDocument(
+      String docName,
+      List<String?> assignedPerson,
+      bool download,
+      bool finalApprover,
+      List<String?> finalApproverNameId) async {
     UserModel _user = Get.find<UserController>().user;
     FilesModel _file = FilesModel(
       name: docName,
@@ -75,7 +117,7 @@ class DocCreationController extends GetxController {
       designation: _user.designation,
       download: download,
       final_approver_set: finalApprover,
-      final_approver: "Not Set",
+      final_approver: finalApproverNameId.last ?? "Not Final Approver",
       organization_no: _user.organization_no,
       storage_link: "",
       files_uniqueId: docName +
@@ -86,6 +128,11 @@ class DocCreationController extends GetxController {
     );
 
     if (await FilesDb().createNewFile(_file)) {
+      finApproverList.clear();
+      finApproverIdList.clear();
+      assignedList.clear();
+      assignedIdList.clear();
+      update();
       Get.snackbar("Success", "File Created");
     }
     print(_file.toString());

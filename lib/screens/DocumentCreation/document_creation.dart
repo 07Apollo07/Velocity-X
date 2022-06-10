@@ -121,44 +121,33 @@ class _DocumentCreationState extends State<DocumentCreation> {
                         ),
                         SizedBox(height: 20),
                         SingleChildScrollView(
-                          child: GetX<DocCreationController>(
-                              init: Get.put<DocCreationController>(
-                                  DocCreationController()),
-                              builder: (DocCreationController
-                                  docCreationController) {
-                                if (docCreationController != null &&
-                                    docCreationController.assignedList.length >
-                                        0) {
-                                  return GridView.builder(
-                                      shrinkWrap: true,
-                                      itemCount: docCreationController
-                                          .assignedList.length,
-                                      gridDelegate:
-                                          const SliverGridDelegateWithMaxCrossAxisExtent(
-                                        maxCrossAxisExtent: 100,
-                                        childAspectRatio: 3 / 2,
-                                        crossAxisSpacing: 20,
-                                        mainAxisSpacing: 20,
-                                      ),
-                                      itemBuilder: (_, index) {
-                                        return Container(
-                                          alignment: Alignment.center,
-                                          child: Text(docCreationController
-                                                  .assignedList[index].f_name +
-                                              " " +
-                                              docCreationController
-                                                  .assignedList[index].l_name),
-                                          decoration: BoxDecoration(
-                                              color: Colors.blue,
-                                              borderRadius:
-                                                  BorderRadius.circular(15)),
-                                        );
-                                      });
-                                } else {
-                                  return CircularProgressIndicator();
-                                }
-                              }),
-                        ),
+                            child: (controller != null &&
+                                    controller.assignedList.length > 0)
+                                ? GridView.builder(
+                                    shrinkWrap: true,
+                                    itemCount: controller.assignedList.length,
+                                    gridDelegate:
+                                        const SliverGridDelegateWithMaxCrossAxisExtent(
+                                      maxCrossAxisExtent: 100,
+                                      childAspectRatio: 3 / 2,
+                                      crossAxisSpacing: 20,
+                                      mainAxisSpacing: 20,
+                                    ),
+                                    itemBuilder: (_, index) {
+                                      return Container(
+                                        alignment: Alignment.center,
+                                        child: Text(controller
+                                                .assignedList[index].f_name +
+                                            " " +
+                                            controller
+                                                .assignedList[index].l_name),
+                                        decoration: BoxDecoration(
+                                            color: Colors.blue,
+                                            borderRadius:
+                                                BorderRadius.circular(15)),
+                                      );
+                                    })
+                                : Container()),
                         SizedBox(height: 20),
                         CheckboxListTile(
                           title: Text(
@@ -190,6 +179,21 @@ class _DocumentCreationState extends State<DocumentCreation> {
                           visible: controller.finalApprover,
                           child: TextFormField(
                             decoration: InputDecoration(
+                              suffixIcon: IconButton(
+                                onPressed: () {
+                                  if (finalApproverController.text != null &&
+                                      finalApproverController.text.isNotEmpty) {
+                                    print("sending request");
+                                    controller.setFinalApprover(
+                                        finalApproverController.text
+                                            .trim()
+                                            .toLowerCase());
+                                  }
+                                  ;
+                                  finalApproverController.text = "";
+                                },
+                                icon: Icon(Icons.add),
+                              ),
                               focusedBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                                     color: Theme.of(context).primaryColor,
@@ -204,7 +208,40 @@ class _DocumentCreationState extends State<DocumentCreation> {
                             controller: finalApproverController,
                           ),
                         ),
-                        SizedBox(height: 30),
+                        Visibility(
+                          visible: controller.finalApprover,
+                          child: SingleChildScrollView(
+                              child: (controller != null &&
+                                      controller.finApproverList.length > 0)
+                                  ? GridView.builder(
+                                      shrinkWrap: true,
+                                      itemCount:
+                                          controller.finApproverList.length,
+                                      gridDelegate:
+                                          const SliverGridDelegateWithMaxCrossAxisExtent(
+                                        maxCrossAxisExtent: 100,
+                                        childAspectRatio: 3 / 2,
+                                        crossAxisSpacing: 20,
+                                        mainAxisSpacing: 20,
+                                      ),
+                                      itemBuilder: (_, index) {
+                                        return Container(
+                                          alignment: Alignment.center,
+                                          child: Text(controller
+                                                  .finApproverList[index]
+                                                  .f_name +
+                                              " " +
+                                              controller.finApproverList[index]
+                                                  .l_name),
+                                          decoration: BoxDecoration(
+                                              color: Colors.blue,
+                                              borderRadius:
+                                                  BorderRadius.circular(15)),
+                                        );
+                                      })
+                                  : Container()),
+                        ),
+                        SizedBox(height: 20),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -250,7 +287,10 @@ class _DocumentCreationState extends State<DocumentCreation> {
                                     controller.assignedIdList,
                                     controller.downloadDocument,
                                     controller.finalApprover,
-                                    finalApproverController.text.trim());
+                                    controller.finApproverIdList);
+                                documentNameController.text = "";
+                                assignedPersonNameController.text = "";
+                                finalApproverController.text = "";
                               }
                             },
                           ),
