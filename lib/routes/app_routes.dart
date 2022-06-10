@@ -14,6 +14,7 @@ abstract class Routes {
   static const PROFILEPAGE = _Paths.PROFILEPAGE;
   static const PDFVIEWER = _Paths.PDFVIEWER;
   static const PDFWEBVIEWER = _Paths.PDFWEBVIEWER;
+  static const QR_CODE = _Paths.QR_CODE;
 }
 
 abstract class _Paths {
@@ -29,4 +30,5 @@ abstract class _Paths {
   static const PROFILEPAGE = '/profile';
   static const PDFVIEWER = '/pdf_viewer';
   static const PDFWEBVIEWER = '/pdf_web_viewer';
+  static const QR_CODE = "/qr_code";
 }

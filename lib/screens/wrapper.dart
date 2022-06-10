@@ -1,5 +1,6 @@
 import 'package:side_navigation/side_navigation.dart';
 import 'package:velocityx/screens/PdfViewer/pdf_viewer.dart';
+import 'package:velocityx/screens/QRCodeGeneration/QrCreator.dart';
 import 'package:velocityx/shared/animatednavbar.dart';
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:easy_sidemenu/easy_sidemenu.dart';
@@ -47,6 +48,7 @@ class _WrapperState extends State<Wrapper> {
     // MetaDataPage(),
     DocumentCreation(),
     ProfileWrapper(),
+    // QrCreator(qrCodeOfInput: "Null"),
     // PdfViewerWeb()
     // HtmlEditorExample(title: 'Flutter HTML Editor Example'),
     // Viewer(),

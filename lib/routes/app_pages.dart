@@ -9,6 +9,7 @@ import 'package:velocityx/screens/Organization/Orgdirectory.dart';
 import 'package:velocityx/screens/Organization/OrgdirectoryWrapper.dart';
 import 'package:velocityx/screens/PdfViewer/pdf_viewer.dart';
 import 'package:velocityx/screens/PdfViewerWeb/pdf_viewer_web.dart';
+import 'package:velocityx/screens/QRCodeGeneration/QrCreator.dart';
 import 'package:velocityx/screens/Scanner/Scanner.dart';
 import 'package:velocityx/screens/UserProfile/profile.dart';
 import 'package:velocityx/screens/UserProfile/profileWrapper.dart';
@@ -84,6 +85,13 @@ class AppPages {
     GetPage(
       name: _Paths.PDFWEBVIEWER,
       page: () => PdfViewerWeb(),
+      // binding: HomeBinding(),
+    ),
+    GetPage(
+      name: _Paths.QR_CODE,
+      page: () => QrCreator(
+        qrCodeOfInput: "Null",
+      ),
       // binding: HomeBinding(),
     ),
   ];

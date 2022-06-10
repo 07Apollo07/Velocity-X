@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:velocityx/routes/app_pages.dart';
 import 'package:velocityx/screens/FileInformation/file_information.dart';
+import 'package:velocityx/screens/QRCodeGeneration/QrCreator.dart';
 import 'package:velocityx/screens/UserProfile/profile.dart';
 import 'package:velocityx/shared/constants.dart';
 
@@ -26,6 +27,12 @@ class ProfileWrapper extends StatelessWidget {
             return GetPageRoute(
               routeName: Routes.FILE_INFORMATION,
               page: () => FileInformation(),
+              maintainState: false,
+            );
+          } else if (routeSettings.name.toString() == Routes.QR_CODE) {
+            return GetPageRoute(
+              routeName: Routes.QR_CODE,
+              page: () => QrCreator(qrCodeOfInput: routeSettings.arguments),
               maintainState: false,
             );
           }
