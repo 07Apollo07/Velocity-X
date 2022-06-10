@@ -7,6 +7,9 @@ import 'package:velocityx/screens/PdfViewer/pdf_viewer.dart';
 import 'package:velocityx/shared/constants.dart';
 import 'package:velocityx/screens/Home/home.dart';
 import 'package:velocityx/screens/metadata/meta_data.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
+
+import '../PdfViewerWeb/pdf_viewer_web.dart';
 
 class HomeWrapper extends StatelessWidget {
   const HomeWrapper({Key? key}) : super(key: key);
@@ -50,7 +53,17 @@ class HomeWrapper extends StatelessWidget {
               // page: () => MetaDataPage(
               //   File: routeSettings.arguments as FilesModel,
               // ),
-              page: () => Viewer(),
+              page: () {
+                if (kIsWeb) {
+                  // It's running on the web!
+                  return PdfViewerWeb();
+                } else {
+                  return Viewer();
+                  // NOT running on the web!
+                  // You can also check for additional platforms here.
+                  // Or you only develop for web and mobile this is mobile
+                }
+              } ,
               maintainState: false,
             );
           }
