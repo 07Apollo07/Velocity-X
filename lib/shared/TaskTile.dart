@@ -63,7 +63,7 @@ class TaskTile extends StatelessWidget {
                     SizedBox(
                       width: 3,
                     ),
-                    Text(assigned_by)
+                    Text(filesModel.creator_name)
                   ]),
                 ],
               ),

@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:velocityx/controllers/authController.dart';
+import 'package:velocityx/controllers/docCreationController.dart';
 import 'package:velocityx/controllers/metaDataController.dart';
 import 'package:velocityx/controllers/userController.dart';
 import 'package:velocityx/controllers/wrapperController.dart';
@@ -9,6 +10,7 @@ class StoreBindings extends Bindings {
   void dependencies() {
     // Get.put<AuthController>(AuthController(), permanent: true);
     Get.lazyPut<UserController>(() => UserController());
+    Get.lazyPut<DocCreationController>(() => DocCreationController());
     Get.put<MetaDataController>(MetaDataController());
     Get.put<WrapperController>(WrapperController(), permanent: true);
   }

@@ -34,18 +34,18 @@ class _WrapperState extends State<Wrapper> {
 
   final iconList = <IconData>[
     CustomIcons.home,
-    CustomIcons.bookmark,
-    CustomIcons.folder,
+    Icons.people,
+    Icons.add_card,
     CustomIcons.profile,
   ];
   List<Widget> views = [
     HomeWrapper(),
     OrgDirectoryWrapper(),
+    Scanner(),
     // MetaDataPage(),
     DocumentCreation(),
     ProfileWrapper(),
     // Viewer(),
-    Scanner(),
   ];
 
   /// The currently selected index of the bar
@@ -110,9 +110,9 @@ class _WrapperState extends State<Wrapper> {
                           if (index == 0) {
                             return "Home";
                           } else if (index == 1) {
-                            return "Organization";
+                            return "Directory";
                           } else if (index == 2) {
-                            return "Folder";
+                            return "Create";
                           } else if (index == 3) {
                             return "Profile";
                           }
@@ -154,20 +154,20 @@ class _WrapperState extends State<Wrapper> {
                     label: 'Dashboard',
                   ),
                   SideNavigationBarItem(
-                    icon: CustomIcons.bookmark,
-                    label: 'Account',
-                  ),
-                  SideNavigationBarItem(
-                    icon: CustomIcons.folder,
-                    label: 'Settings',
-                  ),
-                  SideNavigationBarItem(
-                    icon: CustomIcons.profile,
-                    label: 'Settings',
+                    icon: Icons.people,
+                    label: 'Directory',
                   ),
                   SideNavigationBarItem(
                     icon: Icons.qr_code_scanner_sharp,
-                    label: 'Settings',
+                    label: 'Scanner',
+                  ),
+                  SideNavigationBarItem(
+                    icon: Icons.add_card,
+                    label: 'Create Document',
+                  ),
+                  SideNavigationBarItem(
+                    icon: CustomIcons.profile,
+                    label: 'Profile',
                   ),
                 ],
                 onTap: (index) {

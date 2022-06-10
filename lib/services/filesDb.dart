@@ -70,4 +70,28 @@ class FilesDb {
       return retVal;
     });
   }
+
+  Future<bool> createNewFile(FilesModel file) async {
+    try {
+      await _firestore.collection("Files").doc(file.files_uniqueId).set({
+        "creator_uid": file.creator_uid,
+        "designation": file.designation,
+        "creation_datetime": file.creation_datetime,
+        "files_uniqueId": file.files_uniqueId,
+        "final_approver": file.final_approver,
+        "name": file.name,
+        "organization_no": file.organization_no,
+        "storage_link": file.storage_link,
+        "assigned_person_uid": file.assigned_person_uid,
+        "creator_name": file.creator_name,
+        "download": file.download,
+        "final_approver_set": file.final_approver_set
+      });
+      print("Adding File information in File Collection");
+      return true;
+    } catch (e) {
+      print(e.toString());
+      return false;
+    }
+  }
 }

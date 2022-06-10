@@ -29,6 +29,7 @@ class AuthController extends GetxController {
       Get.offAll(() => SignIn());
     } else {
       Get.offAll(() => Wrapper());
+      Get.put(UserController(), permanent: true);
     }
   }
 
