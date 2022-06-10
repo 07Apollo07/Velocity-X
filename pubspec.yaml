@@ -50,6 +50,7 @@ dependencies:
   permission_handler: ^9.2.0
   side_navigation: ^1.0.2
   jsqr: ^0.1.4
+  html_editor_enhanced: ^2.5.0
 
 dev_dependencies:
   flutter_test:

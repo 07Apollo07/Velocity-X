@@ -23,6 +23,7 @@ import 'package:velocityx/screens/Organization/Orgdirectory.dart';
 import 'package:velocityx/shared/constants.dart';
 
 import 'DocumentCreation/document_creation.dart';
+import 'TextEditor/text_editor.dart';
 
 class Wrapper extends StatefulWidget {
   @override
@@ -44,7 +45,8 @@ class _WrapperState extends State<Wrapper> {
     Scanner(),
     // MetaDataPage(),
     DocumentCreation(),
-    ProfileWrapper(),
+    // ProfileWrapper(),
+    HtmlEditorExample(title: 'Flutter HTML Editor Example'),
     // Viewer(),
   ];
 
@@ -70,7 +72,8 @@ class _WrapperState extends State<Wrapper> {
                 OrgDirectoryWrapper(),
                 // MetaDataPage(),
                 DocumentCreation(),
-                ProfileWrapper(),
+                // ProfileWrapper(),
+                HtmlEditorExample(title: 'Flutter HTML Editor Example'),
                 // Viewer(),
                 Scanner(),
               ],
