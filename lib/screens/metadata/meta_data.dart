@@ -99,16 +99,6 @@ class MetaDataPage extends GetWidget<MetaDataController> {
                 SizedBox(
                   height: 10,
                 ),
-                //         Text(
-                //           '''Name : Document_1.pdf,
-                // Size : 246kb ,
-                // File Owner : User_example
-                // Created : Jan 31, 2021
-                // Modified : Jun 24, 2021
-                // Permission : User1, user2 .''',
-                //           textAlign: TextAlign.start,
-                //           style: TextStyle(fontSize: 16),
-                //         ),
                 Text("Name : " + File.name),
                 Text("Size : " + "No Size available"),
                 Text("File Owner : " + File.creator_uid),

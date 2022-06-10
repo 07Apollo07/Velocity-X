@@ -13,6 +13,7 @@ abstract class Routes {
   static const ORGDIRECTORY = _Paths.ORGDIRECTORY;
   static const PROFILEPAGE = _Paths.PROFILEPAGE;
   static const PDFVIEWER = _Paths.PDFVIEWER;
+  static const PDFWEBVIEWER = _Paths.PDFWEBVIEWER;
 }
 
 abstract class _Paths {
@@ -27,4 +28,5 @@ abstract class _Paths {
   static const ORGDIRECTORY = '/organization_directory';
   static const PROFILEPAGE = '/profile';
   static const PDFVIEWER = '/pdf_viewer';
+  static const PDFWEBVIEWER = '/pdf_web_viewer';
 }
