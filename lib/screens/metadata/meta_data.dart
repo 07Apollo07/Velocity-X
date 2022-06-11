@@ -66,7 +66,7 @@ class MetaDataPage extends GetWidget<MetaDataController> {
         ),
         body: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(20, 70, 10, 70),
+            padding: const EdgeInsets.fromLTRB(20, 50, 10, 70),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -97,19 +97,137 @@ class MetaDataPage extends GetWidget<MetaDataController> {
                   style: TextStyle(fontSize: 20),
                 ),
                 SizedBox(
+                  height: 15,
+                ),
+                TextFormField(
+                  enabled: false,
+                  initialValue: File.name,
+                  decoration: InputDecoration(
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: Theme.of(context).primaryColor,
+                          width: 2.0),
+                    ),
+                    fillColor: Colors.black54,
+                    filled: true,
+                    label: Text("Name"),
+                    hintText: File.name,
+                    focusColor: Colors.blue,
+                  ),
+
+                ),
+                SizedBox(
                   height: 10,
                 ),
-                Text("Name : " + File.name),
-                Text("Size : " + "No Size available"),
-                Text("File Owner : " + File.creator_uid),
-                Text("Created : " +
-                    controller.getDateFromTimeStamp(
-                        File.creation_datetime!.seconds.toString())),
-                Text("Final Approver : " + File.final_approver),
-                Text("Assigned Persons : " +
-                    File.assigned_person_uid.toString()),
+                TextFormField(
+                  enabled: false,
+                  initialValue: "No Size Available",
+                  decoration: InputDecoration(
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: Theme.of(context).primaryColor,
+                          width: 2.0),
+                    ),
+                    fillColor: Colors.black54,
+                    filled: true,
+                    label: Text("Size"),
+                    hintText: File.name,
+                    focusColor: Colors.blue,
+                  ),
+
+                ),
                 SizedBox(
-                  height: 200,
+                  height: 10,
+                ),
+                TextFormField(
+                  enabled: false,
+                  initialValue: File.creator_uid,
+                  decoration: InputDecoration(
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: Theme.of(context).primaryColor,
+                          width: 2.0),
+                    ),
+                    fillColor: Colors.black54,
+                    filled: true,
+                    label: Text("File Owner"),
+                    hintText: File.name,
+                    focusColor: Colors.blue,
+                  ),
+
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                TextFormField(
+                  enabled: false,
+                  initialValue: controller.getDateFromTimeStamp(
+                      File.creation_datetime!.seconds.toString()),
+                  decoration: InputDecoration(
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: Theme.of(context).primaryColor,
+                          width: 2.0),
+                    ),
+                    fillColor: Colors.black54,
+                    filled: true,
+                    label: Text("Created"),
+                    hintText: File.name,
+                    focusColor: Colors.blue,
+                  ),
+
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                TextFormField(
+                  enabled: false,
+                  initialValue:File.final_approver,
+                  decoration: InputDecoration(
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: Theme.of(context).primaryColor,
+                          width: 2.0),
+                    ),
+                    fillColor: Colors.black54,
+                    filled: true,
+                    label: Text("Final Approver"),
+                    hintText: File.name,
+                    focusColor: Colors.blue,
+                  ),
+
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                TextFormField(
+                  enabled: false,
+                  initialValue:File.assigned_person_uid.toString(),
+                  decoration: InputDecoration(
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: Theme.of(context).primaryColor,
+                          width: 2.0),
+                    ),
+                    fillColor: Colors.black54,
+                    filled: true,
+                    label: Text("Assigned Persons"),
+                    hintText: File.name,
+                    focusColor: Colors.blue,
+                  ),
+
+                ),
+                // Text("Name : " + File.name),
+                // Text("Size : " + "No Size available"),
+                // Text("File Owner : " + File.creator_uid),
+                // Text("Created : " +
+                //     controller.getDateFromTimeStamp(
+                //         File.creation_datetime!.seconds.toString())),
+                // Text("Final Approver : " + File.final_approver),
+                // Text("Assigned Persons : " +
+                //     File.assigned_person_uid.toString()),
+                SizedBox(
+                  height: 100,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
