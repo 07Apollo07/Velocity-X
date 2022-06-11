@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:velocityx/binding/bindings.dart';
 import 'package:velocityx/controllers/metaDataController.dart';
 import 'package:velocityx/models/files.dart';
+import 'package:velocityx/screens/ContactCard/ContactCard.dart';
 import 'package:velocityx/screens/FileInformation/file_information.dart';
 import 'package:velocityx/screens/Home/HomeWrapper.dart';
 import 'package:velocityx/screens/Home/home.dart';
@@ -92,6 +93,11 @@ class AppPages {
       page: () => QrCreator(
         qrCodeOfInput: "Null",
       ),
+      // binding: HomeBinding(),
+    ),
+    GetPage(
+      name: _Paths.CONTACT_CARD,
+      page: () => ContactPage(),
       // binding: HomeBinding(),
     ),
   ];

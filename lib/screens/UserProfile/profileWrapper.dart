@@ -19,9 +19,9 @@ class ProfileWrapper extends StatelessWidget {
           print(routeSettings.name);
           if (routeSettings.name.toString() == Routes.PROFILEPAGE) {
             return GetPageRoute(
-              routeName: Routes.ORGDIRECTORY,
+              routeName: Routes.PROFILEPAGE,
               page: () => Profile(),
-              maintainState: false,
+              maintainState: true,
             );
           } else if (routeSettings.name.toString() == Routes.FILE_INFORMATION) {
             return GetPageRoute(

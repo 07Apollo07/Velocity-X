@@ -4,6 +4,7 @@ import 'package:velocityx/models/files.dart';
 import 'package:velocityx/routes/app_pages.dart';
 import 'package:velocityx/screens/FileInformation/file_information.dart';
 import 'package:velocityx/screens/PdfViewer/pdf_viewer.dart';
+import 'package:velocityx/screens/QRCodeGeneration/QrCreator.dart';
 import 'package:velocityx/shared/constants.dart';
 import 'package:velocityx/screens/Home/home.dart';
 import 'package:velocityx/screens/metadata/meta_data.dart';
@@ -40,19 +41,18 @@ class HomeWrapper extends StatelessWidget {
           } else if (routeSettings.name.toString() == Routes.FILE_INFORMATION) {
             return GetPageRoute(
               routeName: Routes.FILE_INFORMATION,
-              // page: () => MetaDataPage(
-              //   File: routeSettings.arguments as FilesModel,
-              // ),
               page: () => FileInformation(),
               maintainState: false,
             );
-          }
-          else if (routeSettings.name.toString() == Routes.PDFVIEWER) {
+          } else if (routeSettings.name.toString() == Routes.QR_CODE) {
+            return GetPageRoute(
+              routeName: Routes.QR_CODE,
+              page: () => QrCreator(qrCodeOfInput: routeSettings.arguments),
+              maintainState: false,
+            );
+          } else if (routeSettings.name.toString() == Routes.PDFVIEWER) {
             return GetPageRoute(
               routeName: Routes.PDFVIEWER,
-              // page: () => MetaDataPage(
-              //   File: routeSettings.arguments as FilesModel,
-              // ),
               page: () {
                 if (kIsWeb) {
                   // It's running on the web!
@@ -63,7 +63,7 @@ class HomeWrapper extends StatelessWidget {
                   // You can also check for additional platforms here.
                   // Or you only develop for web and mobile this is mobile
                 }
-              } ,
+              },
               maintainState: false,
             );
           }

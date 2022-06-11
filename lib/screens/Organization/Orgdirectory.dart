@@ -82,7 +82,7 @@ class OrganizationDoc extends StatelessWidget {
                       subtitle: Text(userController.users[index].designation),
                       onTap: () {
                         Get.toNamed(
-                          Routes.FILE_INFORMATION,
+                          Routes.CONTACT_CARD,
                           id: Constants.orgDirectoryId,
                         );
                       },

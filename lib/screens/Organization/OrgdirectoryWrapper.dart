@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:velocityx/routes/app_pages.dart';
+import 'package:velocityx/screens/ContactCard/ContactCard.dart';
 import 'package:velocityx/screens/FileInformation/file_information.dart';
 import 'package:velocityx/screens/Organization/Orgdirectory.dart';
 import 'package:velocityx/screens/metadata/meta_data.dart';
@@ -21,12 +22,12 @@ class OrgDirectoryWrapper extends StatelessWidget {
             return GetPageRoute(
               routeName: Routes.ORGDIRECTORY,
               page: () => Organization(),
-              maintainState: false,
+              maintainState: true,
             );
-          } else if (routeSettings.name.toString() == Routes.FILE_INFORMATION) {
+          } else if (routeSettings.name.toString() == Routes.CONTACT_CARD) {
             return GetPageRoute(
-              routeName: Routes.FILE_INFORMATION,
-              page: () => FileInformation(),
+              routeName: Routes.CONTACT_CARD,
+              page: () => ContactPage(),
               maintainState: false,
             );
           }

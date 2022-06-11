@@ -7,6 +7,7 @@ import 'package:velocityx/models/files.dart';
 import 'package:velocityx/routes/app_pages.dart';
 import 'package:velocityx/shared/constants.dart';
 import 'package:velocityx/shared/icon_logo.dart';
+import 'package:ai_barcode/ai_barcode.dart';
 
 class MetaDataPage extends GetWidget<MetaDataController> {
   final FilesModel File;
@@ -68,27 +69,42 @@ class MetaDataPage extends GetWidget<MetaDataController> {
           child: Padding(
             padding: const EdgeInsets.fromLTRB(20, 50, 10, 70),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Container(
-                    height: 140.0,
-                    width: 340.0,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      border: Border.all(
-                        width: 4,
-                        color: Theme.of(context).primaryColor,
+                Column(
+                  children: <Widget>[
+                    GestureDetector(
+                      onTap: () {
+                        Get.toNamed(
+                          Routes.QR_CODE,
+                          id: Constants.homeId,
+                          arguments: File.files_uniqueId,
+                          // arguments: filesController.files[index],
+                        );
+                      },
+                      child: Container(
+                        width: 200,
+                        height: 200,
+                        decoration: ShapeDecoration(
+                          shape: RoundedRectangleBorder(
+                            side: BorderSide(
+                              color: Colors.blue,
+                              width: 15,
+                            ),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(10),
+                            ),
+                          ),
+                        ),
+                        margin: EdgeInsets.all(40),
+                        child: PlatformAiBarcodeCreatorWidget(
+                          creatorController: controller.creatorController!,
+                          initialValue: File.files_uniqueId,
+                        ),
                       ),
-                      borderRadius: BorderRadius.all(Radius.circular(30)),
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(15.0, 105, 90, 5),
-                      child: Text(
-                        File.name,
-                        style:
-                            TextStyle(color: Colors.black, letterSpacing: 1.8),
-                      ),
-                    )),
+                  ],
+                ),
                 SizedBox(
                   height: 15,
                 ),
@@ -105,8 +121,7 @@ class MetaDataPage extends GetWidget<MetaDataController> {
                   decoration: InputDecoration(
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(
-                          color: Theme.of(context).primaryColor,
-                          width: 2.0),
+                          color: Theme.of(context).primaryColor, width: 2.0),
                     ),
                     fillColor: Colors.black54,
                     filled: true,
@@ -114,7 +129,6 @@ class MetaDataPage extends GetWidget<MetaDataController> {
                     hintText: File.name,
                     focusColor: Colors.blue,
                   ),
-
                 ),
                 SizedBox(
                   height: 10,
@@ -125,8 +139,7 @@ class MetaDataPage extends GetWidget<MetaDataController> {
                   decoration: InputDecoration(
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(
-                          color: Theme.of(context).primaryColor,
-                          width: 2.0),
+                          color: Theme.of(context).primaryColor, width: 2.0),
                     ),
                     fillColor: Colors.black54,
                     filled: true,
@@ -134,7 +147,6 @@ class MetaDataPage extends GetWidget<MetaDataController> {
                     hintText: File.name,
                     focusColor: Colors.blue,
                   ),
-
                 ),
                 SizedBox(
                   height: 10,
@@ -145,8 +157,7 @@ class MetaDataPage extends GetWidget<MetaDataController> {
                   decoration: InputDecoration(
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(
-                          color: Theme.of(context).primaryColor,
-                          width: 2.0),
+                          color: Theme.of(context).primaryColor, width: 2.0),
                     ),
                     fillColor: Colors.black54,
                     filled: true,
@@ -154,7 +165,6 @@ class MetaDataPage extends GetWidget<MetaDataController> {
                     hintText: File.name,
                     focusColor: Colors.blue,
                   ),
-
                 ),
                 SizedBox(
                   height: 10,
@@ -166,8 +176,7 @@ class MetaDataPage extends GetWidget<MetaDataController> {
                   decoration: InputDecoration(
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(
-                          color: Theme.of(context).primaryColor,
-                          width: 2.0),
+                          color: Theme.of(context).primaryColor, width: 2.0),
                     ),
                     fillColor: Colors.black54,
                     filled: true,
@@ -175,19 +184,17 @@ class MetaDataPage extends GetWidget<MetaDataController> {
                     hintText: File.name,
                     focusColor: Colors.blue,
                   ),
-
                 ),
                 SizedBox(
                   height: 10,
                 ),
                 TextFormField(
                   enabled: false,
-                  initialValue:File.final_approver,
+                  initialValue: File.final_approver,
                   decoration: InputDecoration(
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(
-                          color: Theme.of(context).primaryColor,
-                          width: 2.0),
+                          color: Theme.of(context).primaryColor, width: 2.0),
                     ),
                     fillColor: Colors.black54,
                     filled: true,
@@ -195,19 +202,17 @@ class MetaDataPage extends GetWidget<MetaDataController> {
                     hintText: File.name,
                     focusColor: Colors.blue,
                   ),
-
                 ),
                 SizedBox(
                   height: 10,
                 ),
                 TextFormField(
                   enabled: false,
-                  initialValue:File.assigned_person_uid.toString(),
+                  initialValue: File.assigned_person_uid.toString(),
                   decoration: InputDecoration(
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(
-                          color: Theme.of(context).primaryColor,
-                          width: 2.0),
+                          color: Theme.of(context).primaryColor, width: 2.0),
                     ),
                     fillColor: Colors.black54,
                     filled: true,
@@ -215,7 +220,6 @@ class MetaDataPage extends GetWidget<MetaDataController> {
                     hintText: File.name,
                     focusColor: Colors.blue,
                   ),
-
                 ),
                 // Text("Name : " + File.name),
                 // Text("Size : " + "No Size available"),
@@ -239,7 +243,6 @@ class MetaDataPage extends GetWidget<MetaDataController> {
                         Get.toNamed(
                           Routes.FILE_INFORMATION,
                           id: Constants.homeId,
-                          // arguments: filesController.files[index],
                         );
                       },
                     ),
@@ -250,7 +253,6 @@ class MetaDataPage extends GetWidget<MetaDataController> {
                         Get.toNamed(
                           Routes.PDFVIEWER,
                           id: Constants.homeId,
-                          // arguments: filesController.files[index],
                         );
                       },
                     ),

@@ -29,6 +29,7 @@ class QrCreator extends GetWidget<QrController> {
                   ),
                   Column(
                     children: <Widget>[
+                      //TODO Remove this
                       Text("$qrCodeOfInput"),
                       Container(
                         width: 300,
