@@ -101,7 +101,7 @@ class ProfileDoc extends StatelessWidget {
             init: Get.put<FilesController>(FilesController()),
             builder: (FilesController filesController) {
               if (filesController != null &&
-                  filesController.assignedFiles.length > 0) {
+                  filesController.createdFiles.length > 0) {
                 return ListView.builder(
                   itemCount: filesController.createdFiles.length,
                   itemBuilder: (_, index) {
@@ -120,8 +120,12 @@ class ProfileDoc extends StatelessWidget {
                     );
                   },
                 );
+              } else if (filesController.createdFiles.isEmpty) {
+                return const Center(
+                  child: Text("You have not created any Files"),
+                );
               } else {
-                return Center(child: CircularProgressIndicator());
+                return const Center(child: CircularProgressIndicator());
               }
             },
           ),

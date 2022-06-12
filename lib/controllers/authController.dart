@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:velocityx/controllers/userController.dart';
@@ -128,6 +129,7 @@ class AuthController extends GetxController {
         f_name: f_name.trim(),
         l_name: l_name.trim(),
         email: _authResult.user?.email,
+        joining_date: Timestamp.now(),
       );
       if (await UserDb().createNewUser(_user)) {
         Get.find<UserController>().user = _user;
