@@ -5,7 +5,7 @@ class UserModel {
   late String f_name = "Default";
   late String l_name = "Default";
   int phone = 0000000000;
-  late String? email = "null@null.com";
+  late String? email = "Email Not Set";
   String organization_emp_id = "No Organization";
   String organization_no = "00";
   String designation = "No Designation";

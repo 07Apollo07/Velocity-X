@@ -1,14 +1,16 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:ai_barcode/ai_barcode.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:velocityx/controllers/authController.dart';
 import 'package:velocityx/controllers/userController.dart';
-import 'package:velocityx/models/files.dart';
 import 'package:velocityx/models/user.dart';
-import 'package:velocityx/services/filesDb.dart';
 
-class DocCreationController extends GetxController {
+class DocEditingController extends GetxController {
+  CreatorController? creatorController;
+  bool initialized = false;
+  TextEditingController documentNameController = TextEditingController();
+  TextEditingController assignedPersonNameController = TextEditingController();
+  TextEditingController finalApproverController = TextEditingController();
+
   var downloadDocument = false;
   var finalApprover = false;
 
@@ -31,8 +33,35 @@ class DocCreationController extends GetxController {
   List<UserModel> get finApproverList => finalApproverList.value;
   List<String?> get finApproverIdList => finalApproverIdList.value;
 
+  void initializeAssignedList(String uid) {
+    if (userList.length > 0) {
+      print(uid.trim());
+      print("there are items in userList");
+      for (var user in userList) {
+        print(user.id);
+        if (user.id == uid.trim()) {
+          print("eligible to go in");
+          assignedList.add(user);
+          assignedIdList.add(user.id);
+          update();
+          print(user);
+        }
+      }
+    }
+  }
+
+  void setFinalApproverFromId(String id) {
+    if (userList.length > 0) {
+      for (var user in userList) {
+        if (user.id == id.trim()) {
+          setFinalApprover(id);
+          update();
+        }
+      }
+    }
+  }
+
   void setFinalApprover(String email) async {
-    print("reached here to add");
     if (userList.length > 0) {
       print(email.trim());
       print("there are items in userList");
@@ -127,40 +156,15 @@ class DocCreationController extends GetxController {
     update();
   }
 
-  void createDocument(
-      String docName,
-      List<String?> assignedPerson,
-      bool download,
-      bool finalApprover,
-      List<String?> finalApproverNameId) async {
-    UserModel _user = Get.find<UserController>().user;
-    FilesModel _file = FilesModel(
-      name: docName,
-      assigned_person_uid: assignedPerson,
-      creation_datetime: Timestamp.fromDate(DateTime.now()),
-      creator_name: _user.f_name + " " + _user.l_name,
-      creator_uid: Get.find<AuthController>().user!.uid,
-      designation: _user.designation,
-      download: download,
-      final_approver_set: finalApprover,
-      final_approver: finalApproverNameId.last ?? "Not Final Approver",
-      organization_no: _user.organization_no,
-      storage_link: "",
-      files_uniqueId: docName +
-          "_" +
-          Timestamp.fromDate(DateTime.now()).toString() +
-          "_" +
-          _user.organization_no,
-    );
+  @override
+  void onInit() {
+    super.onInit();
+    creatorController = CreatorController();
+  }
 
-    if (await FilesDb().createNewFile(_file)) {
-      finApproverList.clear();
-      finApproverIdList.clear();
-      assignedList.clear();
-      assignedIdList.clear();
-      update();
-      Get.snackbar("Success", "File Created");
-    }
-    print(_file.toString());
+  @override
+  void dispose() {
+    super.dispose();
+    creatorController = null;
   }
 }

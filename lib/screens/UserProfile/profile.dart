@@ -113,10 +113,9 @@ class ProfileDoc extends StatelessWidget {
                           .createdFiles[index].assigned_person_uid
                           .toString()),
                       onTap: () {
-                        Get.toNamed(Routes.QR_CODE,
+                        Get.toNamed(Routes.DOC_EDITING,
                             id: Constants.profileId,
-                            arguments: filesController
-                                .createdFiles[index].files_uniqueId);
+                            arguments: filesController.createdFiles[index]);
                       },
                     );
                   },

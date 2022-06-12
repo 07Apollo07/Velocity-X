@@ -3,6 +3,8 @@ import 'package:velocityx/binding/bindings.dart';
 import 'package:velocityx/controllers/metaDataController.dart';
 import 'package:velocityx/models/files.dart';
 import 'package:velocityx/screens/ContactCard/ContactCard.dart';
+import 'package:velocityx/screens/DocumentCreation/document_creation.dart';
+import 'package:velocityx/screens/DocumentEditing/DocumentEditing.dart';
 import 'package:velocityx/screens/FileInformation/file_information.dart';
 import 'package:velocityx/screens/Home/HomeWrapper.dart';
 import 'package:velocityx/screens/Home/home.dart';
@@ -98,6 +100,16 @@ class AppPages {
     GetPage(
       name: _Paths.CONTACT_CARD,
       page: () => ContactPage(),
+      // binding: HomeBinding(),
+    ),
+    GetPage(
+      name: _Paths.DOC_CREATOR,
+      page: () => DocumentCreation(),
+      // binding: HomeBinding(),
+    ),
+    GetPage(
+      name: _Paths.DOC_EDITING,
+      page: () => DocumentEditing(File: FilesModel()),
       // binding: HomeBinding(),
     ),
   ];

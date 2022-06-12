@@ -71,39 +71,36 @@ class MetaDataPage extends GetWidget<MetaDataController> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Column(
-                  children: <Widget>[
-                    GestureDetector(
-                      onTap: () {
-                        Get.toNamed(
-                          Routes.QR_CODE,
-                          id: Constants.homeId,
-                          arguments: File.files_uniqueId,
-                          // arguments: filesController.files[index],
-                        );
-                      },
-                      child: Container(
-                        width: 200,
-                        height: 200,
-                        decoration: ShapeDecoration(
-                          shape: RoundedRectangleBorder(
-                            side: BorderSide(
-                              color: Colors.blue,
-                              width: 15,
-                            ),
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(10),
-                            ),
-                          ),
+                GestureDetector(
+                  onTap: () {
+                    Get.toNamed(
+                      Routes.QR_CODE,
+                      id: Constants.homeId,
+                      arguments: File.files_uniqueId,
+                      // arguments: filesController.files[index],
+                    );
+                  },
+                  child: Container(
+                    width: 200,
+                    height: 200,
+                    decoration: ShapeDecoration(
+                      color: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide(
+                          color: Colors.blue,
+                          width: 15,
                         ),
-                        margin: EdgeInsets.all(40),
-                        child: PlatformAiBarcodeCreatorWidget(
-                          creatorController: controller.creatorController!,
-                          initialValue: File.files_uniqueId,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(10),
                         ),
                       ),
                     ),
-                  ],
+                    margin: EdgeInsets.all(40),
+                    child: PlatformAiBarcodeCreatorWidget(
+                      creatorController: controller.creatorController!,
+                      initialValue: File.files_uniqueId,
+                    ),
+                  ),
                 ),
                 SizedBox(
                   height: 15,

@@ -1,33 +1,41 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:ai_barcode/ai_barcode.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:velocityx/controllers/docCreationController.dart';
-import 'package:velocityx/controllers/userController.dart';
+import 'package:velocityx/controllers/docEditingController.dart';
+import 'package:velocityx/models/files.dart';
+import 'package:velocityx/routes/app_pages.dart';
+import 'package:velocityx/shared/constants.dart';
 
-class DocumentCreation extends StatefulWidget {
+class DocumentEditing extends StatefulWidget {
+  final FilesModel File;
+  const DocumentEditing({Key? key, required this.File}) : super(key: key);
+
   static final _formkey = GlobalKey<FormState>();
 
   @override
-  State<DocumentCreation> createState() => _DocumentCreationState();
+  State<DocumentEditing> createState() => _DocumentEditingState();
 }
 
-class _DocumentCreationState extends State<DocumentCreation> {
-  final TextEditingController documentNameController = TextEditingController();
-  final TextEditingController assignedPersonNameController =
-      TextEditingController();
-  final TextEditingController finalApproverController = TextEditingController();
-
-  bool loading = false;
-  String email = '';
-  String password = '';
-  String error = '';
-
+class _DocumentEditingState extends State<DocumentEditing> {
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<DocCreationController>(
-        init: Get.put<DocCreationController>(DocCreationController()),
+    return GetBuilder<DocEditingController>(
+        init: Get.put<DocEditingController>(DocEditingController()),
         builder: (controller) {
+          if (controller.initialized == false) {
+            controller.documentNameController.text = widget.File.name;
+            for (String id in widget.File.assigned_person_uid) {
+              controller.initializeAssignedList(id);
+            }
+            controller.setFinalApproverFromId(widget.File.final_approver);
+            controller.initialized = true;
+            controller.downloadDocument = widget.File.download;
+            controller.finalApprover = widget.File.final_approver_set;
+          }
+          print(controller.assignedList.length);
+
+          String error = '';
+
           return Scaffold(
             appBar: AppBar(
               elevation: 0,
@@ -54,15 +62,46 @@ class _DocumentCreationState extends State<DocumentCreation> {
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
                   child: Form(
-                    key: DocumentCreation._formkey,
+                    key: DocumentEditing._formkey,
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
+                        GestureDetector(
+                          onTap: () {
+                            Get.toNamed(
+                              Routes.QR_CODE,
+                              id: Constants.profileId,
+                              arguments: widget.File.files_uniqueId,
+                              // arguments: filesController.files[index],
+                            );
+                          },
+                          child: Container(
+                            width: 200,
+                            height: 200,
+                            decoration: ShapeDecoration(
+                              color: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                side: BorderSide(
+                                  color: Colors.blue,
+                                  width: 15,
+                                ),
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(10),
+                                ),
+                              ),
+                            ),
+                            margin: EdgeInsets.all(40),
+                            child: PlatformAiBarcodeCreatorWidget(
+                              creatorController: controller.creatorController!,
+                              initialValue: "Hello",
+                            ),
+                          ),
+                        ),
                         Container(
-                          // width: 600,
                           child: Column(
                             children: [
                               TextFormField(
+                                // initialValue: "hey",
                                 decoration: InputDecoration(
                                   focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
@@ -75,7 +114,7 @@ class _DocumentCreationState extends State<DocumentCreation> {
                                   hintText: "Name",
                                   focusColor: Colors.blue,
                                 ),
-                                controller: documentNameController,
+                                controller: controller.documentNameController,
                                 validator: (val) {
                                   if (val != null && val.isEmpty)
                                     return "Document name can't be Empty";
@@ -87,18 +126,23 @@ class _DocumentCreationState extends State<DocumentCreation> {
                                 decoration: InputDecoration(
                                   suffixIcon: IconButton(
                                     onPressed: () {
-                                      if (assignedPersonNameController.text !=
+                                      if (controller
+                                                  .assignedPersonNameController
+                                                  .text !=
                                               null &&
-                                          assignedPersonNameController
-                                              .text.isNotEmpty) {
+                                          controller
+                                              .assignedPersonNameController
+                                              .text
+                                              .isNotEmpty) {
                                         print("sending request");
-                                        controller.addToAssignedList(
-                                            assignedPersonNameController.text
-                                                .trim()
-                                                .toLowerCase());
+                                        controller.addToAssignedList(controller
+                                            .assignedPersonNameController.text
+                                            .trim()
+                                            .toLowerCase());
                                       }
                                       ;
-                                      assignedPersonNameController.text = "";
+                                      controller.assignedPersonNameController
+                                          .text = "";
                                     },
                                     icon: Icon(Icons.add),
                                   ),
@@ -114,7 +158,8 @@ class _DocumentCreationState extends State<DocumentCreation> {
                                   hintText: "Enter Names",
                                   focusColor: Colors.blue,
                                 ),
-                                controller: assignedPersonNameController,
+                                controller:
+                                    controller.assignedPersonNameController,
                               ),
                             ],
                           ),
@@ -128,7 +173,7 @@ class _DocumentCreationState extends State<DocumentCreation> {
                                     itemCount: controller.assignedList.length,
                                     gridDelegate:
                                         const SliverGridDelegateWithMaxCrossAxisExtent(
-                                      maxCrossAxisExtent: 130,
+                                      maxCrossAxisExtent: 150,
                                       childAspectRatio: 3 / 2,
                                       crossAxisSpacing: 20,
                                       mainAxisSpacing: 20,
@@ -203,16 +248,18 @@ class _DocumentCreationState extends State<DocumentCreation> {
                             decoration: InputDecoration(
                               suffixIcon: IconButton(
                                 onPressed: () {
-                                  if (finalApproverController.text != null &&
-                                      finalApproverController.text.isNotEmpty) {
+                                  if (controller.finalApproverController.text !=
+                                          null &&
+                                      controller.finalApproverController.text
+                                          .isNotEmpty) {
                                     print("sending request");
-                                    controller.setFinalApprover(
-                                        finalApproverController.text
-                                            .trim()
-                                            .toLowerCase());
+                                    controller.setFinalApprover(controller
+                                        .finalApproverController.text
+                                        .trim()
+                                        .toLowerCase());
                                   }
                                   ;
-                                  finalApproverController.text = "";
+                                  controller.finalApproverController.text = "";
                                 },
                                 icon: Icon(Icons.add),
                               ),
@@ -227,7 +274,7 @@ class _DocumentCreationState extends State<DocumentCreation> {
                               hintText: "Enter Names",
                               focusColor: Colors.blue,
                             ),
-                            controller: finalApproverController,
+                            controller: controller.finalApproverController,
                           ),
                         ),
                         Visibility(
@@ -327,17 +374,14 @@ class _DocumentCreationState extends State<DocumentCreation> {
                                   fontWeight: FontWeight.bold),
                             ),
                             onPressed: () async {
-                              if (DocumentCreation._formkey.currentState!
+                              if (DocumentEditing._formkey.currentState!
                                   .validate()) {
-                                controller.createDocument(
-                                    documentNameController.text.trim(),
-                                    controller.assignedIdList,
-                                    controller.downloadDocument,
-                                    controller.finalApprover,
-                                    controller.finApproverIdList);
-                                documentNameController.text = "";
-                                assignedPersonNameController.text = "";
-                                finalApproverController.text = "";
+                                // controller.createDocument(
+                                //     documentNameController.text.trim(),
+                                //     controller.assignedIdList,
+                                //     controller.downloadDocument,
+                                //     controller.finalApprover,
+                                //     controller.finApproverIdList);
                               }
                             },
                           ),

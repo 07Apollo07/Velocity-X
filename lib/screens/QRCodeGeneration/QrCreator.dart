@@ -35,6 +35,7 @@ class QrCreator extends GetWidget<QrController> {
                         width: 300,
                         height: 300,
                         decoration: ShapeDecoration(
+                          color: Colors.white,
                           shape: RoundedRectangleBorder(
                             side: BorderSide(
                               color: Colors.blue,
