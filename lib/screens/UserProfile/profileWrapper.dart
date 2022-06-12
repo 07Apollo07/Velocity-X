@@ -18,7 +18,7 @@ class ProfileWrapper extends StatelessWidget {
         key: Get.nestedKey(Constants.profileId),
         initialRoute: Routes.PROFILEPAGE,
         onGenerateRoute: (routeSettings) {
-          print("OrgDirectoryWrapper route stack");
+          print("ProfileWrapper route stack");
           print(routeSettings.name);
           if (routeSettings.name.toString() == Routes.PROFILEPAGE) {
             return GetPageRoute(

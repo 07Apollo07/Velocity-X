@@ -98,7 +98,7 @@ class ProfileDoc extends StatelessWidget {
       children: [
         Expanded(
           child: GetX<FilesController>(
-            init: Get.put<FilesController>(FilesController()),
+            init: Get.find<FilesController>(),
             builder: (FilesController filesController) {
               if (filesController != null &&
                   filesController.createdFiles.length > 0) {

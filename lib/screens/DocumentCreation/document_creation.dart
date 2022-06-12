@@ -128,7 +128,7 @@ class _DocumentCreationState extends State<DocumentCreation> {
                                     itemCount: controller.assignedList.length,
                                     gridDelegate:
                                         const SliverGridDelegateWithMaxCrossAxisExtent(
-                                      maxCrossAxisExtent: 130,
+                                      maxCrossAxisExtent: 180,
                                       childAspectRatio: 3 / 2,
                                       crossAxisSpacing: 20,
                                       mainAxisSpacing: 20,

@@ -154,7 +154,7 @@ class AuthController extends GetxController {
       Get.snackbar(
         "Error signing in",
         e.toString(),
-        snackPosition: SnackPosition.BOTTOM,
+        snackPosition: SnackPosition.TOP,
       );
     }
   }

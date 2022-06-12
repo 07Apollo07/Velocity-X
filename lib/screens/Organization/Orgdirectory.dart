@@ -67,7 +67,7 @@ class OrganizationDoc extends StatelessWidget {
       children: [
         Expanded(
           child: GetX<UserController>(
-            init: Get.put<UserController>(UserController()),
+            init: Get.find<UserController>(),
             builder: (UserController userController) {
               if (userController != null && userController.users.length > 0) {
                 return ListView.builder(

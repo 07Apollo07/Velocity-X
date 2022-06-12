@@ -13,7 +13,7 @@ class FilesController extends GetxController {
   List<FilesModel> get createdFiles => createdFilesList.value;
 
   @override
-  void onInit() {
+  void onReady() {
     String uid = Get.find<AuthController>().user!.uid;
     print("Accessing FilesStream on init");
     assignedFilesList.bindStream(
