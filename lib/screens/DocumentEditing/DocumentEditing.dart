@@ -376,12 +376,14 @@ class _DocumentEditingState extends State<DocumentEditing> {
                             onPressed: () async {
                               if (DocumentEditing._formkey.currentState!
                                   .validate()) {
-                                // controller.createDocument(
-                                //     documentNameController.text.trim(),
-                                //     controller.assignedIdList,
-                                //     controller.downloadDocument,
-                                //     controller.finalApprover,
-                                //     controller.finApproverIdList);
+                                controller.updateDocument(
+                                    widget.File.files_uniqueId,
+                                    controller.documentNameController.text
+                                        .trim(),
+                                    controller.assignedIdList,
+                                    controller.downloadDocument,
+                                    controller.finalApprover,
+                                    controller.finApproverIdList);
                               }
                             },
                           ),

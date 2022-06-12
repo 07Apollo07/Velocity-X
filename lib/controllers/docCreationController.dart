@@ -146,11 +146,6 @@ class DocCreationController extends GetxController {
       final_approver: finalApproverNameId.last ?? "Not Final Approver",
       organization_no: _user.organization_no,
       storage_link: "",
-      files_uniqueId: docName +
-          "_" +
-          Timestamp.fromDate(DateTime.now()).toString() +
-          "_" +
-          _user.organization_no,
     );
 
     if (await FilesDb().createNewFile(_file)) {

@@ -1,8 +1,12 @@
 import 'package:ai_barcode/ai_barcode.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:velocityx/controllers/authController.dart';
 import 'package:velocityx/controllers/userController.dart';
+import 'package:velocityx/models/files.dart';
 import 'package:velocityx/models/user.dart';
+import 'package:velocityx/services/filesDb.dart';
 
 class DocEditingController extends GetxController {
   CreatorController? creatorController;
@@ -54,7 +58,7 @@ class DocEditingController extends GetxController {
     if (userList.length > 0) {
       for (var user in userList) {
         if (user.id == id.trim()) {
-          setFinalApprover(id);
+          setFinalApprover(user.email ?? "Email Not Set");
           update();
         }
       }
@@ -166,5 +170,28 @@ class DocEditingController extends GetxController {
   void dispose() {
     super.dispose();
     creatorController = null;
+  }
+
+  void updateDocument(
+      String fileId,
+      String docName,
+      List<String?> assignedPerson,
+      bool download,
+      bool finalApprover,
+      List<String?> finalApproverNameId) async {
+    FilesModel _file = FilesModel(
+      name: docName,
+      assigned_person_uid: assignedPerson,
+      download: download,
+      final_approver_set: finalApprover,
+      final_approver: finalApproverNameId.last ?? "Not Final Approver",
+      storage_link: "",
+    );
+
+    if (await FilesDb().UpdateFile(fileId, _file)) {
+      update();
+      Get.snackbar("Success", "File Updated");
+    }
+    print(_file.toString());
   }
 }

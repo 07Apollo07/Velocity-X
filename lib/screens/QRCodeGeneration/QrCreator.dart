@@ -3,10 +3,6 @@ import 'package:ai_barcode/ai_barcode.dart';
 import 'package:get/get.dart';
 import 'package:velocityx/controllers/QrController.dart';
 
-///
-/// CreatorPage
-/// 生成：二维码
-
 class QrCreator extends GetWidget<QrController> {
   final qrCodeOfInput;
   const QrCreator({Key? key, required this.qrCodeOfInput}) : super(key: key);
