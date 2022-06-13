@@ -16,7 +16,7 @@ class UserModel {
       this.f_name = "Default",
       this.l_name = "Default",
       this.phone = 0000000000,
-      this.email,
+      this.email = "Email Not Set",
       this.organization_emp_id = "No Organization",
       this.organization_no = "00",
       this.designation = "No Designation",

@@ -15,6 +15,6 @@ class StoreBindings extends Bindings {
     Get.lazyPut<FilesController>(() => FilesController());
     Get.put<WrapperController>(WrapperController(), permanent: true);
     Get.put<ScannerV2Controller>(ScannerV2Controller());
-    Get.put<MetaDataController>(MetaDataController());
+    Get.lazyPut<MetaDataController>(() => MetaDataController());
   }
 }

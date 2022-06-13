@@ -114,6 +114,19 @@ class FilesDb {
     }
   }
 
+  Future<bool> ForwardFile(String fileId, FilesModel file) async {
+    try {
+      await _firestore.collection("Files").doc(fileId).update({
+        "assigned_person_uid": file.assigned_person_uid,
+      }).then((value) => print("Updating File information in File Collection"));
+      print("Updating File information in File Collection");
+      return true;
+    } catch (e) {
+      print(e.toString());
+      return false;
+    }
+  }
+
   Future<bool> DeleteFile(String fileId) async {
     try {
       await _firestore

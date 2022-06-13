@@ -4,6 +4,7 @@ import 'package:html_editor_enhanced/utils/utils.dart';
 import 'package:velocityx/assets/custom_icons_icons.dart';
 import 'package:velocityx/controllers/authController.dart';
 import 'package:velocityx/controllers/metaDataController.dart';
+import 'package:velocityx/controllers/userController.dart';
 import 'package:velocityx/models/files.dart';
 import 'package:velocityx/routes/app_pages.dart';
 import 'package:velocityx/shared/constants.dart';
@@ -13,61 +14,44 @@ import 'package:get/get.dart';
 
 import '../../controllers/docCreationController.dart';
 
-class MetaDataPage extends StatefulWidget {
-
+class MetaDataPage extends StatelessWidget {
   final FilesModel File;
   MetaDataPage({Key? key, required this.File}) : super(key: key);
-  @override
-  State<MetaDataPage> createState() => _MetaDataPageState();
-
-}
-
-
-class _MetaDataPageState extends State<MetaDataPage> {
-  // final FilesModel File;
-  // _MetaDataPageState({Key? key, required this.File}) : super(key: key);
-  
-  // bool isAssignedPressed = false;
-
-  final TextEditingController documentNameController = TextEditingController();
   final TextEditingController assignedPersonNameController =
-  TextEditingController();
-  final TextEditingController finalApproverController = TextEditingController();
+      TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<MetaDataController>(
         init: Get.put<MetaDataController>(MetaDataController()),
         builder: (controller) {
-          return Obx(() => Container(
+          if (controller.initialized == false) {
+            for (String id in File.assigned_person_uid) {
+              controller.initializeAssignedList(id);
+            }
+            controller.initialized = true;
+          }
+          return Container(
             child: Scaffold(
               // backgroundColor: Color.fromRGBO(36, 36, 36, 1.0),
               appBar: AppBar(
                 leading: BackButton(
-                  color: Theme
-                      .of(context)
-                      .primaryColor,
+                  color: Theme.of(context).primaryColor,
                 ),
                 title: Text(
                   "File Information",
-                  style: TextStyle(color: Theme
-                      .of(context)
-                      .primaryColor),
+                  style: TextStyle(color: Theme.of(context).primaryColor),
                 ),
                 elevation: 0.0,
                 actions: <Widget>[
                   Container(
                       margin: EdgeInsets.only(right: 15.0),
                       decoration: BoxDecoration(
-                          color: Theme
-                              .of(context)
-                              .scaffoldBackgroundColor,
+                          color: Theme.of(context).scaffoldBackgroundColor,
                           shape: BoxShape.circle,
                           boxShadow: [
                             BoxShadow(
-                              color: Theme
-                                  .of(context)
-                                  .primaryColor,
+                              color: Theme.of(context).primaryColor,
                               blurRadius: 5.0,
                             ),
                           ]),
@@ -76,21 +60,15 @@ class _MetaDataPageState extends State<MetaDataPage> {
                             // Navigator.pushNamed(context, '/MetaData');
                           },
                           icon: Icon(CustomIcons.search_1),
-                          color: Theme
-                              .of(context)
-                              .primaryColor)),
+                          color: Theme.of(context).primaryColor)),
                   Container(
                     margin: EdgeInsets.only(right: 15.0),
                     decoration: BoxDecoration(
-                        color: Theme
-                            .of(context)
-                            .scaffoldBackgroundColor,
+                        color: Theme.of(context).scaffoldBackgroundColor,
                         shape: BoxShape.circle,
                         boxShadow: [
                           BoxShadow(
-                            color: Theme
-                                .of(context)
-                                .primaryColor,
+                            color: Theme.of(context).primaryColor,
                             blurRadius: 5.0,
                           ),
                         ]),
@@ -99,9 +77,7 @@ class _MetaDataPageState extends State<MetaDataPage> {
                           AuthController.instance.signOut();
                         },
                         icon: Icon(CustomIcons.bell),
-                        color: Theme
-                            .of(context)
-                            .primaryColor),
+                        color: Theme.of(context).primaryColor),
                   ),
                 ],
               ),
@@ -116,7 +92,7 @@ class _MetaDataPageState extends State<MetaDataPage> {
                           Get.toNamed(
                             Routes.QR_CODE,
                             id: Constants.homeId,
-                            arguments: widget.File.files_uniqueId,
+                            arguments: File.files_uniqueId,
                             // arguments: filesController.files[index],
                           );
                         },
@@ -138,7 +114,7 @@ class _MetaDataPageState extends State<MetaDataPage> {
                           margin: EdgeInsets.all(40),
                           child: PlatformAiBarcodeCreatorWidget(
                             creatorController: controller.creatorController!,
-                            initialValue: widget.File.files_uniqueId,
+                            initialValue: File.files_uniqueId,
                           ),
                         ),
                       ),
@@ -154,18 +130,17 @@ class _MetaDataPageState extends State<MetaDataPage> {
                       ),
                       TextFormField(
                         enabled: false,
-                        initialValue: widget.File.name,
+                        initialValue: File.name,
                         decoration: InputDecoration(
                           focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                                color: Theme
-                                    .of(context)
-                                    .primaryColor, width: 2.0),
+                                color: Theme.of(context).primaryColor,
+                                width: 2.0),
                           ),
                           fillColor: Colors.black54,
                           filled: true,
                           label: Text("Name"),
-                          hintText: widget.File.name,
+                          hintText: File.name,
                           focusColor: Colors.blue,
                         ),
                       ),
@@ -178,14 +153,13 @@ class _MetaDataPageState extends State<MetaDataPage> {
                         decoration: InputDecoration(
                           focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                                color: Theme
-                                    .of(context)
-                                    .primaryColor, width: 2.0),
+                                color: Theme.of(context).primaryColor,
+                                width: 2.0),
                           ),
                           fillColor: Colors.black54,
                           filled: true,
                           label: Text("Size"),
-                          hintText: widget.File.name,
+                          hintText: File.name,
                           focusColor: Colors.blue,
                         ),
                       ),
@@ -194,18 +168,17 @@ class _MetaDataPageState extends State<MetaDataPage> {
                       ),
                       TextFormField(
                         enabled: false,
-                        initialValue: widget.File.creator_uid,
+                        initialValue: File.creator_uid,
                         decoration: InputDecoration(
                           focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                                color: Theme
-                                    .of(context)
-                                    .primaryColor, width: 2.0),
+                                color: Theme.of(context).primaryColor,
+                                width: 2.0),
                           ),
                           fillColor: Colors.black54,
                           filled: true,
                           label: Text("File Owner"),
-                          hintText: widget.File.name,
+                          hintText: File.name,
                           focusColor: Colors.blue,
                         ),
                       ),
@@ -215,18 +188,17 @@ class _MetaDataPageState extends State<MetaDataPage> {
                       TextFormField(
                         enabled: false,
                         initialValue: controller.getDateFromTimeStamp(
-                            widget.File.creation_datetime!.seconds.toString()),
+                            File.creation_datetime!.seconds.toString()),
                         decoration: InputDecoration(
                           focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                                color: Theme
-                                    .of(context)
-                                    .primaryColor, width: 2.0),
+                                color: Theme.of(context).primaryColor,
+                                width: 2.0),
                           ),
                           fillColor: Colors.black54,
                           filled: true,
                           label: Text("Created"),
-                          hintText: widget.File.name,
+                          hintText: File.name,
                           focusColor: Colors.blue,
                         ),
                       ),
@@ -235,18 +207,17 @@ class _MetaDataPageState extends State<MetaDataPage> {
                       ),
                       TextFormField(
                         enabled: false,
-                        initialValue: widget.File.final_approver,
+                        initialValue: File.final_approver,
                         decoration: InputDecoration(
                           focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                                color: Theme
-                                    .of(context)
-                                    .primaryColor, width: 2.0),
+                                color: Theme.of(context).primaryColor,
+                                width: 2.0),
                           ),
                           fillColor: Colors.black54,
                           filled: true,
                           label: Text("Final Approver"),
-                          hintText: widget.File.name,
+                          hintText: File.name,
                           focusColor: Colors.blue,
                         ),
                       ),
@@ -255,42 +226,28 @@ class _MetaDataPageState extends State<MetaDataPage> {
                       ),
                       TextFormField(
                         enabled: false,
-                        initialValue: widget.File.assigned_person_uid
-                            .toString(),
+                        initialValue: File.assigned_person_uid.toString(),
                         decoration: InputDecoration(
                           focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                                color: Theme
-                                    .of(context)
-                                    .primaryColor, width: 2.0),
+                                color: Theme.of(context).primaryColor,
+                                width: 2.0),
                           ),
                           fillColor: Colors.black54,
                           filled: true,
                           label: Text("Assigned Persons"),
-                          hintText: widget.File.name,
+                          hintText: File.name,
                           focusColor: Colors.blue,
                         ),
                       ),
-                      // Text("Name : " + File.name),
-                      // Text("Size : " + "No Size available"),
-                      // Text("File Owner : " + File.creator_uid),
-                      // Text("Created : " +
-                      //     controller.getDateFromTimeStamp(
-                      //         File.creation_datetime!.seconds.toString())),
-                      // Text("Final Approver : " + File.final_approver),
-                      // Text("Assigned Persons : " +
-                      //     File.assigned_person_uid.toString()),
                       SizedBox(
                         height: 100,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-
                           IconButton(
-                            color: Theme
-                                .of(context)
-                                .primaryColor,
+                            color: Theme.of(context).primaryColor,
                             icon: Icon(Icons.history_outlined),
                             onPressed: () {
                               Get.toNamed(
@@ -300,74 +257,66 @@ class _MetaDataPageState extends State<MetaDataPage> {
                             },
                           ),
                           IconButton(
-                            color: Theme
-                                .of(context)
-                                .primaryColor,
+                            color: Theme.of(context).primaryColor,
                             icon: Icon(CustomIcons.bookmark),
                             onPressed: () {
                               Get.toNamed(
                                 Routes.PDFVIEWER,
                                 id: Constants.homeId,
-                                arguments: widget.File.storage_link,
+                                arguments: File.storage_link,
                               );
                             },
                           ),
-
                           IconButton(
-                            color: Theme
-                                .of(context)
-                                .primaryColor,
+                            color: Theme.of(context).primaryColor,
                             icon: Icon(CustomIcons.bell),
                             onPressed: () {
-
-                              controller.isAssignedPressed.value = !controller.isAssignedPressed.value;
-
-
+                              controller.changeIsAssignedPressed();
                             },
                           ),
                           IconLogo(
-                              color: Theme
-                                  .of(context)
-                                  .primaryColor,
+                              color: Theme.of(context).primaryColor,
                               icon: CustomIcons.home),
                         ],
                       ),
-                      SizedBox(height: 10,),
+                      SizedBox(
+                        height: 10,
+                      ),
                       Visibility(
-                          visible: controller.isAssignedPressed.value,
-                          child: GetBuilder<DocCreationController>(
-                          init: Get.put<DocCreationController>(DocCreationController()),
-                          builder: (controller) {
-                            return Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                              Container(
-                              // width: 600,
+                        visible: controller.isAssignedPressed.value,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
                               child: Column(
                                 children: [
-
                                   TextFormField(
                                     decoration: InputDecoration(
                                       suffixIcon: IconButton(
                                         onPressed: () {
-                                          if (assignedPersonNameController.text !=
-                                              null &&
+                                          if (assignedPersonNameController
+                                                      .text !=
+                                                  null &&
                                               assignedPersonNameController
                                                   .text.isNotEmpty) {
                                             print("sending request");
-                                            controller.addToAssignedList(
-                                                assignedPersonNameController.text
+                                            controller.addToNewList(
+                                                File.creator_uid,
+                                                assignedPersonNameController
+                                                    .text
                                                     .trim()
                                                     .toLowerCase());
                                           }
                                           ;
-                                          assignedPersonNameController.text = "";
+                                          assignedPersonNameController.text =
+                                              "";
                                         },
                                         icon: Icon(Icons.add),
                                       ),
                                       focusedBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
-                                            color: Theme.of(context).primaryColor,
+                                            color:
+                                                Theme.of(context).primaryColor,
                                             width: 2.0),
                                       ),
                                       fillColor: Colors.black54,
@@ -381,109 +330,103 @@ class _MetaDataPageState extends State<MetaDataPage> {
                                   ),
                                 ],
                               ),
+                            ),
+                            SizedBox(height: 20),
+                            SingleChildScrollView(
+                                child: (controller != null &&
+                                        controller.newList.length > 0)
+                                    ? GridView.builder(
+                                        shrinkWrap: true,
+                                        itemCount: controller.newList.length,
+                                        gridDelegate:
+                                            const SliverGridDelegateWithMaxCrossAxisExtent(
+                                          maxCrossAxisExtent: 180,
+                                          childAspectRatio: 3 / 2,
+                                          crossAxisSpacing: 20,
+                                          mainAxisSpacing: 20,
+                                        ),
+                                        itemBuilder: (_, index) {
+                                          return Container(
+                                            alignment: Alignment.center,
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Text(controller
+                                                        .newList[index].f_name +
+                                                    " " +
+                                                    controller
+                                                        .newList[index].l_name),
+                                                Text(controller
+                                                        .newList[index].email ??
+                                                    "Email Not Set"),
+                                                IconButton(
+                                                  onPressed: () {
+                                                    controller
+                                                        .removePersonFromNewList(
+                                                            controller
+                                                                    .newList[
+                                                                        index]
+                                                                    .email ??
+                                                                "Email Not Set");
+                                                  },
+                                                  icon:
+                                                      Icon(Icons.person_remove),
+                                                  color: Colors.red,
+                                                )
+                                              ],
+                                            ),
+                                            decoration: BoxDecoration(
+                                                color: Colors.blue,
+                                                borderRadius:
+                                                    BorderRadius.circular(15)),
+                                          );
+                                        })
+                                    : Container()),
+                            SizedBox(height: 20),
+                            CheckboxListTile(
+                              title: Text(
+                                  "Do you want to remove yourself from assigned people?"),
+                              value: controller.removeYourself,
+                              onChanged: (newValue) {
+                                // controller.changeDownloadDocumentCheck(newValue!);
+                                controller.removeYourselfPresed();
+                              },
+                              // checkColor: Color(0xFF4784F1),
+                              activeColor: Color(0xFF4784F1),
+                              controlAffinity: ListTileControlAffinity
+                                  .trailing, //  <-- leading Checkbox
+                            ),
+                            SizedBox(height: 20),
+                            Center(
+                              child: TextButton(
+                                style: ElevatedButton.styleFrom(
+                                    primary: Color(0xFF4784F1),
+                                    padding:
+                                        EdgeInsets.fromLTRB(40, 20, 40, 20)),
+                                child: Text(
+                                  "Save",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                onPressed: () async {
+                                  controller.updateDocument(File.files_uniqueId,
+                                      Get.find<UserController>().user.id ?? "");
+                                },
                               ),
-                              SizedBox(height: 20),
-                              SingleChildScrollView(
-                                      child: (controller != null &&
-                                          controller.assignedList.length > 0)
-                                          ? GridView.builder(
-                                          shrinkWrap: true,
-                                          itemCount: controller.assignedList.length,
-                                          gridDelegate:
-                                          const SliverGridDelegateWithMaxCrossAxisExtent(
-                                            maxCrossAxisExtent: 180,
-                                            childAspectRatio: 3 / 2,
-                                            crossAxisSpacing: 20,
-                                            mainAxisSpacing: 20,
-                                          ),
-                                          itemBuilder: (_, index) {
-                                            return Container(
-                                              alignment: Alignment.center,
-                                              child: Column(
-                                                mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                                children: [
-                                                  Text(controller.assignedList[index]
-                                                      .f_name +
-                                                      " " +
-                                                      controller.assignedList[index]
-                                                          .l_name),
-                                                  Text(controller.assignedList[index]
-                                                      .email ??
-                                                      "Email Not Set"),
-                                                  IconButton(
-                                                    onPressed: () {
-                                                      controller
-                                                          .removePersonFromAssignedPerson(
-                                                          controller
-                                                              .assignedList[
-                                                          index]
-                                                              .email ??
-                                                              "Email Not Set");
-                                                    },
-                                                    icon: Icon(Icons.person_remove),
-                                                    color: Colors.red,
-                                                  )
-                                                ],
-                                              ),
-                                              decoration: BoxDecoration(
-                                                  color: Colors.blue,
-                                                  borderRadius:
-                                                  BorderRadius.circular(15)),
-                                            );
-                                          })
-                                          : Container()),
-                              SizedBox(height: 20),
-                              CheckboxListTile(
-                                    title: Text(
-                                        "Do you want to remove yourself from assigned people?"),
-                                    value: controller.downloadDocument,
-                                    onChanged: (newValue) {
-                                      // controller.changeDownloadDocumentCheck(newValue!);
-                                    },
-                                    // checkColor: Color(0xFF4784F1),
-                                    activeColor: Color(0xFF4784F1),
-                                    controlAffinity: ListTileControlAffinity
-                                        .trailing, //  <-- leading Checkbox
-                                  ),
-                              SizedBox(height: 20),
-                              Center(
-                                    child: TextButton(
-                                      style: ElevatedButton.styleFrom(
-                                          primary: Color(0xFF4784F1),
-                                          padding: EdgeInsets.fromLTRB(40, 20, 40, 20)),
-                                      child: Text(
-                                        "Save",
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      onPressed: () async {
-                                        // if (DocumentCreation._formkey.currentState!
-                                        //     .validate()) {
-                                        //   controller.createDocument(
-                                        //       documentNameController.text.trim(),
-                                        //       controller.assignedIdList,
-                                        //       controller.downloadDocument,
-                                        //       controller.finalApprover,
-                                        //       controller.finApproverIdList);
-                                        //   documentNameController.text = "";
-                                        //   assignedPersonNameController.text = "";
-                                        //   finalApproverController.text = "";
-                                        // }
-                                      },
-                                    ),
-                                  ),
-                                ]);
-                          }
+                            ),
+                          ],
+                        ),
                       )
-                      )],
+                      //   },
+                      // ),
+                    ],
                   ),
                 ),
               ),
             ),
-          ));
-
+          );
         });
   }
 }
