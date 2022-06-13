@@ -53,17 +53,24 @@ class HomeWrapper extends StatelessWidget {
           } else if (routeSettings.name.toString() == Routes.PDFVIEWER) {
             return GetPageRoute(
               routeName: Routes.PDFVIEWER,
+              // page: () => MetaDataPage(
+              //   File: routeSettings.arguments as FilesModel,
+              // ),
               page: () {
                 if (kIsWeb) {
                   // It's running on the web!
                   return PdfViewerWeb();
                 } else {
-                  return Viewer();
+                  return Viewer(
+                    document: routeSettings.arguments.toString(),
+
+                  );
+
                   // NOT running on the web!
                   // You can also check for additional platforms here.
                   // Or you only develop for web and mobile this is mobile
                 }
-              },
+              } ,
               maintainState: false,
             );
           }
