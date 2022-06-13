@@ -21,14 +21,24 @@ import 'package:velocityx/routes/app_pages.dart';
 // }
 
 class Viewer extends StatefulWidget {
+
+
+
+  late String document;
+
+  Viewer({Key? key, required this.document}) : super(key: key);
   @override
   _ViewerState createState() => _ViewerState();
+
 }
 
 class _ViewerState extends State<Viewer> {
+
+
   String _version = 'Unknown';
-  String _document =
-      "https://pdftron.s3.amazonaws.com/downloads/pl/PDFTRON_mobile_about.pdf";
+
+      // "https://firebasestorage.googleapis.com/v0/b/velocityx-sih.appspot.com/o/qa_qbsums.pdf?alt=media&token=737b4ab4-798d-4cbe-8964-84775f68b02a";
+      // "https://pdftron.s3.amazonaws.com/downloads/pl/PDFTRON_mobile_about.pdf";
   bool _showViewer = true;
 
   @override
@@ -96,7 +106,7 @@ class _ViewerState extends State<Viewer> {
       print("document loaded: $filePath");
     });
 
-    await PdftronFlutter.openDocument(_document, config: config);
+    await PdftronFlutter.openDocument(widget.document, config: config);
 
     try {
       // The imported command is in XFDF format and tells whether to add, modify or delete annotations in the current document.
@@ -199,7 +209,7 @@ class _ViewerState extends State<Viewer> {
       _showMyDialog();
     });
 
-    controller.openDocument(_document, config: config);
+    controller.openDocument(widget.document, config: config);
   }
 
   Future<void> _showMyDialog() async {

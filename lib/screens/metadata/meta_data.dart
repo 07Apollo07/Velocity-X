@@ -250,6 +250,7 @@ class MetaDataPage extends GetWidget<MetaDataController> {
                         Get.toNamed(
                           Routes.PDFVIEWER,
                           id: Constants.homeId,
+                          arguments: File.storage_link,
                         );
                       },
                     ),

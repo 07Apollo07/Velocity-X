@@ -82,7 +82,8 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.PDFVIEWER,
-      page: () => Viewer(),
+      page: () => Viewer(document: '',),
+
       // binding: HomeBinding(),
     ),
     GetPage(
