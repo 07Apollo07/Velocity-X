@@ -47,7 +47,7 @@ class _DocumentEditingState extends State<DocumentEditing> {
                   Column(
                     children: [
                       new Text(
-                        "Create Document",
+                        "Document Editing",
                         style: TextStyle(
                           fontWeight: FontWeight.w400,
                         ),
@@ -56,6 +56,26 @@ class _DocumentEditingState extends State<DocumentEditing> {
                   ),
                 ],
               ),
+              actions: [
+                Container(
+                  margin: EdgeInsets.only(right: 15.0),
+                  decoration: BoxDecoration(
+                      color: Theme.of(context).scaffoldBackgroundColor,
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.red,
+                          blurRadius: 5.0,
+                        ),
+                      ]),
+                  child: IconButton(
+                      onPressed: () {
+                        controller.deleteFile(widget.File.files_uniqueId);
+                      },
+                      icon: Icon(Icons.delete_forever),
+                      color: Colors.red),
+                ),
+              ],
             ),
             body: SingleChildScrollView(
               child: Container(

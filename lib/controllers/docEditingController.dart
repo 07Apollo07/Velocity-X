@@ -102,13 +102,6 @@ class DocEditingController extends GetxController {
         print(user.email);
         if (user.email == email.trim()) {
           print("eligible to go in");
-          // assignedList.addIf(assignedList.any((element) {
-          //   if (element.email == email.trim()) {
-          //     return false;
-          //   } else
-          //     return true;
-          // }), user);
-          //TODO Duplicate Users can be added here;
           assignedList.add(user);
           assignedIdList.add(user.id);
           update();
@@ -125,7 +118,7 @@ class DocEditingController extends GetxController {
       for (var user in assignedList) {
         if (user.email == email.trim()) {
           assignedList.remove(user);
-          assignedIdList.remove(user.email);
+          assignedIdList.remove(user.id);
           update();
         } else {
           print("Cant Remove");
@@ -139,10 +132,18 @@ class DocEditingController extends GetxController {
       for (var user in finApproverList) {
         if (user.email == email.trim()) {
           finApproverList.remove(user);
-          finApproverIdList.remove(user.email);
+          finApproverIdList.remove(user.id);
+          print(finalApproverIdList);
           update();
         }
       }
+    }
+  }
+
+  void deleteFile(String fileId) async {
+    if (await FilesDb().DeleteFile(fileId)) {
+      Get.back();
+      Get.snackbar("File Deleted", "Success");
     }
   }
 
@@ -181,12 +182,16 @@ class DocEditingController extends GetxController {
       List<String?> finalApproverNameId) async {
     FilesModel _file = FilesModel(
       name: docName,
-      assigned_person_uid: assignedPerson,
+      assigned_person_uid: assignedPerson.length > 0 ? assignedPerson : [""],
       download: download,
       final_approver_set: finalApprover,
-      final_approver: finalApproverNameId.last ?? "Not Final Approver",
+      final_approver: finalApproverNameId.length > 0
+          ? finalApproverNameId.last ?? "No Final Approver"
+          : "No Final Approver",
       storage_link: "",
     );
+    print(fileId);
+    print(_file.assigned_person_uid);
 
     if (await FilesDb().UpdateFile(fileId, _file)) {
       update();

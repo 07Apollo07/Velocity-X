@@ -98,16 +98,30 @@ class FilesDb {
 
   Future<bool> UpdateFile(String fileId, FilesModel file) async {
     try {
-      final FileRef = _firestore.collection("Files").doc(fileId);
-      await FileRef.update({
+      await _firestore.collection("Files").doc(fileId).update({
         "final_approver": file.final_approver,
         "name": file.name,
         "storage_link": file.storage_link,
         "assigned_person_uid": file.assigned_person_uid,
         "download": file.download,
         "final_approver_set": file.final_approver_set
-      });
+      }).then((value) => print("Updating File information in File Collection"));
       print("Updating File information in File Collection");
+      return true;
+    } catch (e) {
+      print(e.toString());
+      return false;
+    }
+  }
+
+  Future<bool> DeleteFile(String fileId) async {
+    try {
+      await _firestore
+          .collection("Files")
+          .doc(fileId)
+          .delete()
+          .then((value) => print("Delete File information in File Collection"));
+      print("Delete File information in File Collection");
       return true;
     } catch (e) {
       print(e.toString());

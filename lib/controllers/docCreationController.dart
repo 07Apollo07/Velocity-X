@@ -136,14 +136,16 @@ class DocCreationController extends GetxController {
     UserModel _user = Get.find<UserController>().user;
     FilesModel _file = FilesModel(
       name: docName,
-      assigned_person_uid: assignedPerson,
+      assigned_person_uid: assignedPerson.length > 0 ? assignedPerson : [""],
       creation_datetime: Timestamp.fromDate(DateTime.now()),
       creator_name: _user.f_name + " " + _user.l_name,
       creator_uid: Get.find<AuthController>().user!.uid,
       designation: _user.designation,
       download: download,
       final_approver_set: finalApprover,
-      final_approver: finalApproverNameId.last ?? "Not Final Approver",
+      final_approver: finalApproverNameId.length > 0
+          ? finalApproverNameId.last ?? "No Final Approver"
+          : "No Final Approver",
       organization_no: _user.organization_no,
       storage_link: "",
     );
