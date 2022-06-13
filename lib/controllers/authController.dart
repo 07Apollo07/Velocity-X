@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:velocityx/controllers/filesController.dart';
+import 'package:velocityx/controllers/scannerController.dart';
 import 'package:velocityx/controllers/userController.dart';
 import 'package:velocityx/models/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -30,6 +31,7 @@ class AuthController extends GetxController {
     if (user == null) {
       Get.delete<UserController>(force: true);
       Get.delete<FilesController>(force: true);
+      Get.delete<ScannerV2Controller>(force: true);
       Get.offAll(() => SignIn());
     } else {
       Get.offAll(() => Wrapper());

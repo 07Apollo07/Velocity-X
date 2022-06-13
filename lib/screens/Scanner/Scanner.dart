@@ -4,165 +4,170 @@ import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:get/get.dart';
 import 'package:velocityx/assets/custom_icons_icons.dart';
 import 'package:velocityx/controllers/authController.dart';
+import 'package:velocityx/controllers/scannerController.dart';
 import 'package:velocityx/screens/Scanner/ScannerV2.dart';
 import 'package:velocityx/screens/Scanner/qr_scan_page.dart';
 
-class Scanner extends StatefulWidget {
-  const Scanner({Key? key}) : super(key: key);
+class Scanner extends StatelessWidget {
+  // var bottomNavIndex = 0;
+  // bool floatingActive = false;
+  // String qrResult = 'Scanned data will appear here!';
 
-  @override
-  State<Scanner> createState() => _ScannerState();
-}
-
-class _ScannerState extends State<Scanner> {
-  var bottomNavIndex = 0;
-  bool floatingActive = false;
-  String qrResult = 'Scanned data will appear here!';
-
-  Future<void> scanQR() async {
-    try {
-      final qrCode = await FlutterBarcodeScanner.scanBarcode(
-          '#ff6666', 'Cancel', true, ScanMode.QR);
-      if (!mounted) return;
-      setState(() {
-        this.qrResult = qrCode.toString();
-      });
-    } on PlatformException {
-      qrResult = 'Fail to read QR Code';
-    }
-  }
+  // Future<void> scanQR() async {
+  //   try {
+  //     final qrCode = await FlutterBarcodeScanner.scanBarcode(
+  //         '#ff6666', 'Cancel', true, ScanMode.QR);
+  //     if (!mounted) return;
+  //     setState(() {
+  //       this.qrResult = qrCode.toString();
+  //     });
+  //   } on PlatformException {
+  //     qrResult = 'Fail to read QR Code';
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Container(
-        child: Scaffold(
-          appBar: AppBar(
-            title: Text(
-              "QR Scanner",
-              style: TextStyle(color: Theme.of(context).primaryColor),
-            ),
-            elevation: 0.0,
-            actions: <Widget>[
-              Container(
-                  margin: EdgeInsets.only(right: 15.0),
-                  decoration: BoxDecoration(
-                      color: Theme.of(context).scaffoldBackgroundColor,
-                      shape: BoxShape.circle,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Theme.of(context).primaryColor,
-                          blurRadius: 5.0,
-                        ),
-                      ]),
-                  child: IconButton(
-                      onPressed: () {
-                        // Navigator.pushNamed(context, '/MetaData');
-                      },
-                      icon: Icon(CustomIcons.search_1),
-                      color: Theme.of(context).primaryColor)),
-              Container(
-                margin: EdgeInsets.only(right: 15.0),
-                decoration: BoxDecoration(
-                    color: Theme.of(context).scaffoldBackgroundColor,
-                    shape: BoxShape.circle,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Theme.of(context).primaryColor,
-                        blurRadius: 5.0,
-                      ),
-                    ]),
-                child: IconButton(
-                    onPressed: () {
-                      AuthController.instance.signOut();
-                    },
-                    icon: Icon(CustomIcons.bell),
-                    color: Theme.of(context).primaryColor),
-              ),
-            ],
-          ),
-          // backgroundColor: Color.fromRGBO(36, 36, 36, 1.0),
-          body: Column(
-            children: [
-              Text('$qrResult', style: TextStyle(color: Colors.white)),
-              ElevatedButton(
-                  onPressed: () {
-                    Get.to(ScannerV2());
-                  },
-                  child: Text("Scan Code")),
-              Row(
-                // mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(30.0),
-                    child: Container(
-                      margin: EdgeInsets.all(15.0),
-                      decoration: const BoxDecoration(
-                          color: Color.fromRGBO(36, 36, 36, 1.0),
+    return GetBuilder<ScannerV2Controller>(
+        init: Get.find<ScannerV2Controller>(),
+        builder: (controller) {
+          return SafeArea(
+            child: Container(
+              child: Scaffold(
+                appBar: AppBar(
+                  title: Text(
+                    "QR Scanner",
+                    style: TextStyle(color: Theme.of(context).primaryColor),
+                  ),
+                  elevation: 0.0,
+                  actions: <Widget>[
+                    Container(
+                        margin: EdgeInsets.only(right: 15.0),
+                        decoration: BoxDecoration(
+                            color: Theme.of(context).scaffoldBackgroundColor,
+                            shape: BoxShape.circle,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Theme.of(context).primaryColor,
+                                blurRadius: 5.0,
+                              ),
+                            ]),
+                        child: IconButton(
+                            onPressed: () {
+                              // Navigator.pushNamed(context, '/MetaData');
+                            },
+                            icon: Icon(CustomIcons.search_1),
+                            color: Theme.of(context).primaryColor)),
+                    Container(
+                      margin: EdgeInsets.only(right: 15.0),
+                      decoration: BoxDecoration(
+                          color: Theme.of(context).scaffoldBackgroundColor,
                           shape: BoxShape.circle,
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.blue,
+                              color: Theme.of(context).primaryColor,
                               blurRadius: 5.0,
                             ),
                           ]),
                       child: IconButton(
+                          onPressed: () {
+                            AuthController.instance.signOut();
+                          },
+                          icon: Icon(CustomIcons.bell),
+                          color: Theme.of(context).primaryColor),
+                    ),
+                  ],
+                ),
+                // backgroundColor: Color.fromRGBO(36, 36, 36, 1.0),
+                body: Column(
+                  children: [
+                    Text(controller.qrResult,
+                        style: TextStyle(color: Colors.white)),
+                    ElevatedButton(
                         onPressed: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => ScanQRCode()));
+                          Get.to(() => ScannerV2());
                         },
-                        icon: Icon(Icons.supervised_user_circle),
-                        color: Colors.blue,
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(30.0),
-                    child: Container(
-                      margin: EdgeInsets.only(right: 15.0),
-                      decoration: const BoxDecoration(
-                          color: Color.fromRGBO(36, 36, 36, 1.0),
-                          shape: BoxShape.circle,
-                          boxShadow: [
-                            BoxShadow(
+                        child: Text("Scan Code")),
+                    ElevatedButton(
+                        onPressed: () {
+                          controller
+                              .setResult("Scanned data will appear here!");
+                        },
+                        child: Text("Reset")),
+                    Row(
+                      // mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(30.0),
+                          child: Container(
+                            margin: EdgeInsets.all(15.0),
+                            decoration: const BoxDecoration(
+                                color: Color.fromRGBO(36, 36, 36, 1.0),
+                                shape: BoxShape.circle,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.blue,
+                                    blurRadius: 5.0,
+                                  ),
+                                ]),
+                            child: IconButton(
+                              onPressed: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => ScanQRCode()));
+                              },
+                              icon: Icon(Icons.supervised_user_circle),
                               color: Colors.blue,
-                              blurRadius: 5.0,
                             ),
-                          ]),
-                      child: IconButton(
-                        onPressed: () {},
-                        icon: Icon(Icons.note_alt),
-                        color: Colors.blue,
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(30.0),
-                    child: Container(
-                      margin: EdgeInsets.only(right: 15.0),
-                      decoration: const BoxDecoration(
-                          color: Color.fromRGBO(36, 36, 36, 1.0),
-                          shape: BoxShape.circle,
-                          boxShadow: [
-                            BoxShadow(
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(30.0),
+                          child: Container(
+                            margin: EdgeInsets.only(right: 15.0),
+                            decoration: const BoxDecoration(
+                                color: Color.fromRGBO(36, 36, 36, 1.0),
+                                shape: BoxShape.circle,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.blue,
+                                    blurRadius: 5.0,
+                                  ),
+                                ]),
+                            child: IconButton(
+                              onPressed: () {},
+                              icon: Icon(Icons.note_alt),
                               color: Colors.blue,
-                              blurRadius: 5.0,
                             ),
-                          ]),
-                      child: IconButton(
-                        onPressed: () {},
-                        icon: Icon(Icons.notes_sharp),
-                        color: Colors.blue,
-                      ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(30.0),
+                          child: Container(
+                            margin: EdgeInsets.only(right: 15.0),
+                            decoration: const BoxDecoration(
+                                color: Color.fromRGBO(36, 36, 36, 1.0),
+                                shape: BoxShape.circle,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.blue,
+                                    blurRadius: 5.0,
+                                  ),
+                                ]),
+                            child: IconButton(
+                              onPressed: () {},
+                              icon: Icon(Icons.notes_sharp),
+                              color: Colors.blue,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ],
-          ),
-        ),
-      ),
-    );
+            ),
+          );
+        });
   }
 }
