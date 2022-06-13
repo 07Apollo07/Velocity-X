@@ -113,4 +113,19 @@ class FilesDb {
       return false;
     }
   }
+
+  Future<bool> DeleteFile(String fileId) async {
+    try {
+      await _firestore
+          .collection("Files")
+          .doc(fileId)
+          .delete()
+          .then((value) => print("Delete File information in File Collection"));
+      print("Delete File information in File Collection");
+      return true;
+    } catch (e) {
+      print(e.toString());
+      return false;
+    }
+  }
 }
