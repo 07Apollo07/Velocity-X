@@ -119,7 +119,7 @@ class _HomeState extends State<Home> {
           ),
           Expanded(
             child: GetX<FilesController>(
-              init: Get.put<FilesController>(FilesController()),
+              init: Get.find<FilesController>(),
               builder: (FilesController filesController) {
                 if (filesController != null &&
                     filesController.assignedFiles.length > 0) {

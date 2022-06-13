@@ -11,9 +11,9 @@ class StoreBindings extends Bindings {
   void dependencies() {
     // Get.put<AuthController>(AuthController(), permanent: true);
     Get.lazyPut<UserController>(() => UserController());
+    Get.lazyPut<FilesController>(() => FilesController());
     Get.put<WrapperController>(WrapperController(), permanent: true);
     // Get.lazyPut<DocCreationController>(() => DocCreationController());
-    Get.lazyPut<FilesController>(() => FilesController());
     Get.put<MetaDataController>(MetaDataController());
   }
 }

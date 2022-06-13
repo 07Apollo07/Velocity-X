@@ -125,7 +125,7 @@ class DocEditingController extends GetxController {
       for (var user in assignedList) {
         if (user.email == email.trim()) {
           assignedList.remove(user);
-          assignedIdList.remove(user.email);
+          assignedIdList.remove(user.id);
           update();
         } else {
           print("Cant Remove");
@@ -139,7 +139,8 @@ class DocEditingController extends GetxController {
       for (var user in finApproverList) {
         if (user.email == email.trim()) {
           finApproverList.remove(user);
-          finApproverIdList.remove(user.email);
+          finApproverIdList.remove(user.id);
+          print(finalApproverIdList);
           update();
         }
       }
@@ -181,12 +182,16 @@ class DocEditingController extends GetxController {
       List<String?> finalApproverNameId) async {
     FilesModel _file = FilesModel(
       name: docName,
-      assigned_person_uid: assignedPerson,
+      assigned_person_uid: assignedPerson.length > 0 ? assignedPerson : [""],
       download: download,
       final_approver_set: finalApprover,
-      final_approver: finalApproverNameId.last ?? "Not Final Approver",
+      final_approver: finalApproverNameId.length > 0
+          ? finalApproverNameId.last ?? "No Final Approver"
+          : "No Final Approver",
       storage_link: "",
     );
+    print(fileId);
+    print(_file.assigned_person_uid);
 
     if (await FilesDb().UpdateFile(fileId, _file)) {
       update();
