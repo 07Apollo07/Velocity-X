@@ -8,6 +8,8 @@ class MetaDataController extends GetxController {
   // String fileId = " ";
   CreatorController? creatorController;
 
+  var isAssignedPressed = false.obs;
+
   String getDateFromTimeStamp(String timestamp) {
     int time = int.parse(timestamp);
     DateTime date = DateTime.fromMillisecondsSinceEpoch(time * 1000);
