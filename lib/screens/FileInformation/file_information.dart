@@ -20,43 +20,6 @@ class FileInformation extends StatelessWidget {
             style: TextStyle(color: Theme.of(context).primaryColor),
           ),
           elevation: 0.0,
-          actions: <Widget>[
-            Container(
-                margin: EdgeInsets.only(right: 15.0),
-                decoration: BoxDecoration(
-                    color: Theme.of(context).scaffoldBackgroundColor,
-                    shape: BoxShape.circle,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Theme.of(context).primaryColor,
-                        blurRadius: 5.0,
-                      ),
-                    ]),
-                child: IconButton(
-                    onPressed: () {
-                      // Navigator.pushNamed(context, '/MetaData');
-                    },
-                    icon: Icon(CustomIcons.search_1),
-                    color: Theme.of(context).primaryColor)),
-            Container(
-              margin: EdgeInsets.only(right: 15.0),
-              decoration: BoxDecoration(
-                  color: Theme.of(context).scaffoldBackgroundColor,
-                  shape: BoxShape.circle,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Theme.of(context).primaryColor,
-                      blurRadius: 5.0,
-                    ),
-                  ]),
-              child: IconButton(
-                  onPressed: () {
-                    AuthController.instance.signOut();
-                  },
-                  icon: Icon(CustomIcons.bell),
-                  color: Theme.of(context).primaryColor),
-            ),
-          ],
         ),
         // backgroundColor: Color.fromRGBO(36, 36, 36, 1.0),
         body: Padding(

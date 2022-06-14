@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:ai_barcode/ai_barcode.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';

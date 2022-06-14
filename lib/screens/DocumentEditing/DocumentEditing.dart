@@ -117,6 +117,13 @@ class _DocumentEditingState extends State<DocumentEditing> {
                             ),
                           ),
                         ),
+                        ElevatedButton(
+                            onPressed: () {
+                              Get.toNamed(Routes.FILE_INFORMATION,
+                                  id: Constants.profileId);
+                            },
+                            child: Text("Track Document")),
+                        SizedBox(height: 10),
                         Container(
                           child: Column(
                             children: [
@@ -193,7 +200,7 @@ class _DocumentEditingState extends State<DocumentEditing> {
                                     itemCount: controller.assignedList.length,
                                     gridDelegate:
                                         const SliverGridDelegateWithMaxCrossAxisExtent(
-                                      maxCrossAxisExtent: 150,
+                                      maxCrossAxisExtent: 180,
                                       childAspectRatio: 3 / 2,
                                       crossAxisSpacing: 20,
                                       mainAxisSpacing: 20,
@@ -297,6 +304,7 @@ class _DocumentEditingState extends State<DocumentEditing> {
                             controller: controller.finalApproverController,
                           ),
                         ),
+                        SizedBox(height: 20),
                         Visibility(
                           visible: controller.finalApprover,
                           child: SingleChildScrollView(
@@ -308,7 +316,7 @@ class _DocumentEditingState extends State<DocumentEditing> {
                                           controller.finApproverList.length,
                                       gridDelegate:
                                           const SliverGridDelegateWithMaxCrossAxisExtent(
-                                        maxCrossAxisExtent: 130,
+                                        maxCrossAxisExtent: 180,
                                         childAspectRatio: 3 / 2,
                                         crossAxisSpacing: 20,
                                         mainAxisSpacing: 20,

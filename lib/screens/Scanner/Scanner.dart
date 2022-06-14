@@ -29,7 +29,7 @@ class Scanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<ScannerV2Controller>(
-        init: Get.find<ScannerV2Controller>(),
+        init: Get.put<ScannerV2Controller>(ScannerV2Controller()),
         builder: (controller) {
           return SafeArea(
             child: Container(

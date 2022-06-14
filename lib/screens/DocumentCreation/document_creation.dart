@@ -1,4 +1,4 @@
-import  'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -241,7 +241,7 @@ class _DocumentCreationState extends State<DocumentCreation> {
                                           controller.finApproverList.length,
                                       gridDelegate:
                                           const SliverGridDelegateWithMaxCrossAxisExtent(
-                                        maxCrossAxisExtent: 130,
+                                        maxCrossAxisExtent: 180,
                                         childAspectRatio: 3 / 2,
                                         crossAxisSpacing: 20,
                                         mainAxisSpacing: 20,

@@ -258,7 +258,7 @@ class MetaDataPage extends StatelessWidget {
                           ),
                           IconButton(
                             color: Theme.of(context).primaryColor,
-                            icon: Icon(CustomIcons.bookmark),
+                            icon: Icon(Icons.open_in_new),
                             onPressed: () {
                               Get.toNamed(
                                 Routes.PDFVIEWER,
@@ -269,7 +269,7 @@ class MetaDataPage extends StatelessWidget {
                           ),
                           IconButton(
                             color: Theme.of(context).primaryColor,
-                            icon: Icon(CustomIcons.bell),
+                            icon: Icon(Icons.person_add_alt_outlined),
                             onPressed: () {
                               controller.changeIsAssignedPressed();
                             },

@@ -40,6 +40,12 @@ class ProfileWrapper extends StatelessWidget {
               page: () => QrCreator(qrCodeOfInput: routeSettings.arguments),
               maintainState: false,
             );
+          } else if (routeSettings.name.toString() == Routes.FILE_INFORMATION) {
+            return GetPageRoute(
+              routeName: Routes.FILE_INFORMATION,
+              page: () => FileInformation(),
+              maintainState: false,
+            );
           }
         });
   }
