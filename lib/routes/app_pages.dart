@@ -100,7 +100,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.CONTACT_CARD,
-      page: () => ContactPage(),
+      page: () => ContactPage(index: ''),
       // binding: HomeBinding(),
     ),
     GetPage(

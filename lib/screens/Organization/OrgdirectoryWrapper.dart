@@ -27,7 +27,11 @@ class OrgDirectoryWrapper extends StatelessWidget {
           } else if (routeSettings.name.toString() == Routes.CONTACT_CARD) {
             return GetPageRoute(
               routeName: Routes.CONTACT_CARD,
-              page: () => ContactPage(),
+              page: () => ContactPage(
+                // index: routeSettings.arguments.hashCode,
+                index: routeSettings.arguments.toString(),
+
+              ),
               maintainState: false,
             );
           }

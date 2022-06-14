@@ -10,10 +10,14 @@ import 'package:velocityx/shared/constants.dart';
 import 'package:velocityx/shared/icon_logo.dart';
 
 class ContactPage extends GetWidget<UserController> {
-  const ContactPage({Key? key}) : super(key: key);
+  String index;
+  ContactPage({Key? key, required this.index}) : super(key: key) ;
+
+
 
   @override
   Widget build(BuildContext context) {
+
     return Container(
       child: Scaffold(
         // backgroundColor: Color.fromRGBO(36, 36, 36, 1.0),
@@ -41,6 +45,7 @@ class ContactPage extends GetWidget<UserController> {
                 child: IconButton(
                     onPressed: () {
                       // Navigator.pushNamed(context, '/MetaData');
+
                     },
                     icon: Icon(CustomIcons.search_1),
                     color: Theme.of(context).primaryColor)),
@@ -106,208 +111,119 @@ class ContactPage extends GetWidget<UserController> {
                 left: 30,
                 right: 30,
                 child: Form(
-                  // key: _formkey,
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 30, 280, 5),
-                        child: Text(
-                          'NAME',
-                          textAlign: TextAlign.start,
-                        ),
-                      ),
-                      Container(
-                        width: 600,
-                        child: TextFormField(
-                          enabled: false,
-                          // controller: nameController,
-                          // onChanged: (val){
-                          //   setState(() {
-                          //     name = val;
-                          //   });
-                          // },
-                          validator: (String? val) {
-                            if (val!.isEmpty) {
-                              return "Enter your Name";
-                            } else {
-                              return null;
-                            }
-                          },
-
-                          decoration: InputDecoration(
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Color(int.parse(("0xff3D3A3A"))),
-                                  width: 2.0),
+                  child: GetX<UserController>(
+                    init: Get.put<UserController>(UserController()),
+                    builder: (_) {
+                      return Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 30, 560, 5),
+                            child: Text(
+                              'NAME',
+                              textAlign: TextAlign.start,
                             ),
-                            // hintText: '${snapshot.data?.name}',
-                            hintText: 'User Name',
-                            fillColor: Color(int.parse(("0xff3D3A3A"))),
-                            filled: true,
                           ),
-                        ),
-                      ),
-                      // Padding(
-                      //   padding: const EdgeInsets.fromLTRB(0,20,280,5),
-                      //   child: Text(
-                      //     'EMAIL',
-                      //     textAlign: TextAlign.start,
-                      //   ),
-                      // ),
-                      // Container(
-                      //   width: 600,
-                      //   child: TextField(
-                      //     decoration: InputDecoration(
-                      //       enabledBorder: OutlineInputBorder(
-                      //         borderSide: BorderSide(color: Color(int.parse(("0xff3D3A3A"))),width: 2.0),
-                      //       ),
-                      //       hintText: 'antsav@gmail.com',
-                      //       fillColor: Color(int.parse(("0xff3D3A3A"))),
-                      //       filled: true,
-                      //
-                      //
-                      //     ),
-                      //   ),
-                      // ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 20, 280, 5),
-                        child: Text(
-                          'Email',
-                          textAlign: TextAlign.start,
-                        ),
-                      ),
-                      Container(
-                        width: 600,
-                        child: TextField(
-                          enabled: false,
-                          decoration: InputDecoration(
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Color(int.parse(("0xff3D3A3A"))),
-                                  width: 2.0),
+                          Container(
+                            width: 600,
+                            child: TextFormField(
+                              enabled: false,
+                              decoration: InputDecoration(
+                                hintText: "${_.users[int.parse(index)].f_name} ${_.users[int.parse(index)].l_name}",
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Color(int.parse(("0xff3D3A3A"))),
+                                      width: 2.0),
+                                ),
+                                fillColor: Color(int.parse(("0xff3D3A3A"))),
+                                filled: true,
+                              ),
                             ),
-                            // hintText: '${snapshot.data?.phoneNumber}',
-                            hintText: 'Email Addresss',
-                            fillColor: Color(int.parse(("0xff3D3A3A"))),
-                            filled: true,
                           ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 20, 220, 5),
-                        child: Text(
-                          'PHONE NUMBER',
-                          textAlign: TextAlign.start,
-                        ),
-                      ),
-                      Container(
-                        width: 600,
-                        child: TextField(
-                          enabled: false,
-                          decoration: InputDecoration(
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Color(int.parse(("0xff3D3A3A"))),
-                                  width: 2.0),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 20, 560, 5),
+                            child: Text(
+                              'EMAIL',
+                              textAlign: TextAlign.start,
                             ),
-                            // hintText: '${snapshot.data?.phoneNumber}',
-                            hintText: 'Phone Number',
-                            fillColor: Color(int.parse(("0xff3D3A3A"))),
-                            filled: true,
                           ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 20, 270, 5),
-                        child: Text(
-                          'Designation',
-                          textAlign: TextAlign.start,
-                        ),
-                      ),
-                      Container(
-                        width: 600,
-                        child: TextFormField(
-                          enabled: false,
-                          // controller: addressController,
-                          // onChanged: (val){
-                          //   setState(() {
-                          //     address = val;
-                          //   });
-                          // },
-                          validator: (String? val) {
-                            if (val!.isEmpty) {
-                              return "Enter your Address";
-                            } else {
-                              return null;
-                            }
-                          },
-
-                          decoration: InputDecoration(
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Color(int.parse(("0xff3D3A3A"))),
-                                  width: 2.0),
+                          Container(
+                            width: 600,
+                            child: TextField(
+                              enabled: false,
+                              decoration: InputDecoration(
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Color(int.parse(("0xff3D3A3A"))),
+                                      width: 2.0),
+                                ),
+                                // hintText: '${snapshot.data?.phoneNumber}',
+                                hintText: "${_.users[int.parse(index)].email}",
+                                fillColor: Color(int.parse(("0xff3D3A3A"))),
+                                filled: true,
+                              ),
                             ),
-                            // hintText: '${snapshot.data?.address}',
-                            hintText: 'Designation',
-                            fillColor: Color(int.parse(("0xff3D3A3A"))),
-                            filled: true,
                           ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 40,
-                      ),
-                      TextButton(
-                          style: ElevatedButton.styleFrom(
-                            primary: Color(int.parse("0xff4784F1")),
-                            padding: EdgeInsets.fromLTRB(40, 20, 40, 20),
-                            shadowColor: Colors.cyan,
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 20, 495, 5),
+                            child: Text(
+                              'PHONE NUMBER',
+                              textAlign: TextAlign.start,
+                            ),
                           ),
-                          child: Text(
-                            "EDIT",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
+                          Container(
+                            width: 600,
+                            child: TextField(
+                              enabled: false,
+                              decoration: InputDecoration(
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Color(int.parse(("0xff3D3A3A"))),
+                                      width: 2.0),
+                                ),
+                                // hintText: '${snapshot.data?.phoneNumber}',
+                                hintText: "${_.users[int.parse(index)].phone}",
+                                fillColor: Color(int.parse(("0xff3D3A3A"))),
+                                filled: true,
+                              ),
+                            ),
                           ),
-                          onPressed: () {
-                            // widget.toggleView();
-
-                            // if (_formkey.currentState!.validate()){
-                            //
-                            //   // setState(() {
-                            //   //   loading = true;
-                            //   // });
-                            //
-                            //   print(addressController.text);
-                            //   print(nameController.text);
-                            //
-                            //   final user = Provider.of<MyUser?>(context,listen: false);
-                            //
-                            //   print(user?.uid);
-                            //
-                            //   await DatabaseService(uid: user?.uid).updateUserData(addressController.text, nameController.text, '${snapshot.data?.phoneNumber}');
-
-                            // if (result == null ){
-                            //   setState(() {
-                            //     error = "Enter valid Email";
-                            //     loading = false;
-                            //   });
-                            // }
-                          }
-
-                          // }
-
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 20, 510, 5),
+                            child: Text(
+                              'DESIGNATION',
+                              textAlign: TextAlign.start,
+                            ),
                           ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      // Text(
-                      //   error,
-                      //   style: TextStyle(color: Colors.red, fontSize: 14.0),
-                      // ),
-                    ],
+                          Container(
+                            width: 600,
+                            child: TextFormField(
+                              enabled: false,
+                              decoration: InputDecoration(
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Color(int.parse(("0xff3D3A3A"))),
+                                      width: 2.0),
+                                ),
+                                // hintText: '${snapshot.data?.address}',
+                                hintText: "${_.users[int.parse(index)].designation}",
+                                fillColor: Color(int.parse(("0xff3D3A3A"))),
+                                filled: true,
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 40,
+                          ),
+                          // Text(
+                          //   error,
+                          //   style: TextStyle(color: Colors.red, fontSize: 14.0),
+                          // ),
+                        ],
+                      );
+                    },
                   ),
+                  // key: _formkey,
+
                 ),
               ),
             ],

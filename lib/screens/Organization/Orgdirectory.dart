@@ -84,6 +84,7 @@ class OrganizationDoc extends StatelessWidget {
                         Get.toNamed(
                           Routes.CONTACT_CARD,
                           id: Constants.orgDirectoryId,
+                          arguments: index,
                         );
                       },
                     );
