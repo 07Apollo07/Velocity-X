@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:velocityx/binding/bindings.dart';
 import 'package:velocityx/controllers/metaDataController.dart';
+import 'package:velocityx/models/file_stats.dart';
 import 'package:velocityx/models/files.dart';
 import 'package:velocityx/screens/ContactCard/ContactCard.dart';
 import 'package:velocityx/screens/DocumentCreation/document_creation.dart';
@@ -57,7 +58,9 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.FILE_INFORMATION,
-      page: () => FileInformation(),
+      page: () => FileInformation(
+        FileStat: FileStatsModel(),
+      ),
       // binding: HomeBinding(),
     ),
     GetPage(
@@ -82,7 +85,9 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.PDFVIEWER,
-      page: () => Viewer(document: '',),
+      page: () => Viewer(
+        document: '',
+      ),
 
       // binding: HomeBinding(),
     ),

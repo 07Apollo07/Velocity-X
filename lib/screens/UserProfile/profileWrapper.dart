@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:velocityx/models/file_stats.dart';
 import 'package:velocityx/models/files.dart';
 import 'package:velocityx/routes/app_pages.dart';
 import 'package:velocityx/screens/DocumentCreation/document_creation.dart';
@@ -43,7 +44,9 @@ class ProfileWrapper extends StatelessWidget {
           } else if (routeSettings.name.toString() == Routes.FILE_INFORMATION) {
             return GetPageRoute(
               routeName: Routes.FILE_INFORMATION,
-              page: () => FileInformation(),
+              page: () => FileInformation(
+                FileStat: routeSettings.arguments as FileStatsModel,
+              ),
               maintainState: false,
             );
           }

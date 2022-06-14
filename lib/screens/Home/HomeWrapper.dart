@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:velocityx/models/file_stats.dart';
 import 'package:velocityx/models/files.dart';
 import 'package:velocityx/routes/app_pages.dart';
 import 'package:velocityx/screens/FileInformation/file_information.dart';
@@ -41,7 +42,9 @@ class HomeWrapper extends StatelessWidget {
           } else if (routeSettings.name.toString() == Routes.FILE_INFORMATION) {
             return GetPageRoute(
               routeName: Routes.FILE_INFORMATION,
-              page: () => FileInformation(),
+              page: () => FileInformation(
+                FileStat: FileStatsModel(),
+              ),
               maintainState: false,
             );
           } else if (routeSettings.name.toString() == Routes.QR_CODE) {
@@ -63,14 +66,13 @@ class HomeWrapper extends StatelessWidget {
                 } else {
                   return Viewer(
                     document: routeSettings.arguments.toString(),
-
                   );
 
                   // NOT running on the web!
                   // You can also check for additional platforms here.
                   // Or you only develop for web and mobile this is mobile
                 }
-              } ,
+              },
               maintainState: false,
             );
           }

@@ -2,8 +2,10 @@ import 'package:ai_barcode/ai_barcode.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:velocityx/controllers/docEditingController.dart';
+import 'package:velocityx/models/file_stats.dart';
 import 'package:velocityx/models/files.dart';
 import 'package:velocityx/routes/app_pages.dart';
+import 'package:velocityx/services/filesDb.dart';
 import 'package:velocityx/shared/constants.dart';
 
 class DocumentEditing extends StatefulWidget {
@@ -87,7 +89,7 @@ class _DocumentEditingState extends State<DocumentEditing> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         GestureDetector(
-                          onTap: () {
+                          onTap: () async {
                             Get.toNamed(
                               Routes.QR_CODE,
                               id: Constants.profileId,
@@ -118,9 +120,16 @@ class _DocumentEditingState extends State<DocumentEditing> {
                           ),
                         ),
                         ElevatedButton(
-                            onPressed: () {
-                              Get.toNamed(Routes.FILE_INFORMATION,
-                                  id: Constants.profileId);
+                            onPressed: () async {
+                              FileStatsModel FileStats =
+                                  await FilesDb().GetStats("File");
+                              // FilesDb().GetStats("File");
+                              Get.toNamed(
+                                Routes.FILE_INFORMATION,
+                                id: Constants.profileId,
+                                arguments: FileStats,
+                                // arguments: "File",
+                              );
                             },
                             child: Text("Track Document")),
                         SizedBox(height: 10),

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:velocityx/models/file_stats.dart';
 import 'package:velocityx/models/files.dart';
 
 class FilesDb {
@@ -139,6 +140,32 @@ class FilesDb {
     } catch (e) {
       print(e.toString());
       return false;
+    }
+  }
+
+  Future<FileStatsModel> GetStats(String fileId) async {
+    try {
+      FileStatsModel _fileStat = FileStatsModel();
+      await _firestore
+          .collection("Files")
+          .doc(fileId)
+          .collection("File_Stats")
+          .doc("Stats")
+          .get()
+          .then(
+        (DocumentSnapshot doc) {
+          _fileStat =
+              FileStatsModel.fromDocumentSnapshot(documentSnapshot: doc);
+          print(_fileStat.fileModifiedDateTime);
+          print(_fileStat.fileLastOpenedDateTime);
+          // print(_fileStat.file_transfers);
+          print(_fileStat.tracking);
+        },
+      );
+      return _fileStat;
+    } catch (e) {
+      print(e.toString());
+      return FileStatsModel();
     }
   }
 }

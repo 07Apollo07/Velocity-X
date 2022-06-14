@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:velocityx/controllers/authController.dart';
 import 'package:velocityx/controllers/docCreationController.dart';
+import 'package:velocityx/controllers/fileInformationController.dart';
 import 'package:velocityx/controllers/filesController.dart';
 import 'package:velocityx/controllers/metaDataController.dart';
 import 'package:velocityx/controllers/scannerController.dart';
@@ -16,5 +17,6 @@ class StoreBindings extends Bindings {
     Get.put<WrapperController>(WrapperController(), permanent: true);
     Get.put<ScannerV2Controller>(ScannerV2Controller());
     Get.lazyPut<MetaDataController>(() => MetaDataController());
+    Get.lazyPut<FileInformationController>(() => FileInformationController());
   }
 }
