@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:get/get.dart';
+import 'package:velocityx/controllers/authController.dart';
 import 'package:velocityx/models/file_stats.dart';
 import 'package:velocityx/models/files.dart';
 
@@ -88,8 +90,39 @@ class FilesDb {
         "creator_name": file.creator_name,
         "download": file.download,
         "final_approver_set": file.final_approver_set
+      }).then((value) async {
+        await CreateStarterStats(FileRef.id, file);
       });
+
       print("Adding File information in File Collection");
+      return true;
+    } catch (e) {
+      print(e.toString());
+      return false;
+    }
+  }
+
+  Future<bool> CreateStarterStats(String fileId, FilesModel file) async {
+    try {
+      List<dynamic> tracking = [
+        {
+          "Operation": "Creation",
+          "By": file.creator_uid,
+          "Time": Timestamp.now(),
+        }
+      ];
+      print("makig Subcollection");
+      _firestore
+          .collection("Files")
+          .doc(fileId)
+          .collection("File_Stats")
+          .doc("Stats")
+          .set({
+        "tracking": tracking,
+        "fileLastOpenedDateTime": Timestamp.now(),
+        "fileModifiedDateTime": Timestamp.now(),
+      });
+      print("Added COllection ");
       return true;
     } catch (e) {
       print(e.toString());
@@ -106,7 +139,7 @@ class FilesDb {
         "assigned_person_uid": file.assigned_person_uid,
         "download": file.download,
         "final_approver_set": file.final_approver_set
-      }).then((value) => print("Updating File information in File Collection"));
+      }).then((value) => print("File Updated"));
       print("Updating File information in File Collection");
       return true;
     } catch (e) {
@@ -115,11 +148,44 @@ class FilesDb {
     }
   }
 
-  Future<bool> ForwardFile(String fileId, FilesModel file) async {
+  Future<bool> UpdateFileStats(
+      FilesModel file, List<String> newAssignedList) async {
+    try {
+      newAssignedList.forEach((newId) async {
+        print("adding to tracking");
+        List<Map> tracking = ([
+          {
+            "Operation": "Transfer",
+            "From": file.creator_uid,
+            "To": newId,
+            "Time": Timestamp.now(),
+          }
+        ]);
+        print(tracking);
+        await _firestore
+            .collection("Files")
+            .doc(file.files_uniqueId)
+            .collection("File_Stats")
+            .doc("Stats")
+            .update({
+          "tracking": FieldValue.arrayUnion(tracking),
+        });
+      });
+
+      print("Update Sicessful");
+      return true;
+    } catch (e) {
+      print(e.toString());
+      return false;
+    }
+  }
+
+  Future<bool> ForwardFile(String fileId, FilesModel file,
+      List<String> newAssignedList, FilesModel FullFile) async {
     try {
       await _firestore.collection("Files").doc(fileId).update({
         "assigned_person_uid": file.assigned_person_uid,
-      }).then((value) => print("Updating File information in File Collection"));
+      }).then((value) => UpdateFileStats(FullFile, newAssignedList));
       print("Updating File information in File Collection");
       return true;
     } catch (e) {

@@ -138,7 +138,7 @@ class _TimelineActivity extends StatelessWidget {
           alignment: TimelineAlign.manual,
           isFirst: index == 0,
           isLast: index == (FileStats.tracking?.length ?? 1) - 1,
-          lineXY: 0.25,
+          lineXY: 0.5,
           indicatorStyle: indicator,
           startChild: leftChild,
           endChild: righChild,
@@ -167,26 +167,22 @@ class _LeftChildTimeline extends StatelessWidget {
   }
 }
 
-String getLeftText(Map<String, dynamic> FileStats) {
+String getRightText(Map<String, dynamic> FileStats) {
   if (FileStats["Operation"] == "Transfer") {
-    String message = "File Transferred from " +
-        FileStats["From"] +
-        " to " +
-        FileStats["To"] +
-        " At " +
-        FileStats["Time"].toString();
+    String message =
+        "File Transferred from " + FileStats["From"] + " to " + FileStats["To"];
+    return message;
+  } else if (FileStats["Operation"] == "Creation") {
+    String message = "File Created by " + FileStats["By"];
     return message;
   } else if (FileStats["Operation"] == "Opened") {
-    String message = "File Opened by " +
-        FileStats["User"] +
-        " At " +
-        FileStats["Time"].toString();
+    String message = "File Opened by " + FileStats["User"];
     return message;
   }
   return "";
 }
 
-String getRightText(Map<String, dynamic> FileStats) {
+String getLeftText(Map<String, dynamic> FileStats) {
   String message = FileStats["Time"].toString();
   return message;
 }

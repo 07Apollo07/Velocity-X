@@ -121,8 +121,8 @@ class _DocumentEditingState extends State<DocumentEditing> {
                         ),
                         ElevatedButton(
                             onPressed: () async {
-                              FileStatsModel FileStats =
-                                  await FilesDb().GetStats("File");
+                              FileStatsModel FileStats = await FilesDb()
+                                  .GetStats(widget.File.files_uniqueId);
                               // FilesDb().GetStats("File");
                               Get.toNamed(
                                 Routes.FILE_INFORMATION,

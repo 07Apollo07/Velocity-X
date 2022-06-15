@@ -19,7 +19,7 @@ class FileStatsModel {
     fileLastOpenedDateTime = documentSnapshot!["fileLastOpenedDateTime"];
     fileModifiedDateTime = documentSnapshot["fileModifiedDateTime"];
     // file_transfers = documentSnapshot["file_transfers"];
-    tracking = documentSnapshot["Tracking"];
+    tracking = documentSnapshot["tracking"];
     // tracking = List<dynamic>.from(documentSnapshot["Tracking"].map((operation) {
     //   if (operation["Operation"] == "Transfer") {
     //     return Transfer(operation["From"], operation["To"], operation["Time"]);

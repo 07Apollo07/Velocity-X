@@ -149,7 +149,6 @@ class DocCreationController extends GetxController {
       organization_no: _user.organization_no,
       storage_link: "",
     );
-
     if (await FilesDb().createNewFile(_file)) {
       finApproverList.clear();
       finApproverIdList.clear();

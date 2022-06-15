@@ -145,7 +145,7 @@ class MetaDataController extends GetxController {
     return _user.email ?? "Email Not Set";
   }
 
-  void updateDocument(String fileId, String userId) async {
+  void updateDocument(String fileId, String userId, FilesModel file) async {
     List<String> _assignedIdList = List.from(assignedIdList);
     List<String> _newIdList = List.from(newIdList);
     _assignedIdList.addAll(_newIdList);
@@ -158,7 +158,7 @@ class MetaDataController extends GetxController {
     print(fileId);
     print(_file.assigned_person_uid);
 
-    if (await FilesDb().ForwardFile(fileId, _file)) {
+    if (await FilesDb().ForwardFile(fileId, _file, _newIdList, file)) {
       update();
       Get.snackbar("Success", "File Updated");
     }

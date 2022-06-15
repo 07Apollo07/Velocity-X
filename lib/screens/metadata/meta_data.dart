@@ -411,8 +411,10 @@ class MetaDataPage extends StatelessWidget {
                                       fontWeight: FontWeight.bold),
                                 ),
                                 onPressed: () async {
-                                  controller.updateDocument(File.files_uniqueId,
-                                      Get.find<UserController>().user.id ?? "");
+                                  controller.updateDocument(
+                                      File.files_uniqueId,
+                                      Get.find<UserController>().user.id ?? "",
+                                      File);
                                 },
                               ),
                             ),
