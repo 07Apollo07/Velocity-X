@@ -52,6 +52,7 @@ dependencies:
   jsqr: ^0.1.4
   html_editor_enhanced: ^2.5.0
   syncfusion_flutter_pdfviewer: ^20.1.59-beta
+  file_picker: ^4.6.1
 
 
 dev_dependencies:
@@ -80,6 +81,8 @@ flutter:
   assets:
     - assets/
     - assets/images/
+    - WebViewer/
+    - WebViewer/lib/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
