@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -31,6 +33,44 @@ class DocCreationController extends GetxController {
   List<UserModel> get finApproverList => finalApproverList.value;
   List<String?> get finApproverIdList => finalApproverIdList.value;
 
+  void addToAssignedList(String creator_id, String email) {
+    if (userList.length > 0) {
+      UserModel _eligibleUser = userList.firstWhere(
+        (user) => ((user.email == email) && (user.id != creator_id)),
+        orElse: () {
+          UserModel dummy = UserModel();
+          return dummy;
+        },
+      );
+      bool inAssignedList = assignedUserList.value
+          .any((user) => (user.email == _eligibleUser.email));
+      if (!inAssignedList && _eligibleUser.email != "Email Not Set") {
+        assignedUserList.value.add(_eligibleUser);
+        assignedUserIdList.value.add(_eligibleUser.id);
+        update();
+        print("Added to List");
+      } else {
+        Get.snackbar("Not Allowed", "You are Not allowed to add this User");
+      }
+    } else {
+      (Get.snackbar("Empty List", "userList empty"));
+    }
+  }
+
+  void removePersonFromAssignedPerson(String email) {
+    if (assignedList.length > 0) {
+      for (var user in assignedList) {
+        if (user.email == email.trim()) {
+          assignedUserList.value.remove(user);
+          assignedUserIdList.value.remove(user.email);
+          update();
+        } else {
+          print("Cant Remove");
+        }
+      }
+    }
+  }
+
   void setFinalApprover(String email) async {
     print("reached here to add");
     if (userList.length > 0) {
@@ -57,47 +97,6 @@ class DocCreationController extends GetxController {
     } else {
       (Get.snackbar("title", "userList empty"));
       print(finApproverList.toString());
-    }
-  }
-
-  void addToAssignedList(String email) async {
-    print("reached here to add");
-    if (userList.length > 0) {
-      print(email.trim());
-      print("there are items in userList");
-      for (var user in userList) {
-        print(user.email);
-        if (user.email == email.trim()) {
-          print("eligible to go in");
-          // assignedList.addIf(assignedList.any((element) {
-          //   if (element.email == email.trim()) {
-          //     return false;
-          //   } else
-          //     return true;
-          // }), user);
-          //TODO Duplicate Users can be added here;
-          assignedList.add(user);
-          assignedIdList.add(user.id);
-          update();
-          print(user);
-        }
-      }
-    } else
-      (Get.snackbar("title", "userList empty"));
-    print(assignedList.toString());
-  }
-
-  void removePersonFromAssignedPerson(String email) {
-    if (assignedList.length > 0) {
-      for (var user in assignedList) {
-        if (user.email == email.trim()) {
-          assignedList.remove(user);
-          assignedIdList.remove(user.email);
-          update();
-        } else {
-          print("Cant Remove");
-        }
-      }
     }
   }
 
@@ -154,6 +153,8 @@ class DocCreationController extends GetxController {
       finApproverIdList.clear();
       assignedList.clear();
       assignedIdList.clear();
+      downloadDocument = false;
+      finalApprover = false;
       update();
       Get.snackbar("Success", "File Created");
     }

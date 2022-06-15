@@ -1,5 +1,4 @@
-import 'dart:collection';
-import 'dart:io';
+import 'package:intl/intl.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,7 +6,9 @@ import 'package:timeline_tile/timeline_tile.dart';
 import 'package:velocityx/assets/custom_icons_icons.dart';
 import 'package:velocityx/controllers/authController.dart';
 import 'package:velocityx/controllers/fileInformationController.dart';
+import 'package:velocityx/controllers/userController.dart';
 import 'package:velocityx/models/file_stats.dart';
+import 'package:velocityx/models/user.dart';
 
 class FileInformation extends StatelessWidget {
   final FileStatsModel FileStat;
@@ -168,22 +169,34 @@ class _LeftChildTimeline extends StatelessWidget {
 }
 
 String getRightText(Map<String, dynamic> FileStats) {
-  if (FileStats["Operation"] == "Transfer") {
-    String message =
-        "File Transferred from " + FileStats["From"] + " to " + FileStats["To"];
+  if (FileStats["Operation"] == "Added") {
+    String message = getNameFromUid(FileStats["From"]) +
+        " Added " +
+        getNameFromUid(FileStats["To"]) +
+        " As Final Approver";
+    return message;
+  } else if (FileStats["Operation"] == "Transfer") {
+    String message = "File Transferred from " +
+        getNameFromUid(FileStats["From"]) +
+        " to " +
+        getNameFromUid(FileStats["To"]);
     return message;
   } else if (FileStats["Operation"] == "Creation") {
-    String message = "File Created by " + FileStats["By"];
+    String message = "File Created by " + getNameFromUid(FileStats["By"]);
     return message;
   } else if (FileStats["Operation"] == "Opened") {
-    String message = "File Opened by " + FileStats["User"];
+    String message = "File Opened by " + getNameFromUid(FileStats["User"]);
+    return message;
+  } else if (FileStats["Operation"] == "RemoveSelf") {
+    String message =
+        getNameFromUid(FileStats["User"]) + " decided to surrender possession";
     return message;
   }
   return "";
 }
 
 String getLeftText(Map<String, dynamic> FileStats) {
-  String message = FileStats["Time"].toString();
+  String message = getDateFromTimeStamp(FileStats["Time"].seconds.toString());
   return message;
 }
 
@@ -210,4 +223,18 @@ class _RightChildTimeline extends StatelessWidget {
       ],
     );
   }
+}
+
+String getDateFromTimeStamp(String timestamp) {
+  int time = int.parse(timestamp);
+  DateTime date = DateTime.fromMillisecondsSinceEpoch(time * 1000);
+  String formattedDate = DateFormat('M/d/y -- E -- HH:mm:ss a ').format(date);
+  return formattedDate;
+}
+
+String getNameFromUid(String uid) {
+  UserModel user =
+      Get.find<UserController>().users.firstWhere((user) => user.id == uid);
+  String name = user.f_name + " " + user.l_name;
+  return name;
 }

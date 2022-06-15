@@ -1,22 +1,20 @@
 import 'package:ai_barcode/ai_barcode.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:velocityx/controllers/authController.dart';
 import 'package:velocityx/controllers/userController.dart';
 import 'package:velocityx/models/files.dart';
 import 'package:velocityx/models/user.dart';
 import 'package:velocityx/services/filesDb.dart';
 
 class DocEditingController extends GetxController {
-  CreatorController? creatorController;
+  var downloadDocument = false;
+  var finalApprover = false;
   bool initialized = false;
+
+  CreatorController? creatorController;
   TextEditingController documentNameController = TextEditingController();
   TextEditingController assignedPersonNameController = TextEditingController();
   TextEditingController finalApproverController = TextEditingController();
-
-  var downloadDocument = false;
-  var finalApprover = false;
 
   List<UserModel> userList = Get.find<UserController>().users;
 

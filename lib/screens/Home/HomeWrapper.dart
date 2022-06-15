@@ -43,7 +43,7 @@ class HomeWrapper extends StatelessWidget {
             return GetPageRoute(
               routeName: Routes.FILE_INFORMATION,
               page: () => FileInformation(
-                FileStat: FileStatsModel(),
+                FileStat: routeSettings.arguments as FileStatsModel,
               ),
               maintainState: false,
             );
