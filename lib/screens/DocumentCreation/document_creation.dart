@@ -315,14 +315,14 @@ class _DocumentCreationState extends State<DocumentCreation> {
                               ),
                               IconButton(
                                 onPressed: () async {
-
-                                  final result = await FilePicker.platform.pickFiles(
+                                  final result =
+                                      await FilePicker.platform.pickFiles(
                                     type: FileType.custom,
-                                    allowedExtensions: ['jpg', 'pdf', 'doc'],
+                                    allowedExtensions: ['pdf'],
                                   );
-                                  if( result == null){
+                                  if (result == null) {
                                     return null;
-                                  }else{
+                                  } else {
                                     controller.updatePickedFile(result);
                                     print(controller.pickedFile?.name);
                                   }
@@ -336,51 +336,52 @@ class _DocumentCreationState extends State<DocumentCreation> {
                             ],
                           ),
                           Visibility(
-                              visible: controller.isFilePicked,
-                              // child: Text("${controller.pickedFile?.name}")
-                              child: SingleChildScrollView(
-                                  child: controller.isFilePicked
-                                      ? GridView.builder(
-                                    shrinkWrap: true,
-                                    itemCount:
-                                    1,
-                                    gridDelegate:
-                                    const SliverGridDelegateWithMaxCrossAxisExtent(
-                                      maxCrossAxisExtent: 180,
-                                      childAspectRatio: 3 / 2,
-                                      crossAxisSpacing: 20,
-                                      mainAxisSpacing: 20,
-                                    ),
-                                    itemBuilder: (_, index) {
-                                      return Container(
-                                        alignment: Alignment.center,
-                                        child: Column(
-                                          mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                          children: [
-                                            Text("${controller.pickedFile?.name}"),
-                                            // Text(controller
-                                            //     .finApproverList[index]
-                                            //     .email ??
-                                            //     "Email Not Set"),
-                                            IconButton(
-                                              onPressed: () {
-                                                controller.removePickedFile();
-                                              },
-                                              icon:
-                                              Icon(Icons.person_remove),
-                                              color: Colors.red,
-                                            )
-                                          ],
+                            visible: controller.isFilePicked,
+                            // child: Text("${controller.pickedFile?.name}")
+                            child: SingleChildScrollView(
+                                child: controller.isFilePicked
+                                    ? GridView.builder(
+                                        shrinkWrap: true,
+                                        itemCount: 1,
+                                        gridDelegate:
+                                            const SliverGridDelegateWithMaxCrossAxisExtent(
+                                          maxCrossAxisExtent: 180,
+                                          childAspectRatio: 3 / 2,
+                                          crossAxisSpacing: 20,
+                                          mainAxisSpacing: 20,
                                         ),
-                                        decoration: BoxDecoration(
-                                            color: Colors.blue,
-                                            borderRadius:
-                                            BorderRadius.circular(15)),
-                                      );
-                                    },
-                                  )
-                                      : Container()),
+                                        itemBuilder: (_, index) {
+                                          return Container(
+                                            alignment: Alignment.center,
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                    "${controller.pickedFile?.name}"),
+                                                // Text(controller
+                                                //     .finApproverList[index]
+                                                //     .email ??
+                                                //     "Email Not Set"),
+                                                IconButton(
+                                                  onPressed: () {
+                                                    controller
+                                                        .removePickedFile();
+                                                  },
+                                                  icon:
+                                                      Icon(Icons.person_remove),
+                                                  color: Colors.red,
+                                                )
+                                              ],
+                                            ),
+                                            decoration: BoxDecoration(
+                                                color: Colors.blue,
+                                                borderRadius:
+                                                    BorderRadius.circular(15)),
+                                          );
+                                        },
+                                      )
+                                    : Container()),
                           ),
                           SizedBox(height: 20),
                           Center(
@@ -397,16 +398,22 @@ class _DocumentCreationState extends State<DocumentCreation> {
                               onPressed: () async {
                                 if (DocumentCreation._formkey.currentState!
                                     .validate()) {
-                                  controller.createDocument(
-                                      documentNameController.text.trim(),
-                                      controller.assignedIdList,
-                                      controller.downloadDocument,
-                                      controller.finalApproverIdList.value
-                                                  .length >
-                                              0
-                                          ? true
-                                          : false,
-                                      controller.finApproverIdList);
+                                  controller.storageLink = await controller
+                                      .updateStorageLink()
+                                      .then((value) async {
+                                    await controller.createDocument(
+                                        documentNameController.text.trim(),
+                                        controller.assignedIdList,
+                                        controller.downloadDocument,
+                                        controller.finalApproverIdList.value
+                                                    .length >
+                                                0
+                                            ? true
+                                            : false,
+                                        controller.finApproverIdList,
+                                        controller.storageLink);
+                                    return "";
+                                  });
                                   documentNameController.text = "";
                                   assignedPersonNameController.text = "";
                                   finalApproverController.text = "";

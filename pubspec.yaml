@@ -53,6 +53,7 @@ dependencies:
   html_editor_enhanced: ^2.5.0
   syncfusion_flutter_pdfviewer: ^20.1.59-beta
   file_picker: ^4.6.1
+  firebase_storage: ^10.2.17
 
 
 dev_dependencies:

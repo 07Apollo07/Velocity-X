@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'package:velocityx/controllers/authController.dart';
@@ -75,6 +76,23 @@ class FilesDb {
       return retVal;
     });
   }
+
+  Future<String> UploadFileInStorage(var path, var file) async {
+
+      String storageLink = "";
+      final ref = FirebaseStorage.instance.ref().child(path);
+      UploadTask uploadTask = ref.putFile(file);
+
+      uploadTask.whenComplete(() async {
+        storageLink =await ref.getDownloadURL();
+        print("Got storage Link : ${storageLink}");
+        return storageLink;
+      }).catchError((onError) {
+        print(onError);
+      });
+      return storageLink;
+  }
+
 
   Future<bool> createNewFile(FilesModel file) async {
     try {
@@ -195,6 +213,48 @@ class FilesDb {
       return false;
     }
   }
+
+  Future<bool> UpdateStorageLinkInFile(String fileId, String link) async {
+    try {
+      await _firestore.collection("Files").doc(fileId).update({
+
+        "storage_link": link,
+
+      });
+      print("Updating Storage Link in File Collection");
+      return true;
+    } catch (e) {
+      print(e.toString());
+      return false;
+    }
+  }
+
+  // Future<String> UploadFileInStorage(var path, var file) async {
+  //
+  //
+  //   try {
+  //       String storageLink;
+  //       final ref = FirebaseStorage.instance.ref().child(path);
+  //       UploadTask uploadTask = ref.putFile(file);
+  //
+  //       uploadTask.whenComplete(() async {
+  //         storageLink = await ref.getDownloadURL() ;
+  //       }).catchError((onError) {
+  //         print(onError);
+  //       });
+  //
+  //       // String storageLink = await ref.getDownloadURL();
+  //
+  //     print("Storage Link:${storageLink}");
+  //     print("Uploaded Document in Storage");
+  //     return storageLink;
+  //   } catch (e) {
+  //     print(e.toString());
+  //     return e.toString();
+  //   }
+  // }
+
+  
 
   Future<bool> UpdateEditStats(String fileId, List<String> newAssignedList,
       List<String> deletedUsersList) async {

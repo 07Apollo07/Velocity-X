@@ -16,41 +16,39 @@ class DocCreationController extends GetxController {
   var finalApprover = false;
   PlatformFile? pickedFile;
   bool isFilePicked = false;
+  String storageLink = "";
 
   List<UserModel> userList = Get.find<UserController>().users;
 
   Rx<List<UserModel>> assignedUserList =
-  Rx<List<UserModel>>(List.empty(growable: true));
+      Rx<List<UserModel>>(List.empty(growable: true));
 
   Rx<List<String?>> assignedUserIdList =
-  Rx<List<String?>>(List.empty(growable: true));
+      Rx<List<String?>>(List.empty(growable: true));
 
   Rx<List<UserModel>> finalApproverList =
-  Rx<List<UserModel>>(List.empty(growable: true));
+      Rx<List<UserModel>>(List.empty(growable: true));
 
   Rx<List<String?>> finalApproverIdList =
-  Rx<List<String?>>(List.empty(growable: true));
+      Rx<List<String?>>(List.empty(growable: true));
 
   List<UserModel> get assignedList => assignedUserList.value;
   List<String?> get assignedIdList => assignedUserIdList.value;
   List<UserModel> get finApproverList => finalApproverList.value;
   List<String?> get finApproverIdList => finalApproverIdList.value;
 
-  void updatePickedFile(var result){
-
-    if (pickedFile == null){
+  void updatePickedFile(var result) {
+    if (pickedFile == null) {
       pickedFile = result.files.first;
       isFilePicked = true;
       update();
       Get.snackbar("Success", "File Picked");
-    }else{
+    } else {
       Get.snackbar("Error", "File Already Picked, Remove the Selected File");
     }
-
-
   }
 
-  void removePickedFile(){
+  void removePickedFile() {
     pickedFile = null;
     isFilePicked = false;
     update();
@@ -60,7 +58,7 @@ class DocCreationController extends GetxController {
   void addToAssignedList(String creator_id, String email) {
     if (userList.length > 0) {
       UserModel _eligibleUser = userList.firstWhere(
-            (user) => ((user.email == email) && (user.id != creator_id)),
+        (user) => ((user.email == email) && (user.id != creator_id)),
         orElse: () {
           UserModel dummy = UserModel();
           return dummy;
@@ -150,38 +148,59 @@ class DocCreationController extends GetxController {
     update();
   }
 
-  void createDocument(
+  Future<bool> createDocument(
       String docName,
       List<String?> assignedPerson,
       bool download,
       bool finalApprover,
-      List<String?> finalApproverNameId) async {
+      List<String?> finalApproverNameId,
+      String StorageLink) async {
     UserModel _user = Get.find<UserController>().user;
-    FilesModel _file = FilesModel(
-      name: docName,
-      assigned_person_uid: assignedPerson.length > 0 ? assignedPerson : [""],
-      creation_datetime: Timestamp.fromDate(DateTime.now()),
-      creator_name: _user.f_name + " " + _user.l_name,
-      creator_uid: Get.find<AuthController>().user!.uid,
-      designation: _user.designation,
-      download: download,
-      final_approver_set: finalApprover,
-      final_approver: finalApproverNameId.length > 0
-          ? finalApproverNameId.last ?? "No Final Approver"
-          : "No Final Approver",
-      organization_no: _user.organization_no,
-      storage_link: "",
-    );
-    if (await FilesDb().createNewFile(_file)) {
-      finApproverList.clear();
-      finApproverIdList.clear();
-      assignedList.clear();
-      assignedIdList.clear();
-      downloadDocument = false;
-      finalApprover = false;
-      update();
-      Get.snackbar("Success", "File Created");
+    try {
+      FilesModel _file = FilesModel(
+        name: docName,
+        assigned_person_uid: assignedPerson.length > 0 ? assignedPerson : [""],
+        creation_datetime: Timestamp.fromDate(DateTime.now()),
+        creator_name: _user.f_name + " " + _user.l_name,
+        creator_uid: Get.find<AuthController>().user!.uid,
+        designation: _user.designation,
+        download: download,
+        final_approver_set: finalApprover,
+        final_approver: finalApproverNameId.length > 0
+            ? finalApproverNameId.last ?? "No Final Approver"
+            : "No Final Approver",
+        organization_no: _user.organization_no,
+        storage_link: StorageLink,
+      );
+      if (await FilesDb().createNewFile(_file)) {
+        finApproverList.clear();
+        finApproverIdList.clear();
+        assignedList.clear();
+        assignedIdList.clear();
+        downloadDocument = false;
+        finalApprover = false;
+        update();
+        Get.snackbar("Success", "File Created");
+      }
+      return true;
+    } catch (e) {
+      print(e.toString());
+      return false;
     }
-    print(_file.toString());
+  }
+
+  Future<String> updateStorageLink() async {
+    UserModel _user = Get.find<UserController>().user;
+
+    final path = "${_user.organization_no}/${pickedFile!.name}";
+    final file = File(pickedFile!.path!);
+
+    String storageLink = await FilesDb().UploadFileInStorage(path, file);
+
+    print(storageLink);
+
+    return storageLink;
+
+    // await FilesDb().UpdateStorageLinkInFile()
   }
 }
