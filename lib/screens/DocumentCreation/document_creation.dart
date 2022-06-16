@@ -52,6 +52,7 @@ class _DocumentCreationState extends State<DocumentCreation> {
                 ),
               ),
               body: SingleChildScrollView(
+                controller: ScrollController(),
                 child: Container(
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
@@ -95,6 +96,10 @@ class _DocumentCreationState extends State<DocumentCreation> {
                                                 .text.isNotEmpty) {
                                           print("sending request");
                                           controller.addToAssignedList(
+                                              Get.find<UserController>()
+                                                      .user
+                                                      .id ??
+                                                  "Email Not Set",
                                               assignedPersonNameController.text
                                                   .trim()
                                                   .toLowerCase());
@@ -122,58 +127,56 @@ class _DocumentCreationState extends State<DocumentCreation> {
                             ),
                           ),
                           SizedBox(height: 20),
-                          SingleChildScrollView(
-                              child: (controller != null &&
-                                      controller.assignedList.length > 0)
-                                  ? GridView.builder(
-                                      shrinkWrap: true,
-                                      itemCount: controller.assignedList.length,
-                                      gridDelegate:
-                                          const SliverGridDelegateWithMaxCrossAxisExtent(
-                                        maxCrossAxisExtent: 180,
-                                        childAspectRatio: 3 / 2,
-                                        crossAxisSpacing: 20,
-                                        mainAxisSpacing: 20,
+                          (controller != null &&
+                                  controller.assignedList.length > 0)
+                              ? GridView.builder(
+                                  controller: ScrollController(),
+                                  shrinkWrap: true,
+                                  itemCount: controller.assignedList.length,
+                                  gridDelegate:
+                                      const SliverGridDelegateWithMaxCrossAxisExtent(
+                                    maxCrossAxisExtent: 180,
+                                    childAspectRatio: 3 / 2,
+                                    crossAxisSpacing: 20,
+                                    mainAxisSpacing: 20,
+                                  ),
+                                  itemBuilder: (_, index) {
+                                    return Container(
+                                      alignment: Alignment.center,
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(controller
+                                                  .assignedList[index].f_name +
+                                              " " +
+                                              controller
+                                                  .assignedList[index].l_name),
+                                          Text(controller
+                                                  .assignedList[index].email ??
+                                              "Email Not Set"),
+                                          IconButton(
+                                            onPressed: () {
+                                              controller
+                                                  .removePersonFromAssignedPerson(
+                                                      controller
+                                                              .assignedList[
+                                                                  index]
+                                                              .email ??
+                                                          "Email Not Set");
+                                            },
+                                            icon: Icon(Icons.person_remove),
+                                            color: Colors.red,
+                                          )
+                                        ],
                                       ),
-                                      itemBuilder: (_, index) {
-                                        return Container(
-                                          alignment: Alignment.center,
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Text(controller
-                                                      .assignedList[index]
-                                                      .f_name +
-                                                  " " +
-                                                  controller.assignedList[index]
-                                                      .l_name),
-                                              Text(controller
-                                                      .assignedList[index]
-                                                      .email ??
-                                                  "Email Not Set"),
-                                              IconButton(
-                                                onPressed: () {
-                                                  controller
-                                                      .removePersonFromAssignedPerson(
-                                                          controller
-                                                                  .assignedList[
-                                                                      index]
-                                                                  .email ??
-                                                              "Email Not Set");
-                                                },
-                                                icon: Icon(Icons.person_remove),
-                                                color: Colors.red,
-                                              )
-                                            ],
-                                          ),
-                                          decoration: BoxDecoration(
-                                              color: Colors.blue,
-                                              borderRadius:
-                                                  BorderRadius.circular(15)),
-                                        );
-                                      })
-                                  : Container()),
+                                      decoration: BoxDecoration(
+                                          color: Colors.blue,
+                                          borderRadius:
+                                              BorderRadius.circular(15)),
+                                    );
+                                  })
+                              : Container(),
                           SizedBox(height: 20),
                           CheckboxListTile(
                             title: Text(
@@ -235,64 +238,64 @@ class _DocumentCreationState extends State<DocumentCreation> {
                               controller: finalApproverController,
                             ),
                           ),
+                          SizedBox(height: 20),
                           Visibility(
                             visible: controller.finalApprover,
-                            child: SingleChildScrollView(
-                                child: (controller != null &&
-                                        controller.finApproverList.length > 0)
-                                    ? GridView.builder(
-                                        shrinkWrap: true,
-                                        itemCount:
-                                            controller.finApproverList.length,
-                                        gridDelegate:
-                                            const SliverGridDelegateWithMaxCrossAxisExtent(
-                                          maxCrossAxisExtent: 180,
-                                          childAspectRatio: 3 / 2,
-                                          crossAxisSpacing: 20,
-                                          mainAxisSpacing: 20,
+                            child: (controller != null &&
+                                    controller.finApproverList.length > 0)
+                                ? GridView.builder(
+                                    controller: ScrollController(),
+                                    shrinkWrap: true,
+                                    itemCount:
+                                        controller.finApproverList.length,
+                                    gridDelegate:
+                                        const SliverGridDelegateWithMaxCrossAxisExtent(
+                                      maxCrossAxisExtent: 180,
+                                      childAspectRatio: 3 / 2,
+                                      crossAxisSpacing: 20,
+                                      mainAxisSpacing: 20,
+                                    ),
+                                    itemBuilder: (_, index) {
+                                      return Container(
+                                        alignment: Alignment.center,
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text(controller
+                                                    .finApproverList[index]
+                                                    .f_name +
+                                                " " +
+                                                controller
+                                                    .finApproverList[index]
+                                                    .l_name),
+                                            Text(controller
+                                                    .finApproverList[index]
+                                                    .email ??
+                                                "Email Not Set"),
+                                            IconButton(
+                                              onPressed: () {
+                                                controller
+                                                    .removePersonFromFinalApprover(
+                                                        controller
+                                                                .finApproverList[
+                                                                    index]
+                                                                .email ??
+                                                            "Email Not Set");
+                                              },
+                                              icon: Icon(Icons.person_remove),
+                                              color: Colors.red,
+                                            )
+                                          ],
                                         ),
-                                        itemBuilder: (_, index) {
-                                          return Container(
-                                            alignment: Alignment.center,
-                                            child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                Text(controller
-                                                        .finApproverList[index]
-                                                        .f_name +
-                                                    " " +
-                                                    controller
-                                                        .finApproverList[index]
-                                                        .l_name),
-                                                Text(controller
-                                                        .finApproverList[index]
-                                                        .email ??
-                                                    "Email Not Set"),
-                                                IconButton(
-                                                  onPressed: () {
-                                                    controller
-                                                        .removePersonFromFinalApprover(
-                                                            controller
-                                                                    .finApproverList[
-                                                                        index]
-                                                                    .email ??
-                                                                "Email Not Set");
-                                                  },
-                                                  icon:
-                                                      Icon(Icons.person_remove),
-                                                  color: Colors.red,
-                                                )
-                                              ],
-                                            ),
-                                            decoration: BoxDecoration(
-                                                color: Colors.blue,
-                                                borderRadius:
-                                                    BorderRadius.circular(15)),
-                                          );
-                                        },
-                                      )
-                                    : Container()),
+                                        decoration: BoxDecoration(
+                                            color: Colors.blue,
+                                            borderRadius:
+                                                BorderRadius.circular(15)),
+                                      );
+                                    },
+                                  )
+                                : Container(),
                           ),
                           SizedBox(height: 20),
                           Row(
@@ -398,7 +401,11 @@ class _DocumentCreationState extends State<DocumentCreation> {
                                       documentNameController.text.trim(),
                                       controller.assignedIdList,
                                       controller.downloadDocument,
-                                      controller.finalApprover,
+                                      controller.finalApproverIdList.value
+                                                  .length >
+                                              0
+                                          ? true
+                                          : false,
                                       controller.finApproverIdList);
                                   documentNameController.text = "";
                                   assignedPersonNameController.text = "";

@@ -5,8 +5,10 @@ import 'package:velocityx/assets/custom_icons_icons.dart';
 import 'package:velocityx/controllers/authController.dart';
 import 'package:velocityx/controllers/metaDataController.dart';
 import 'package:velocityx/controllers/userController.dart';
+import 'package:velocityx/models/file_stats.dart';
 import 'package:velocityx/models/files.dart';
 import 'package:velocityx/routes/app_pages.dart';
+import 'package:velocityx/services/filesDb.dart';
 import 'package:velocityx/shared/constants.dart';
 import 'package:velocityx/shared/icon_logo.dart';
 import 'package:ai_barcode/ai_barcode.dart';
@@ -168,7 +170,7 @@ class MetaDataPage extends StatelessWidget {
                       ),
                       TextFormField(
                         enabled: false,
-                        initialValue: File.creator_uid,
+                        initialValue: File.creator_name,
                         decoration: InputDecoration(
                           focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
@@ -207,7 +209,8 @@ class MetaDataPage extends StatelessWidget {
                       ),
                       TextFormField(
                         enabled: false,
-                        initialValue: File.final_approver,
+                        initialValue: controller
+                            .getFinalApproverName(File.final_approver),
                         decoration: InputDecoration(
                           focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
@@ -249,10 +252,13 @@ class MetaDataPage extends StatelessWidget {
                           IconButton(
                             color: Theme.of(context).primaryColor,
                             icon: Icon(Icons.history_outlined),
-                            onPressed: () {
+                            onPressed: () async {
+                              FileStatsModel FileStats =
+                                  await FilesDb().GetStats(File.files_uniqueId);
                               Get.toNamed(
                                 Routes.FILE_INFORMATION,
                                 id: Constants.homeId,
+                                arguments: FileStats,
                               );
                             },
                           ),
@@ -260,6 +266,8 @@ class MetaDataPage extends StatelessWidget {
                             color: Theme.of(context).primaryColor,
                             icon: Icon(Icons.open_in_new),
                             onPressed: () {
+                              controller.OpenedDocument(File.files_uniqueId,
+                                  Get.find<UserController>().user.id ?? "");
                               Get.toNamed(
                                 Routes.PDFVIEWER,
                                 id: Constants.homeId,
@@ -274,9 +282,11 @@ class MetaDataPage extends StatelessWidget {
                               controller.changeIsAssignedPressed();
                             },
                           ),
-                          IconLogo(
-                              color: Theme.of(context).primaryColor,
-                              icon: CustomIcons.home),
+                          IconButton(
+                            color: Theme.of(context).primaryColor,
+                            icon: Icon(Icons.download),
+                            onPressed: () {},
+                          ),
                         ],
                       ),
                       SizedBox(

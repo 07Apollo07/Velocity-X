@@ -1,12 +1,11 @@
 import 'package:ai_barcode/ai_barcode.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:velocityx/controllers/userController.dart';
 import 'package:velocityx/models/files.dart';
 import 'package:velocityx/models/user.dart';
 import 'package:velocityx/services/filesDb.dart';
+import 'package:velocityx/shared/constants.dart';
 
 class MetaDataController extends GetxController {
   bool initialized = false;
@@ -33,13 +32,6 @@ class MetaDataController extends GetxController {
   List<String?> get newIdList => newUserIdList.value;
 
   var isAssignedPressed = false.obs;
-
-  String getDateFromTimeStamp(String timestamp) {
-    int time = int.parse(timestamp);
-    DateTime date = DateTime.fromMillisecondsSinceEpoch(time * 1000);
-    String formattedDate = DateFormat('M/d/y -- E -- HH:mm:ss a ').format(date);
-    return formattedDate;
-  }
 
   void changeIsAssignedPressed() {
     isAssignedPressed.value = !isAssignedPressed.value;
@@ -69,6 +61,32 @@ class MetaDataController extends GetxController {
     }
   }
 
+  // void addToAssignedList(String email) async {
+  //   print("reached here to add");
+  //   if (userList.length > 0) {
+  //     print("there are items in userList");
+  //     UserModel _eligibleUser = userList.firstWhere(
+  //           (user) => ((user.email == email)),
+  //       orElse: () {
+  //         UserModel dummy = UserModel();
+  //         Get.snackbar("Fail", "Massive Fail");
+  //         return dummy;
+  //       },
+  //     );
+  //     bool duplicateUser =
+  //     assignedList.any((user) => (user.email == _eligibleUser.email));
+  //     if (!duplicateUser && _eligibleUser.email != "Email Not Set") {
+  //       assignedUserList.value.add(_eligibleUser);
+  //       assignedUserIdList.value.add(_eligibleUser.id);
+  //       update();
+  //       print("Added to List");
+  //     } else {
+  //       Get.snackbar("Failure", "Cant Add User");
+  //     }
+  //   } else
+  //     (Get.snackbar("Empty List", "userList empty"));
+  // }
+
   void addToNewList(String creator_id, String email) async {
     print("Adding to New List");
     if (userList.length > 0) {
@@ -76,7 +94,6 @@ class MetaDataController extends GetxController {
         (user) => ((user.email == email) && (user.id != creator_id)),
         orElse: () {
           UserModel dummy = UserModel();
-          Get.snackbar("Fail", "Massive Fail");
           return dummy;
         },
       );
@@ -84,7 +101,6 @@ class MetaDataController extends GetxController {
           .any((user) => (user.email == _eligibleUser.email));
       bool inNewList =
           newUserList.value.any((user) => (user.email == _eligibleUser.email));
-
       if (!inAssignedList &&
           !inNewList &&
           _eligibleUser.email != "Email Not Set") {
@@ -93,36 +109,11 @@ class MetaDataController extends GetxController {
         update();
         print("Added to List");
       } else {
-        Get.snackbar("Failure", "Cant Add User");
+        Get.snackbar("Not Allowed", "You are Not allowed to add this User");
       }
-    } else
+    } else {
       (Get.snackbar("Empty List", "userList empty"));
-  }
-
-  void addToAssignedList(String email) async {
-    print("reached here to add");
-    if (userList.length > 0) {
-      print("there are items in userList");
-      UserModel _eligibleUser = userList.firstWhere(
-        (user) => ((user.email == email)),
-        orElse: () {
-          UserModel dummy = UserModel();
-          Get.snackbar("Fail", "Massive Fail");
-          return dummy;
-        },
-      );
-      bool duplicateUser =
-          assignedList.any((user) => (user.email == _eligibleUser.email));
-      if (!duplicateUser && _eligibleUser.email != "Email Not Set") {
-        assignedUserList.value.add(_eligibleUser);
-        assignedUserIdList.value.add(_eligibleUser.id);
-        update();
-        print("Added to List");
-      } else {
-        Get.snackbar("Failure", "Cant Add User");
-      }
-    } else
-      (Get.snackbar("Empty List", "userList empty"));
+    }
   }
 
   void removePersonFromNewList(String email) {
@@ -140,9 +131,13 @@ class MetaDataController extends GetxController {
     }
   }
 
-  String getCreatorEmail(String id) {
-    UserModel _user = userList.firstWhere((element) => element.id == id);
-    return _user.email ?? "Email Not Set";
+  String getFinalApproverName(String uid) {
+    if (uid == "No Final Approver") {
+      return "No Final Approver";
+    }
+    UserModel user = userList.firstWhere((user) => user.id == uid);
+    String name = user.f_name + " " + user.l_name;
+    return name;
   }
 
   void updateDocument(String fileId, String userId, FilesModel file) async {
@@ -158,11 +153,33 @@ class MetaDataController extends GetxController {
     print(fileId);
     print(_file.assigned_person_uid);
 
-    if (await FilesDb().ForwardFile(fileId, _file, _newIdList, file)) {
+    if (await FilesDb()
+        .ForwardFile(fileId, _file, _newIdList, file, removeYourself)) {
       update();
+      Get.back(id: Constants.homeId);
       Get.snackbar("Success", "File Updated");
     }
     print(_file.toString());
+  }
+
+  void OpenedDocument(String fileId, String userId) async {
+    await FilesDb().UpdateOpenedStats(fileId, userId);
+  }
+
+  String getCreatorEmail(String id) {
+    UserModel _user = userList.firstWhere((element) => element.id == id);
+    return _user.email ?? "Email Not Set";
+  }
+
+  String getDateFromTimeStamp(String timestamp) {
+    int time = int.parse(timestamp);
+    DateTime date = DateTime.fromMillisecondsSinceEpoch(time * 1000);
+    String formattedDate = DateFormat('M/d/y -- E -- HH:mm:ss a ').format(date);
+    return formattedDate;
+  }
+
+  void clear() {
+    assignedUserList.value = [];
   }
 
   @override
@@ -170,10 +187,6 @@ class MetaDataController extends GetxController {
     super.onInit();
     creatorController = CreatorController();
     initialized = false;
-  }
-
-  void clear() {
-    assignedUserList.value = [];
   }
 
   @override

@@ -69,29 +69,35 @@ class OrganizationDoc extends StatelessWidget {
           child: GetX<UserController>(
             init: Get.find<UserController>(),
             builder: (UserController userController) {
-              if (userController != null && userController.users.length > 0) {
-                return ListView.builder(
-                  itemCount: userController.users.length,
-                  itemBuilder: (_, index) {
-                    return ListTile(
-                      //TODO remove assigned_by and due_date after changes to TaskTile
-                      leading: Icon(Icons.account_circle_outlined),
-                      title: Text(userController.users[index].f_name +
-                          " " +
-                          userController.users[index].l_name),
-                      subtitle: Text(userController.users[index].designation),
-                      onTap: () {
-                        Get.toNamed(
-                          Routes.CONTACT_CARD,
-                          id: Constants.orgDirectoryId,
-                          arguments: index,
-                        );
-                      },
-                    );
-                  },
-                );
+              if (userController.user.organization_no != "00") {
+                if (userController != null && userController.users.length > 0) {
+                  return ListView.builder(
+                    itemCount: userController.users.length,
+                    itemBuilder: (_, index) {
+                      return ListTile(
+                        //TODO remove assigned_by and due_date after changes to TaskTile
+                        leading: Icon(Icons.account_circle_outlined),
+                        title: Text(userController.users[index].f_name +
+                            " " +
+                            userController.users[index].l_name),
+                        subtitle: Text(userController.users[index].designation),
+                        onTap: () {
+                          Get.toNamed(
+                            Routes.CONTACT_CARD,
+                            id: Constants.orgDirectoryId,
+                            arguments: index,
+                          );
+                        },
+                      );
+                    },
+                  );
+                } else {
+                  return Center(child: CircularProgressIndicator());
+                }
               } else {
-                return Center(child: CircularProgressIndicator());
+                return Center(
+                    child: Text(
+                        "Please ask your Employer to add you to their organization"));
               }
             },
           ),

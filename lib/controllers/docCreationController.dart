@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -34,6 +36,44 @@ class DocCreationController extends GetxController {
   List<String?> get assignedIdList => assignedUserIdList.value;
   List<UserModel> get finApproverList => finalApproverList.value;
   List<String?> get finApproverIdList => finalApproverIdList.value;
+
+  void addToAssignedList(String creator_id, String email) {
+    if (userList.length > 0) {
+      UserModel _eligibleUser = userList.firstWhere(
+        (user) => ((user.email == email) && (user.id != creator_id)),
+        orElse: () {
+          UserModel dummy = UserModel();
+          return dummy;
+        },
+      );
+      bool inAssignedList = assignedUserList.value
+          .any((user) => (user.email == _eligibleUser.email));
+      if (!inAssignedList && _eligibleUser.email != "Email Not Set") {
+        assignedUserList.value.add(_eligibleUser);
+        assignedUserIdList.value.add(_eligibleUser.id);
+        update();
+        print("Added to List");
+      } else {
+        Get.snackbar("Not Allowed", "You are Not allowed to add this User");
+      }
+    } else {
+      (Get.snackbar("Empty List", "userList empty"));
+    }
+  }
+
+  void removePersonFromAssignedPerson(String email) {
+    if (assignedList.length > 0) {
+      for (var user in assignedList) {
+        if (user.email == email.trim()) {
+          assignedUserList.value.remove(user);
+          assignedUserIdList.value.remove(user.email);
+          update();
+        } else {
+          print("Cant Remove");
+        }
+      }
+    }
+  }
 
   void updatePickedFile(var result){
 
@@ -179,6 +219,8 @@ class DocCreationController extends GetxController {
       finApproverIdList.clear();
       assignedList.clear();
       assignedIdList.clear();
+      downloadDocument = false;
+      finalApprover = false;
       update();
       Get.snackbar("Success", "File Created");
     }

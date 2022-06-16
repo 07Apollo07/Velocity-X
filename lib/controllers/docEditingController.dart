@@ -1,22 +1,21 @@
 import 'package:ai_barcode/ai_barcode.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:velocityx/controllers/authController.dart';
 import 'package:velocityx/controllers/userController.dart';
 import 'package:velocityx/models/files.dart';
 import 'package:velocityx/models/user.dart';
 import 'package:velocityx/services/filesDb.dart';
+import 'package:velocityx/shared/constants.dart';
 
 class DocEditingController extends GetxController {
-  CreatorController? creatorController;
+  var downloadDocument = false;
+  var finalApprover = false;
   bool initialized = false;
+
+  CreatorController? creatorController;
   TextEditingController documentNameController = TextEditingController();
   TextEditingController assignedPersonNameController = TextEditingController();
   TextEditingController finalApproverController = TextEditingController();
-
-  var downloadDocument = false;
-  var finalApprover = false;
 
   List<UserModel> userList = Get.find<UserController>().users;
 
@@ -24,6 +23,18 @@ class DocEditingController extends GetxController {
       Rx<List<UserModel>>(List.empty(growable: true));
 
   Rx<List<String?>> assignedUserIdList =
+      Rx<List<String?>>(List.empty(growable: true));
+
+  Rx<List<UserModel>> oldUserList =
+      Rx<List<UserModel>>(List.empty(growable: true));
+
+  Rx<List<String?>> oldUserIdList =
+      Rx<List<String?>>(List.empty(growable: true));
+
+  Rx<List<UserModel>> newUserList =
+      Rx<List<UserModel>>(List.empty(growable: true));
+
+  Rx<List<String?>> newUserIdList =
       Rx<List<String?>>(List.empty(growable: true));
 
   Rx<List<UserModel>> finalApproverList =
@@ -34,6 +45,10 @@ class DocEditingController extends GetxController {
 
   List<UserModel> get assignedList => assignedUserList.value;
   List<String?> get assignedIdList => assignedUserIdList.value;
+  List<UserModel> get oldList => oldUserList.value;
+  List<String?> get oldIdList => oldUserIdList.value;
+  List<UserModel> get newList => newUserList.value;
+  List<String?> get newIdList => newUserIdList.value;
   List<UserModel> get finApproverList => finalApproverList.value;
   List<String?> get finApproverIdList => finalApproverIdList.value;
 
@@ -45,12 +60,70 @@ class DocEditingController extends GetxController {
         print(user.id);
         if (user.id == uid.trim()) {
           print("eligible to go in");
-          assignedList.add(user);
-          assignedIdList.add(user.id);
+          assignedUserList.value.add(user);
+          assignedUserIdList.value.add(user.id);
+          oldUserList.value.add(user);
+          oldUserIdList.value.add(user.id);
           update();
           print(user);
         }
       }
+    }
+  }
+
+  void addToAssignedList(String email) async {
+    print("reached here to add");
+    if (userList.length > 0) {
+      UserModel _eligibleUser = userList.firstWhere(
+        (user) => ((user.email == email) &&
+            (user.id != Get.find<UserController>().user.id)),
+        orElse: () {
+          UserModel dummy = UserModel();
+          return dummy;
+        },
+      );
+      bool inAssignedList = assignedUserList.value
+          .any((user) => (user.email == _eligibleUser.email));
+      if (!inAssignedList && _eligibleUser.email != "Email Not Set") {
+        assignedUserList.value.add(_eligibleUser);
+        assignedUserIdList.value.add(_eligibleUser.id);
+        // newUserList.value.add(_eligibleUser);
+        // newUserIdList.value.add(_eligibleUser.id);
+        update();
+        print("Added to List");
+      } else {
+        Get.snackbar("Not Allowed", "You are Not allowed to add this User");
+      }
+    } else
+      (Get.snackbar("title", "userList empty"));
+    print(assignedList.toString());
+  }
+
+  void removePersonFromAssignedPerson(String email) {
+    if (assignedList.length > 0) {
+      UserModel _eligibleUser = assignedList.firstWhere(
+        (user) => ((user.email == email)),
+        orElse: () {
+          UserModel dummy = UserModel();
+          return dummy;
+        },
+      );
+      assignedUserList.value.remove(_eligibleUser);
+      assignedUserIdList.value.remove(_eligibleUser.id);
+      update();
+      // if (oldIdList.contains(_eligibleUser.id)) {
+      //   assignedUserList.value.remove(_eligibleUser);
+      //   assignedUserIdList.value.remove(_eligibleUser.id);
+      //   oldUserList.value.remove(_eligibleUser);
+      //   oldUserIdList.value.remove(_eligibleUser.id);
+      //   update();
+      // } else {
+      //   assignedUserList.value.remove(_eligibleUser);
+      //   assignedUserIdList.value.remove(_eligibleUser.id);
+      //   newUserIdList.value.remove(_eligibleUser);
+      //   newUserIdList.value.remove(_eligibleUser.id);
+      //   update();
+      // }
     }
   }
 
@@ -90,40 +163,6 @@ class DocEditingController extends GetxController {
     } else {
       (Get.snackbar("title", "userList empty"));
       print(finApproverList.toString());
-    }
-  }
-
-  void addToAssignedList(String email) async {
-    print("reached here to add");
-    if (userList.length > 0) {
-      print(email.trim());
-      print("there are items in userList");
-      for (var user in userList) {
-        print(user.email);
-        if (user.email == email.trim()) {
-          print("eligible to go in");
-          assignedList.add(user);
-          assignedIdList.add(user.id);
-          update();
-          print(user);
-        }
-      }
-    } else
-      (Get.snackbar("title", "userList empty"));
-    print(assignedList.toString());
-  }
-
-  void removePersonFromAssignedPerson(String email) {
-    if (assignedList.length > 0) {
-      for (var user in assignedList) {
-        if (user.email == email.trim()) {
-          assignedList.remove(user);
-          assignedIdList.remove(user.id);
-          update();
-        } else {
-          print("Cant Remove");
-        }
-      }
     }
   }
 
@@ -193,8 +232,26 @@ class DocEditingController extends GetxController {
     print(fileId);
     print(_file.assigned_person_uid);
 
-    if (await FilesDb().UpdateFile(fileId, _file)) {
+    List<String> deletedUsersId = [];
+    oldIdList.forEach((olduserId) {
+      if (assignedIdList.contains(olduserId)) {
+      } else {
+        deletedUsersId.add(olduserId!);
+      }
+      ;
+    });
+    List<String> newUserListId = [];
+    assignedIdList.forEach((user) {
+      if (oldList.contains(user)) {
+      } else {
+        newUserListId.add(user!);
+      }
+    });
+
+    if (await FilesDb()
+        .UpdateFile(fileId, _file, deletedUsersId, newUserListId)) {
       update();
+      Get.back(id: Constants.profileId);
       Get.snackbar("Success", "File Updated");
     }
     print(_file.toString());
