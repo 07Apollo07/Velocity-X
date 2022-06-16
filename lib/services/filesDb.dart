@@ -126,13 +126,13 @@ class FilesDb {
       }
       if (file.final_approver != "No Final Approver") {
         tracking.add({
-          "Operation": "Added",
+          "Operation": "FinalApproverAdded",
           "From": file.creator_uid,
           "To": file.final_approver,
           "Time": Timestamp.now(),
         });
       }
-      print("makig Subcollection");
+      print("making Subcollection");
       _firestore
           .collection("Files")
           .doc(fileId)
@@ -143,7 +143,7 @@ class FilesDb {
         "fileLastOpenedDateTime": Timestamp.now(),
         "fileModifiedDateTime": Timestamp.now(),
       });
-      print("Added COllection ");
+      print("Added Collection ");
       return true;
     } catch (e) {
       print(e.toString());
@@ -199,44 +199,48 @@ class FilesDb {
   Future<bool> UpdateEditStats(String fileId, List<String> newAssignedList,
       List<String> deletedUsersList) async {
     try {
-      deletedUsersList.forEach((newId) async {
-        print("adding to tracking");
-        List<Map> tracking = ([
-          {
-            "Operation": "Remove",
-            "By": Get.find<UserController>().user.id,
-            "User": newId,
-            "Time": Timestamp.now(),
-          }
-        ]);
-        await _firestore
-            .collection("Files")
-            .doc(fileId)
-            .collection("File_Stats")
-            .doc("Stats")
-            .update({
-          "tracking": FieldValue.arrayUnion(tracking),
+      if (deletedUsersList.length > 0) {
+        deletedUsersList.forEach((newId) async {
+          print("adding to tracking");
+          List<Map> tracking = ([
+            {
+              "Operation": "Remove",
+              "By": Get.find<UserController>().user.id,
+              "User": newId,
+              "Time": Timestamp.now(),
+            }
+          ]);
+          await _firestore
+              .collection("Files")
+              .doc(fileId)
+              .collection("File_Stats")
+              .doc("Stats")
+              .update({
+            "tracking": FieldValue.arrayUnion(tracking),
+          });
         });
-      });
-      newAssignedList.forEach((newId) async {
-        print("adding to tracking");
-        List<Map> tracking = ([
-          {
-            "Operation": "Transfer",
-            "From": Get.find<UserController>().user.id,
-            "To": newId,
-            "Time": Timestamp.now(),
-          }
-        ]);
-        await _firestore
-            .collection("Files")
-            .doc(fileId)
-            .collection("File_Stats")
-            .doc("Stats")
-            .update({
-          "tracking": FieldValue.arrayUnion(tracking),
+      }
+      if (newAssignedList.length > 0) {
+        newAssignedList.forEach((newId) async {
+          print("adding to tracking");
+          List<Map> tracking = ([
+            {
+              "Operation": "Transfer",
+              "From": Get.find<UserController>().user.id,
+              "To": newId,
+              "Time": Timestamp.now(),
+            }
+          ]);
+          await _firestore
+              .collection("Files")
+              .doc(fileId)
+              .collection("File_Stats")
+              .doc("Stats")
+              .update({
+            "tracking": FieldValue.arrayUnion(tracking),
+          });
         });
-      });
+      }
       print("Update Sucessful");
       return true;
     } catch (e) {

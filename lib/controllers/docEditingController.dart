@@ -43,6 +43,12 @@ class DocEditingController extends GetxController {
   Rx<List<String?>> finalApproverIdList =
       Rx<List<String?>>(List.empty(growable: true));
 
+  Rx<List<UserModel>> oldfinalApproverList =
+      Rx<List<UserModel>>(List.empty(growable: true));
+
+  Rx<List<String?>> oldfinalApproverIdList =
+      Rx<List<String?>>(List.empty(growable: true));
+
   List<UserModel> get assignedList => assignedUserList.value;
   List<String?> get assignedIdList => assignedUserIdList.value;
   List<UserModel> get oldList => oldUserList.value;
@@ -51,6 +57,8 @@ class DocEditingController extends GetxController {
   List<String?> get newIdList => newUserIdList.value;
   List<UserModel> get finApproverList => finalApproverList.value;
   List<String?> get finApproverIdList => finalApproverIdList.value;
+  List<UserModel> get oldfinApproverList => oldfinalApproverList.value;
+  List<String?> get oldfinApproverIdList => oldfinalApproverIdList.value;
 
   void initializeAssignedList(String uid) {
     if (userList.length > 0) {
@@ -111,19 +119,6 @@ class DocEditingController extends GetxController {
       assignedUserList.value.remove(_eligibleUser);
       assignedUserIdList.value.remove(_eligibleUser.id);
       update();
-      // if (oldIdList.contains(_eligibleUser.id)) {
-      //   assignedUserList.value.remove(_eligibleUser);
-      //   assignedUserIdList.value.remove(_eligibleUser.id);
-      //   oldUserList.value.remove(_eligibleUser);
-      //   oldUserIdList.value.remove(_eligibleUser.id);
-      //   update();
-      // } else {
-      //   assignedUserList.value.remove(_eligibleUser);
-      //   assignedUserIdList.value.remove(_eligibleUser.id);
-      //   newUserIdList.value.remove(_eligibleUser);
-      //   newUserIdList.value.remove(_eligibleUser.id);
-      //   update();
-      // }
     }
   }
 
@@ -147,13 +142,17 @@ class DocEditingController extends GetxController {
         if (user.email == email.trim()) {
           print("eligible to go in");
           if (finApproverList.length > 0) {
-            finApproverList.removeLast();
-            finApproverList.add(user);
-            finApproverIdList.removeLast();
-            finApproverIdList.add(user.id);
+            finalApproverList.value.removeLast();
+            finalApproverList.value.add(user);
+            finalApproverIdList.value.removeLast();
+            finalApproverIdList.value.add(user.id);
           } else {
             finApproverList.add(user);
             finApproverIdList.add(user.id);
+            if (initialized == false) {
+              oldfinalApproverList.value.add(user);
+              oldfinalApproverIdList.value.add(user.id);
+            }
           }
           print("added");
           update();
@@ -181,7 +180,7 @@ class DocEditingController extends GetxController {
 
   void deleteFile(String fileId) async {
     if (await FilesDb().DeleteFile(fileId)) {
-      Get.back();
+      Get.back(id: Constants.profileId);
       Get.snackbar("File Deleted", "Success");
     }
   }
@@ -242,12 +241,16 @@ class DocEditingController extends GetxController {
     });
     List<String> newUserListId = [];
     assignedIdList.forEach((user) {
-      if (oldList.contains(user)) {
+      if (oldIdList.contains(user)) {
       } else {
         newUserListId.add(user!);
       }
     });
+    String deletedFinalApprover = "";
+    String newFinalAPprover = "";
 
+    if (finApproverIdList.contains(oldIdList.first)) {}
+    ;
     if (await FilesDb()
         .UpdateFile(fileId, _file, deletedUsersId, newUserListId)) {
       update();

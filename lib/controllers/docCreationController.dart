@@ -130,7 +130,7 @@ class DocCreationController extends GetxController {
       String docName,
       List<String?> assignedPerson,
       bool download,
-      bool finalApprover,
+      bool finalApproverSet,
       List<String?> finalApproverNameId) async {
     UserModel _user = Get.find<UserController>().user;
     FilesModel _file = FilesModel(
@@ -141,7 +141,7 @@ class DocCreationController extends GetxController {
       creator_uid: Get.find<AuthController>().user!.uid,
       designation: _user.designation,
       download: download,
-      final_approver_set: finalApprover,
+      final_approver_set: finalApproverSet,
       final_approver: finalApproverNameId.length > 0
           ? finalApproverNameId.last ?? "No Final Approver"
           : "No Final Approver",
