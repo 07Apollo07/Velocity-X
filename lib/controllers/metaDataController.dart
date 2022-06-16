@@ -5,6 +5,7 @@ import 'package:velocityx/controllers/userController.dart';
 import 'package:velocityx/models/files.dart';
 import 'package:velocityx/models/user.dart';
 import 'package:velocityx/services/filesDb.dart';
+import 'package:velocityx/shared/constants.dart';
 
 class MetaDataController extends GetxController {
   bool initialized = false;
@@ -155,6 +156,7 @@ class MetaDataController extends GetxController {
     if (await FilesDb()
         .ForwardFile(fileId, _file, _newIdList, file, removeYourself)) {
       update();
+      Get.back(id: Constants.homeId);
       Get.snackbar("Success", "File Updated");
     }
     print(_file.toString());

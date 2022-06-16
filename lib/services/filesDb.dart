@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
+import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'package:velocityx/controllers/authController.dart';
 import 'package:velocityx/controllers/userController.dart';
 import 'package:velocityx/models/file_stats.dart';
@@ -176,7 +177,8 @@ class FilesDb {
     }
   }
 
-  Future<bool> UpdateFile(String fileId, FilesModel file) async {
+  Future<bool> UpdateFile(String fileId, FilesModel file,
+      List<String> deletedUserId, List<String> newUserId) async {
     try {
       await _firestore.collection("Files").doc(fileId).update({
         "final_approver": file.final_approver,
@@ -185,8 +187,57 @@ class FilesDb {
         "assigned_person_uid": file.assigned_person_uid,
         "download": file.download,
         "final_approver_set": file.final_approver_set
-      }).then((value) => print("File Updated"));
+      }).then((value) => UpdateEditStats(fileId, newUserId, deletedUserId));
       print("Updating File information in File Collection");
+      return true;
+    } catch (e) {
+      print(e.toString());
+      return false;
+    }
+  }
+
+  Future<bool> UpdateEditStats(String fileId, List<String> newAssignedList,
+      List<String> deletedUsersList) async {
+    try {
+      deletedUsersList.forEach((newId) async {
+        print("adding to tracking");
+        List<Map> tracking = ([
+          {
+            "Operation": "Remove",
+            "By": Get.find<UserController>().user.id,
+            "User": newId,
+            "Time": Timestamp.now(),
+          }
+        ]);
+        await _firestore
+            .collection("Files")
+            .doc(fileId)
+            .collection("File_Stats")
+            .doc("Stats")
+            .update({
+          "tracking": FieldValue.arrayUnion(tracking),
+        });
+      });
+      newAssignedList.forEach((newId) async {
+        print("adding to tracking");
+        List<Map> tracking = ([
+          {
+            "Operation": "Transfer",
+            "From": Get.find<UserController>().user.id,
+            "To": newId,
+            "Time": Timestamp.now(),
+          }
+        ]);
+        await _firestore
+            .collection("Files")
+            .doc(fileId)
+            .collection("File_Stats")
+            .doc("Stats")
+            .update({
+          "tracking": FieldValue.arrayUnion(tracking),
+        });
+      });
+      print("Update Sucessful");
       return true;
     } catch (e) {
       print(e.toString());

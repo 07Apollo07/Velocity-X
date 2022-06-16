@@ -191,6 +191,11 @@ String getRightText(Map<String, dynamic> FileStats) {
     String message =
         getNameFromUid(FileStats["User"]) + " decided to surrender possession";
     return message;
+  } else if (FileStats["Operation"] == "Remove") {
+    String message = getNameFromUid(FileStats["By"]) +
+        " Removed " +
+        getNameFromUid(FileStats["User"]);
+    return message;
   }
   return "";
 }

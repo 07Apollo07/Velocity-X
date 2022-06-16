@@ -419,7 +419,11 @@ class _DocumentEditingState extends State<DocumentEditing> {
                                         .trim(),
                                     controller.assignedIdList,
                                     controller.downloadDocument,
-                                    controller.finalApprover,
+                                    controller.finalApproverIdList.value
+                                                .length >
+                                            0
+                                        ? true
+                                        : false,
                                     controller.finApproverIdList);
                               }
                             },
