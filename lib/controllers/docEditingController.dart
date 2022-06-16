@@ -1,4 +1,5 @@
 import 'package:ai_barcode/ai_barcode.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:velocityx/controllers/userController.dart';
@@ -11,6 +12,8 @@ class DocEditingController extends GetxController {
   var downloadDocument = false;
   var finalApprover = false;
   bool initialized = false;
+  PlatformFile? pickedFile;
+  bool isFilePicked = false;
 
   CreatorController? creatorController;
   TextEditingController documentNameController = TextEditingController();
@@ -176,6 +179,24 @@ class DocEditingController extends GetxController {
         }
       }
     }
+  }
+
+  void updatePickedFile(var result) {
+    if (pickedFile == null) {
+      pickedFile = result.files.first;
+      isFilePicked = true;
+      update();
+      Get.snackbar("Success", "File Picked");
+    } else {
+      Get.snackbar("Error", "File Already Picked, Remove the Selected File");
+    }
+  }
+
+  void removePickedFile() {
+    pickedFile = null;
+    isFilePicked = false;
+    update();
+    Get.snackbar("Success", "File Removed");
   }
 
   void deleteFile(String fileId) async {
