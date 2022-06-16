@@ -24,7 +24,7 @@ import 'package:velocityx/screens/Organization/Orgdirectory.dart';
 import 'package:velocityx/shared/constants.dart';
 
 import 'DocumentCreation/document_creation.dart';
-import 'PdfViewerWeb-PDFTron/PdfViewerWebPDFTron.dart';
+
 import 'PdfViewerWeb/pdf_viewer_web.dart';
 import 'TextEditor/text_editor.dart';
 
@@ -48,8 +48,8 @@ class _WrapperState extends State<Wrapper> {
     Scanner(),
     // MetaDataPage(),
     DocumentCreation(),
-    // ProfileWrapper(),
-    PdfViewerWebPDFTron(title: "New Page",),
+    ProfileWrapper(),
+
     // QrCreator(qrCodeOfInput: "Null"),
     // PdfViewerWeb()
     // HtmlEditorExample(title: 'Flutter HTML Editor Example'),

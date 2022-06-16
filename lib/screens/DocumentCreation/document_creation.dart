@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:velocityx/controllers/docCreationController.dart';
 import 'package:velocityx/controllers/userController.dart';
+import 'package:file_picker/file_picker.dart';
 
 class DocumentCreation extends StatefulWidget {
   static final _formkey = GlobalKey<FormState>();
@@ -310,7 +311,19 @@ class _DocumentCreationState extends State<DocumentCreation> {
                                 ],
                               ),
                               IconButton(
-                                onPressed: () {},
+                                onPressed: () async {
+
+                                  final result = await FilePicker.platform.pickFiles(
+                                    type: FileType.custom,
+                                    allowedExtensions: ['jpg', 'pdf', 'doc'],
+                                  );
+                                  if( result == null){
+                                    return null;
+                                  }else{
+                                    controller.updatePickedFile(result);
+                                    print(controller.pickedFile?.name);
+                                  }
+                                },
                                 iconSize: 40,
                                 icon: Icon(
                                   Icons.upload_file,
@@ -318,6 +331,53 @@ class _DocumentCreationState extends State<DocumentCreation> {
                                 ),
                               )
                             ],
+                          ),
+                          Visibility(
+                              visible: controller.isFilePicked,
+                              // child: Text("${controller.pickedFile?.name}")
+                              child: SingleChildScrollView(
+                                  child: controller.isFilePicked
+                                      ? GridView.builder(
+                                    shrinkWrap: true,
+                                    itemCount:
+                                    1,
+                                    gridDelegate:
+                                    const SliverGridDelegateWithMaxCrossAxisExtent(
+                                      maxCrossAxisExtent: 180,
+                                      childAspectRatio: 3 / 2,
+                                      crossAxisSpacing: 20,
+                                      mainAxisSpacing: 20,
+                                    ),
+                                    itemBuilder: (_, index) {
+                                      return Container(
+                                        alignment: Alignment.center,
+                                        child: Column(
+                                          mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                          children: [
+                                            Text("${controller.pickedFile?.name}"),
+                                            // Text(controller
+                                            //     .finApproverList[index]
+                                            //     .email ??
+                                            //     "Email Not Set"),
+                                            IconButton(
+                                              onPressed: () {
+                                                controller.removePickedFile();
+                                              },
+                                              icon:
+                                              Icon(Icons.person_remove),
+                                              color: Colors.red,
+                                            )
+                                          ],
+                                        ),
+                                        decoration: BoxDecoration(
+                                            color: Colors.blue,
+                                            borderRadius:
+                                            BorderRadius.circular(15)),
+                                      );
+                                    },
+                                  )
+                                      : Container()),
                           ),
                           SizedBox(height: 20),
                           Center(

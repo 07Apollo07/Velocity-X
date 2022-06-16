@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,9 +9,12 @@ import 'package:velocityx/models/files.dart';
 import 'package:velocityx/models/user.dart';
 import 'package:velocityx/services/filesDb.dart';
 
+
 class DocCreationController extends GetxController {
   var downloadDocument = false;
   var finalApprover = false;
+  PlatformFile? pickedFile;
+  bool isFilePicked = false;
 
   List<UserModel> userList = Get.find<UserController>().users;
 
@@ -30,6 +34,27 @@ class DocCreationController extends GetxController {
   List<String?> get assignedIdList => assignedUserIdList.value;
   List<UserModel> get finApproverList => finalApproverList.value;
   List<String?> get finApproverIdList => finalApproverIdList.value;
+
+  void updatePickedFile(var result){
+
+    if (pickedFile == null){
+      pickedFile = result.files.first;
+      isFilePicked = true;
+      update();
+      Get.snackbar("Success", "File Picked");
+    }else{
+      Get.snackbar("Error", "File Already Picked, Remove the Selected File");
+    }
+
+
+  }
+
+  void removePickedFile(){
+    pickedFile = null;
+    isFilePicked = false;
+    update();
+    Get.snackbar("Success", "File Removed");
+  }
 
   void setFinalApprover(String email) async {
     print("reached here to add");
