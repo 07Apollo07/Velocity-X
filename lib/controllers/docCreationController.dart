@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,7 +9,7 @@ import 'package:velocityx/controllers/userController.dart';
 import 'package:velocityx/models/files.dart';
 import 'package:velocityx/models/user.dart';
 import 'package:velocityx/services/filesDb.dart';
-
+import 'package:file_picker/file_picker.dart';
 
 class DocCreationController extends GetxController {
   var downloadDocument = false;
@@ -21,26 +20,47 @@ class DocCreationController extends GetxController {
   List<UserModel> userList = Get.find<UserController>().users;
 
   Rx<List<UserModel>> assignedUserList =
-      Rx<List<UserModel>>(List.empty(growable: true));
+  Rx<List<UserModel>>(List.empty(growable: true));
 
   Rx<List<String?>> assignedUserIdList =
-      Rx<List<String?>>(List.empty(growable: true));
+  Rx<List<String?>>(List.empty(growable: true));
 
   Rx<List<UserModel>> finalApproverList =
-      Rx<List<UserModel>>(List.empty(growable: true));
+  Rx<List<UserModel>>(List.empty(growable: true));
 
   Rx<List<String?>> finalApproverIdList =
-      Rx<List<String?>>(List.empty(growable: true));
+  Rx<List<String?>>(List.empty(growable: true));
 
   List<UserModel> get assignedList => assignedUserList.value;
   List<String?> get assignedIdList => assignedUserIdList.value;
   List<UserModel> get finApproverList => finalApproverList.value;
   List<String?> get finApproverIdList => finalApproverIdList.value;
 
+  void updatePickedFile(var result){
+
+    if (pickedFile == null){
+      pickedFile = result.files.first;
+      isFilePicked = true;
+      update();
+      Get.snackbar("Success", "File Picked");
+    }else{
+      Get.snackbar("Error", "File Already Picked, Remove the Selected File");
+    }
+
+
+  }
+
+  void removePickedFile(){
+    pickedFile = null;
+    isFilePicked = false;
+    update();
+    Get.snackbar("Success", "File Removed");
+  }
+
   void addToAssignedList(String creator_id, String email) {
     if (userList.length > 0) {
       UserModel _eligibleUser = userList.firstWhere(
-        (user) => ((user.email == email) && (user.id != creator_id)),
+            (user) => ((user.email == email) && (user.id != creator_id)),
         orElse: () {
           UserModel dummy = UserModel();
           return dummy;
@@ -75,27 +95,6 @@ class DocCreationController extends GetxController {
     }
   }
 
-  void updatePickedFile(var result){
-
-    if (pickedFile == null){
-      pickedFile = result.files.first;
-      isFilePicked = true;
-      update();
-      Get.snackbar("Success", "File Picked");
-    }else{
-      Get.snackbar("Error", "File Already Picked, Remove the Selected File");
-    }
-
-
-  }
-
-  void removePickedFile(){
-    pickedFile = null;
-    isFilePicked = false;
-    update();
-    Get.snackbar("Success", "File Removed");
-  }
-
   void setFinalApprover(String email) async {
     print("reached here to add");
     if (userList.length > 0) {
@@ -122,47 +121,6 @@ class DocCreationController extends GetxController {
     } else {
       (Get.snackbar("title", "userList empty"));
       print(finApproverList.toString());
-    }
-  }
-
-  void addToAssignedList(String email) async {
-    print("reached here to add");
-    if (userList.length > 0) {
-      print(email.trim());
-      print("there are items in userList");
-      for (var user in userList) {
-        print(user.email);
-        if (user.email == email.trim()) {
-          print("eligible to go in");
-          // assignedList.addIf(assignedList.any((element) {
-          //   if (element.email == email.trim()) {
-          //     return false;
-          //   } else
-          //     return true;
-          // }), user);
-          //TODO Duplicate Users can be added here;
-          assignedList.add(user);
-          assignedIdList.add(user.id);
-          update();
-          print(user);
-        }
-      }
-    } else
-      (Get.snackbar("title", "userList empty"));
-    print(assignedList.toString());
-  }
-
-  void removePersonFromAssignedPerson(String email) {
-    if (assignedList.length > 0) {
-      for (var user in assignedList) {
-        if (user.email == email.trim()) {
-          assignedList.remove(user);
-          assignedIdList.remove(user.email);
-          update();
-        } else {
-          print("Cant Remove");
-        }
-      }
     }
   }
 
