@@ -24,6 +24,7 @@ import 'package:velocityx/screens/Organization/Orgdirectory.dart';
 import 'package:velocityx/shared/constants.dart';
 
 import 'DocumentCreation/document_creation.dart';
+
 import 'PdfViewerWeb/pdf_viewer_web.dart';
 import 'TextEditor/text_editor.dart';
 
@@ -48,6 +49,7 @@ class _WrapperState extends State<Wrapper> {
     // MetaDataPage(),
     DocumentCreation(),
     ProfileWrapper(),
+
     // QrCreator(qrCodeOfInput: "Null"),
     // PdfViewerWeb()
     // HtmlEditorExample(title: 'Flutter HTML Editor Example'),

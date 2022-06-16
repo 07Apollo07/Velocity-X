@@ -149,7 +149,7 @@ packages:
     source: hosted
     version: "1.2.1"
   file_picker:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: file_picker
       url: "https://pub.dartlang.org"

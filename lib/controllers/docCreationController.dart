@@ -9,34 +9,58 @@ import 'package:velocityx/controllers/userController.dart';
 import 'package:velocityx/models/files.dart';
 import 'package:velocityx/models/user.dart';
 import 'package:velocityx/services/filesDb.dart';
+import 'package:file_picker/file_picker.dart';
 
 class DocCreationController extends GetxController {
   var downloadDocument = false;
   var finalApprover = false;
+  PlatformFile? pickedFile;
+  bool isFilePicked = false;
 
   List<UserModel> userList = Get.find<UserController>().users;
 
   Rx<List<UserModel>> assignedUserList =
-      Rx<List<UserModel>>(List.empty(growable: true));
+  Rx<List<UserModel>>(List.empty(growable: true));
 
   Rx<List<String?>> assignedUserIdList =
-      Rx<List<String?>>(List.empty(growable: true));
+  Rx<List<String?>>(List.empty(growable: true));
 
   Rx<List<UserModel>> finalApproverList =
-      Rx<List<UserModel>>(List.empty(growable: true));
+  Rx<List<UserModel>>(List.empty(growable: true));
 
   Rx<List<String?>> finalApproverIdList =
-      Rx<List<String?>>(List.empty(growable: true));
+  Rx<List<String?>>(List.empty(growable: true));
 
   List<UserModel> get assignedList => assignedUserList.value;
   List<String?> get assignedIdList => assignedUserIdList.value;
   List<UserModel> get finApproverList => finalApproverList.value;
   List<String?> get finApproverIdList => finalApproverIdList.value;
 
+  void updatePickedFile(var result){
+
+    if (pickedFile == null){
+      pickedFile = result.files.first;
+      isFilePicked = true;
+      update();
+      Get.snackbar("Success", "File Picked");
+    }else{
+      Get.snackbar("Error", "File Already Picked, Remove the Selected File");
+    }
+
+
+  }
+
+  void removePickedFile(){
+    pickedFile = null;
+    isFilePicked = false;
+    update();
+    Get.snackbar("Success", "File Removed");
+  }
+
   void addToAssignedList(String creator_id, String email) {
     if (userList.length > 0) {
       UserModel _eligibleUser = userList.firstWhere(
-        (user) => ((user.email == email) && (user.id != creator_id)),
+            (user) => ((user.email == email) && (user.id != creator_id)),
         orElse: () {
           UserModel dummy = UserModel();
           return dummy;
