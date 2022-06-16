@@ -157,6 +157,8 @@ class DocCreationController extends GetxController {
       String StorageLink) async {
     UserModel _user = Get.find<UserController>().user;
     try {
+      print("inside FileModel to create file");
+      print("controller storagrLink is ${storageLink}");
       FilesModel _file = FilesModel(
         name: docName,
         assigned_person_uid: assignedPerson.length > 0 ? assignedPerson : [""],
@@ -179,6 +181,8 @@ class DocCreationController extends GetxController {
         assignedIdList.clear();
         downloadDocument = false;
         finalApprover = false;
+        pickedFile = null;
+        isFilePicked = false;
         update();
         Get.snackbar("Success", "File Created");
       }
@@ -190,16 +194,18 @@ class DocCreationController extends GetxController {
   }
 
   Future<String> updateStorageLink() async {
+    print("inside storage function in controller");
     UserModel _user = Get.find<UserController>().user;
 
     final path = "${_user.organization_no}/${pickedFile!.name}";
     final file = File(pickedFile!.path!);
 
-    String storageLink = await FilesDb().UploadFileInStorage(path, file);
+    String StorageLink = await FilesDb().UploadFileInStorage(path, file);
+    print("recieved storage link");
+    storageLink = StorageLink;
+    print(StorageLink);
 
-    print(storageLink);
-
-    return storageLink;
+    return StorageLink;
 
     // await FilesDb().UpdateStorageLinkInFile()
   }

@@ -78,21 +78,21 @@ class FilesDb {
   }
 
   Future<String> UploadFileInStorage(var path, var file) async {
+    print("in fileDb");
+    String storageLink = "";
+    final ref = FirebaseStorage.instance.ref().child(path);
+    UploadTask uploadTask = ref.putFile(file);
 
-      String storageLink = "";
-      final ref = FirebaseStorage.instance.ref().child(path);
-      UploadTask uploadTask = ref.putFile(file);
-
-      uploadTask.whenComplete(() async {
-        storageLink =await ref.getDownloadURL();
-        print("Got storage Link : ${storageLink}");
-        return storageLink;
-      }).catchError((onError) {
-        print(onError);
-      });
-      return storageLink;
+    // uploadTask.whenComplete(() async {
+    //   storageLink = await ref.getDownloadURL();
+    //   print("Got storage Link : ${storageLink}");
+    //   return storageLink;
+    // }).catchError((onError) {
+    //   print(onError);
+    // });
+    storageLink = await (await uploadTask).ref.getDownloadURL();
+    return storageLink;
   }
-
 
   Future<bool> createNewFile(FilesModel file) async {
     try {
@@ -217,9 +217,7 @@ class FilesDb {
   Future<bool> UpdateStorageLinkInFile(String fileId, String link) async {
     try {
       await _firestore.collection("Files").doc(fileId).update({
-
         "storage_link": link,
-
       });
       print("Updating Storage Link in File Collection");
       return true;
@@ -253,8 +251,6 @@ class FilesDb {
   //     return e.toString();
   //   }
   // }
-
-  
 
   Future<bool> UpdateEditStats(String fileId, List<String> newAssignedList,
       List<String> deletedUsersList) async {

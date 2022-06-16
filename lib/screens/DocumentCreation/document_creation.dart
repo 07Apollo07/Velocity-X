@@ -398,9 +398,13 @@ class _DocumentCreationState extends State<DocumentCreation> {
                               onPressed: () async {
                                 if (DocumentCreation._formkey.currentState!
                                     .validate()) {
+                                  print("sending for upload");
                                   controller.storageLink = await controller
                                       .updateStorageLink()
-                                      .then((value) async {
+                                      .whenComplete(() async {
+                                    print("creating file now");
+                                    print(
+                                        "controller storageLink is${controller.storageLink}");
                                     await controller.createDocument(
                                         documentNameController.text.trim(),
                                         controller.assignedIdList,
@@ -412,7 +416,6 @@ class _DocumentCreationState extends State<DocumentCreation> {
                                             : false,
                                         controller.finApproverIdList,
                                         controller.storageLink);
-                                    return "";
                                   });
                                   documentNameController.text = "";
                                   assignedPersonNameController.text = "";
