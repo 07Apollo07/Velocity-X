@@ -169,11 +169,31 @@ class _LeftChildTimeline extends StatelessWidget {
 }
 
 String getRightText(Map<String, dynamic> FileStats) {
-  if (FileStats["Operation"] == "Added") {
+  if (FileStats["Operation"] == "Creation") {
+    String message = "File Created by " + getNameFromUid(FileStats["By"]);
+    return message;
+  } else if (FileStats["Operation"] == "FinalApproverAdded") {
     String message = getNameFromUid(FileStats["From"]) +
         " Added " +
         getNameFromUid(FileStats["To"]) +
         " As Final Approver";
+    return message;
+  } else if (FileStats["Operation"] == "FinalApproverRemoved") {
+    String message = getNameFromUid(FileStats["From"]) +
+        " Removed " +
+        getNameFromUid(FileStats["To"]) +
+        " As Final Approver";
+    return message;
+  } else if (FileStats["Operation"] == "FinalApproverChanged") {
+    String message = getNameFromUid(FileStats["From"]) +
+        " Changed " +
+        getNameFromUid(FileStats["To"]) +
+        " As Final Approver";
+    return message;
+  } else if (FileStats["Operation"] == "Remove") {
+    String message = getNameFromUid(FileStats["By"]) +
+        " Removed " +
+        getNameFromUid(FileStats["User"]);
     return message;
   } else if (FileStats["Operation"] == "Transfer") {
     String message = "File Transferred from " +
@@ -181,22 +201,15 @@ String getRightText(Map<String, dynamic> FileStats) {
         " to " +
         getNameFromUid(FileStats["To"]);
     return message;
-  } else if (FileStats["Operation"] == "Creation") {
-    String message = "File Created by " + getNameFromUid(FileStats["By"]);
-    return message;
-  } else if (FileStats["Operation"] == "Opened") {
-    String message = "File Opened by " + getNameFromUid(FileStats["User"]);
-    return message;
   } else if (FileStats["Operation"] == "RemoveSelf") {
     String message =
         getNameFromUid(FileStats["User"]) + " decided to surrender possession";
     return message;
-  } else if (FileStats["Operation"] == "Remove") {
-    String message = getNameFromUid(FileStats["By"]) +
-        " Removed " +
-        getNameFromUid(FileStats["User"]);
+  } else if (FileStats["Operation"] == "Opened") {
+    String message = "File Opened by " + getNameFromUid(FileStats["User"]);
     return message;
   }
+
   return "";
 }
 

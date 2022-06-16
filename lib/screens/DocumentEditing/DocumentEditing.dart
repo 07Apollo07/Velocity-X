@@ -30,9 +30,9 @@ class _DocumentEditingState extends State<DocumentEditing> {
               controller.initializeAssignedList(id);
             }
             controller.setFinalApproverFromId(widget.File.final_approver);
-            controller.initialized = true;
             controller.downloadDocument = widget.File.download;
             controller.finalApprover = widget.File.final_approver_set;
+            controller.initialized = true;
           }
           print(controller.assignedList.length);
 
@@ -42,6 +42,9 @@ class _DocumentEditingState extends State<DocumentEditing> {
             appBar: AppBar(
               elevation: 0,
               // leading: Icon(Icons.arrow_back_ios_new_rounded),
+              leading: BackButton(
+                color: Theme.of(context).primaryColor,
+              ),
               title: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
