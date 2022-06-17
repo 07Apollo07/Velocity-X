@@ -1,4 +1,5 @@
 import 'package:ai_barcode/ai_barcode.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:velocityx/controllers/userController.dart';
@@ -32,6 +33,11 @@ class MetaDataController extends GetxController {
   List<String?> get newIdList => newUserIdList.value;
 
   var isAssignedPressed = false.obs;
+
+  bool optionsVisible() {
+    bool assigned = assignedIdList.contains(Get.find<UserController>().user.id);
+    return assigned ? true : false;
+  }
 
   void changeIsAssignedPressed() {
     isAssignedPressed.value = !isAssignedPressed.value;

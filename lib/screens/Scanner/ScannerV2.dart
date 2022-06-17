@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:velocityx/controllers/scannerController.dart';
+import 'package:velocityx/models/files.dart';
+import 'package:velocityx/screens/Scanner/ScannerLoad.dart';
 import 'package:velocityx/screens/Scanner/app_barcode_scanner_widget.dart';
+import 'package:velocityx/screens/metadata/meta_data.dart';
+import 'package:velocityx/services/filesDb.dart';
 
 ///
 /// FullScreenScannerPage
@@ -16,24 +20,25 @@ class ScannerV2 extends StatelessWidget {
             return Scaffold(
               appBar: AppBar(
                 leading: BackButton(),
-                title: Text(controller.Code),
+                title: Text("Scan QR Code"),
               ),
               body: Column(
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(controller.Code),
-                    ],
-                  ),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.center,
+                  //   children: [
+                  //     Text(controller.Code),
+                  //   ],
+                  // ),
                   Expanded(
                     child: AppBarcodeScannerWidget.defaultStyle(
-                      resultCallback: (String code) {
+                      resultCallback: (String code) async {
                         controller.setCode(code);
                         controller.setResult(code);
                         print(controller.Code);
-                        Get.back();
+                        Get.off(ScannerLoad());
                       },
+                      openManual: false,
                     ),
                   ),
                 ],
