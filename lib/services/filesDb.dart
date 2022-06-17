@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'package:velocityx/controllers/authController.dart';
@@ -77,21 +78,19 @@ class FilesDb {
     });
   }
 
-  Future<String> UploadFileInStorage(var path, var file) async {
+  Future<String> UploadFileInStorage(var path, var file, var fileBytes) async {
     print("in fileDb");
     String storageLink = "";
     final ref = FirebaseStorage.instance.ref().child(path);
-    UploadTask uploadTask = ref.putFile(file);
-
-    // uploadTask.whenComplete(() async {
-    //   storageLink = await ref.getDownloadURL();
-    //   print("Got storage Link : ${storageLink}");
-    //   return storageLink;
-    // }).catchError((onError) {
-    //   print(onError);
-    // });
-    storageLink = await (await uploadTask).ref.getDownloadURL();
-    return storageLink;
+    if (kIsWeb) {
+      UploadTask uploadTask = ref.putData(fileBytes);
+      storageLink = await (await uploadTask).ref.getDownloadURL();
+      return storageLink;
+    } else {
+      UploadTask uploadTask = ref.putFile(file);
+      storageLink = await (await uploadTask).ref.getDownloadURL();
+      return storageLink;
+    }
   }
 
   Future<bool> createNewFile(FilesModel file) async {

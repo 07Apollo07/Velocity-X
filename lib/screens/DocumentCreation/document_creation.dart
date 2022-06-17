@@ -320,6 +320,7 @@ class _DocumentCreationState extends State<DocumentCreation> {
                                     type: FileType.custom,
                                     allowedExtensions: ['pdf'],
                                   );
+                                  print(result);
                                   if (result == null) {
                                     return null;
                                   } else {

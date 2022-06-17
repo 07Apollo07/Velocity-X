@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:velocityx/controllers/authController.dart';
@@ -194,18 +195,29 @@ class DocCreationController extends GetxController {
   }
 
   Future<String> updateStorageLink() async {
-    print("inside storage function in controller");
-    UserModel _user = Get.find<UserController>().user;
+    if (isFilePicked) {
+      print("inside storage function in controller");
+      UserModel _user = Get.find<UserController>().user;
 
-    final path = "${_user.organization_no}/${pickedFile!.name}";
-    final file = File(pickedFile!.path!);
+      final storagePath = "${_user.organization_no}/${pickedFile!.name}";
+      File file = File("");
+      if (kIsWeb) {
+        file = File("");
+      } else {
+        file = File(pickedFile!.path!);
+      }
+      final fileBytes = pickedFile?.bytes;
 
-    String StorageLink = await FilesDb().UploadFileInStorage(path, file);
-    print("recieved storage link");
-    storageLink = StorageLink;
-    print(StorageLink);
+      String StorageLink =
+          await FilesDb().UploadFileInStorage(storagePath, file, fileBytes);
+      print("recieved storage link");
+      storageLink = StorageLink;
+      print(StorageLink);
 
-    return StorageLink;
+      return StorageLink;
+    } else {
+      return "";
+    }
 
     // await FilesDb().UpdateStorageLinkInFile()
   }
