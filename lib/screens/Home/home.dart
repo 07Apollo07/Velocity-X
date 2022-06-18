@@ -123,25 +123,59 @@ class _HomeState extends State<Home> {
               builder: (FilesController filesController) {
                 if (filesController != null &&
                     filesController.assignedFiles.length > 0) {
-                  return ListView.builder(
-                    itemCount: filesController.assignedFiles.length,
-                    itemBuilder: (_, index) {
-                      return GestureDetector(
-                        onTap: () {
-                          Get.toNamed(Routes.METADATA,
-                              id: Constants.homeId,
-                              arguments: filesController.assignedFiles[index]);
-                          // print("sending data");
-                          // print(filesController.files[index].files_uniqueId);
-                        },
-                        child: TaskTile(
-                            //TODO remove assigned_by and due_date after changes to TaskTile
-                            assigned_by: "Random Person",
-                            due_date: "Random date",
-                            filesModel: filesController.assignedFiles[index]),
-                      );
-                    },
-                  );
+                  return (MediaQuery.of(context).size.width < 800)
+                      ? ListView.builder(
+                          itemCount: filesController.assignedFiles.length,
+                          itemBuilder: (_, index) {
+                            return GestureDetector(
+                              onTap: () {
+                                Get.toNamed(Routes.METADATA,
+                                    id: Constants.homeId,
+                                    arguments:
+                                        filesController.assignedFiles[index]);
+                                // print("sending data");
+                                // print(filesController.files[index].files_uniqueId);
+                              },
+                              child: TaskTile(
+                                  //TODO remove assigned_by and due_date after changes to TaskTile
+                                  assigned_by: "Random Person",
+                                  due_date: "Random date",
+                                  filesModel:
+                                      filesController.assignedFiles[index]),
+                            );
+                          },
+                        )
+                      : GridView.builder(
+                          controller: ScrollController(),
+                          shrinkWrap: true,
+                          itemCount: filesController.assignedFiles.length,
+                          gridDelegate:
+                              const SliverGridDelegateWithMaxCrossAxisExtent(
+                            maxCrossAxisExtent: 780,
+                            childAspectRatio: 7 / 1,
+                            crossAxisSpacing: 20,
+                            mainAxisSpacing: 20,
+                          ),
+                          itemBuilder: (_, index) {
+                            return GestureDetector(
+                                onTap: () {
+                                  Get.toNamed(Routes.METADATA,
+                                      id: Constants.homeId,
+                                      arguments:
+                                          filesController.assignedFiles[index]);
+                                  // print("sending data");
+                                  // print(filesController.files[index].files_uniqueId);
+                                },
+                                child: Container(
+                                  height: 50,
+                                  child: TaskTile(
+                                      //TODO remove assigned_by and due_date after changes to TaskTile
+                                      assigned_by: "Random Person",
+                                      due_date: "Random date",
+                                      filesModel:
+                                          filesController.assignedFiles[index]),
+                                ));
+                          });
                 } else if (filesController.assignedFiles.isEmpty) {
                   return const Center(
                       child: Text("No Documents have Been Assigned to you"));
