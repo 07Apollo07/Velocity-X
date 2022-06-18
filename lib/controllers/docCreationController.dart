@@ -13,11 +13,22 @@ import 'package:velocityx/services/filesDb.dart';
 import 'package:file_picker/file_picker.dart';
 
 class DocCreationController extends GetxController {
+
+  // final TextEditingController documentNameController = TextEditingController();
+  // final TextEditingController assignedPersonNameController =
+  // TextEditingController();
+  // final TextEditingController finalApproverController = TextEditingController();
+
   var downloadDocument = false;
   var finalApprover = false;
   PlatformFile? pickedFile;
   bool isFilePicked = false;
   String storageLink = "";
+
+  var name = ''.obs;
+  var assignedDocument = ''.obs;
+  var finalApproverText = ''.obs;
+
 
   List<UserModel> userList = Get.find<UserController>().users;
 
@@ -37,6 +48,12 @@ class DocCreationController extends GetxController {
   List<String?> get assignedIdList => assignedUserIdList.value;
   List<UserModel> get finApproverList => finalApproverList.value;
   List<String?> get finApproverIdList => finalApproverIdList.value;
+
+  void updateDocName(var docName){
+    name.value = docName;
+    print(name.value);
+    update();
+  }
 
   void updatePickedFile(var result) {
     if (pickedFile == null) {

@@ -168,6 +168,21 @@ class FilesDb {
     }
   }
 
+  Future<FilesModel> GetFile(String fileId) async {
+    try {
+      FilesModel _fileStat = FilesModel();
+      await _firestore.collection("Files").doc(fileId).get().then(
+        (DocumentSnapshot doc) {
+          _fileStat = FilesModel.fromDocumentSnapshot(documentSnapshot: doc);
+        },
+      );
+      return _fileStat;
+    } catch (e) {
+      print(e.toString());
+      return FilesModel(files_uniqueId: "Not Found");
+    }
+  }
+
   Future<FileStatsModel> GetStats(String fileId) async {
     try {
       FileStatsModel _fileStat = FileStatsModel();

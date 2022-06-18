@@ -15,6 +15,7 @@ class DocEditingController extends GetxController {
   PlatformFile? pickedFile;
   bool isFilePicked = false;
 
+
   CreatorController? creatorController;
   TextEditingController documentNameController = TextEditingController();
   TextEditingController assignedPersonNameController = TextEditingController();

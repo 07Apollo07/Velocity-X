@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 class ScannerV2Controller extends GetxController {
   String Code = "";
   String qrResult = 'Scanned data will appear here!';
+  bool Scanned = false;
 
   void setCode(String code) {
     Code = code;

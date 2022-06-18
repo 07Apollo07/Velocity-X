@@ -20,15 +20,36 @@ class _DocumentCreationState extends State<DocumentCreation> {
   final TextEditingController finalApproverController = TextEditingController();
 
   bool loading = false;
-  String email = '';
-  String password = '';
-  String error = '';
+  String name = '';
+  String assignedDocument = '';
+  String finalApprover = '';
+
+  // void _updateDocName(){
+  //   name = "${documentNameController.value}";
+  //   print("${documentNameController.value}");
+  // }
+  //
+  // void initState() {
+  //   super.initState();
+  //
+  //   // Start listening to changes.
+  //   documentNameController.addListener(_updateDocName);
+  // }
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<DocCreationController>(
         init: Get.put<DocCreationController>(DocCreationController()),
         builder: (controller) {
+
+          // documentNameController.text = "${controller.name}";
+          // documentNameController.selection = TextSelection.fromPosition(TextPosition(offset: documentNameController.text.length));
+          // documentNameController.text = name;
+          // documentNameController.value = TextEditingValue(
+          //   text: "${controller.name}",
+          //   selection: TextSelection.collapsed(offset: "${controller.name}".length),
+          // );
+
           return SafeArea(
             child: Scaffold(
               appBar: AppBar(
@@ -66,6 +87,19 @@ class _DocumentCreationState extends State<DocumentCreation> {
                             child: Column(
                               children: [
                                 TextFormField(
+
+
+                                  // onChanged: (val){
+                                  //
+                                  //   // name = val;
+                                  //
+                                  //     // controller.updateDocName(val);
+                                  //   // documentNameController.text = "${val}";
+                                  //   // documentNameController.value = TextEditingValue(
+                                  //   //     text: val,
+                                  //   //     selection: TextSelection.collapsed(offset: val.length));
+                                  //
+                                  // },
                                   decoration: InputDecoration(
                                     focusedBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
@@ -117,7 +151,7 @@ class _DocumentCreationState extends State<DocumentCreation> {
                                     fillColor: Colors.black54,
                                     filled: true,
                                     label: Text(
-                                        "Who do u want to assign this Document? "),
+                                        "Who do you want to assign this Document? "),
                                     hintText: "Enter Names",
                                     focusColor: Colors.blue,
                                   ),
@@ -428,10 +462,10 @@ class _DocumentCreationState extends State<DocumentCreation> {
                           SizedBox(
                             height: 20,
                           ),
-                          Text(
-                            error,
-                            style: TextStyle(color: Colors.red, fontSize: 14.0),
-                          ),
+                          // Text(
+                          //   error,
+                          //   style: TextStyle(color: Colors.red, fontSize: 14.0),
+                          // ),
                         ],
                       ),
                     ),
