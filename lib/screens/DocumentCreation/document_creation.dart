@@ -41,7 +41,6 @@ class _DocumentCreationState extends State<DocumentCreation> {
     return GetBuilder<DocCreationController>(
         init: Get.put<DocCreationController>(DocCreationController()),
         builder: (controller) {
-
           // documentNameController.text = "${controller.name}";
           // documentNameController.selection = TextSelection.fromPosition(TextPosition(offset: documentNameController.text.length));
           // documentNameController.text = name;
@@ -61,11 +60,9 @@ class _DocumentCreationState extends State<DocumentCreation> {
                   children: [
                     Column(
                       children: [
-                        new Text(
+                        Text(
                           "Create Document",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w400,
-                          ),
+                          style: Theme.of(context).textTheme.headline2,
                         ),
                       ],
                     ),
@@ -87,8 +84,6 @@ class _DocumentCreationState extends State<DocumentCreation> {
                             child: Column(
                               children: [
                                 TextFormField(
-
-
                                   // onChanged: (val){
                                   //
                                   //   // name = val;

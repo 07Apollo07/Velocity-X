@@ -24,6 +24,7 @@ class _HomeState extends State<Home> {
       // backgroundColor: Color.fromRGBO(36, 36, 36, 1.0),
 
       appBar: AppBar(
+        backgroundColor: Colors.black38,
         elevation: 0.0,
         title: Image.asset(
           'assets/images/VelocityX.png',
@@ -39,7 +40,7 @@ class _HomeState extends State<Home> {
             ),
             child: AnimSearchBar(
               width: 200,
-              color: Color.fromRGBO(36, 36, 36, 1.0),
+              color: Theme.of(context).scaffoldBackgroundColor,
               style: TextStyle(),
               textController: textController,
               onSuffixTap: () {

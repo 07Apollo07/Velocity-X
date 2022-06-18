@@ -7,14 +7,20 @@ class CustomTheme {
       //2
       brightness: Brightness.dark,
       primaryColor: const Color(0xFF4784F1),
+      secondaryHeaderColor: Color.fromRGBO(255, 255, 255, 1),
       appBarTheme:
           AppBarTheme(backgroundColor: Color.fromRGBO(36, 36, 36, 1.0)),
       scaffoldBackgroundColor: Color.fromRGBO(36, 36, 36, 1.0),
       textTheme: const TextTheme(
         headline1: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
+        headline2: TextStyle(fontSize: 50.0, fontWeight: FontWeight.w400),
         headline3: TextStyle(fontSize: 24),
+        headline4: TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
+        headline5: TextStyle(fontSize: 15),
+        headline6: TextStyle(fontSize: 10),
         bodyText1: TextStyle(letterSpacing: 1.8),
       ),
+
       // fontFamily: 'Lato', //3
       // elevatedButtonTheme: ElevatedButtonThemeData(
       //     style: ElevatedButton.styleFrom(
@@ -45,16 +51,19 @@ class CustomTheme {
       //2
       brightness: Brightness.light,
       primaryColor: const Color(0xFF4784F1),
+      secondaryHeaderColor: Color.fromRGBO(36, 36, 36, 1.0),
       appBarTheme:
           const AppBarTheme(backgroundColor: Color.fromRGBO(255, 255, 255, 1)),
       scaffoldBackgroundColor: Color.fromARGB(255, 255, 255, 255),
-      // textTheme: const TextTheme(
-      //   headline1: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
-      //   headline3: TextStyle(fontSize: 24),
-      //   bodyText1: TextStyle(letterSpacing: 1.8),
-      //   bodyText2: TextStyle(
-      //       fontSize: 27, letterSpacing: 1.8, fontWeight: FontWeight.bold),
-      // ),
+      textTheme: const TextTheme(
+        headline1: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
+        headline2: TextStyle(fontSize: 50.0, fontWeight: FontWeight.w400),
+        headline3: TextStyle(fontSize: 24),
+        headline4: TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
+        headline5: TextStyle(fontSize: 15),
+        headline6: TextStyle(fontSize: 10),
+        bodyText1: TextStyle(letterSpacing: 1.8),
+      ),
       // bottomAppBarColor: const Color(0xFF4784F1)
       // fontFamily: 'Lato', //3,
       // elevatedButtonTheme: ElevatedButtonThemeData(

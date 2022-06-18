@@ -31,15 +31,13 @@ class Profile extends StatelessWidget {
                       init: Get.put<UserController>(UserController()),
                       builder: (_) {
                         return Column(children: [
-                          new Text(
+                          Text(
                             _.user.f_name + " " + _.user.l_name,
-                            style: TextStyle(
-                              fontWeight: FontWeight.w400,
-                            ),
+                            style: Theme.of(context).textTheme.headline4,
                           ),
-                          new Text(
+                          Text(
                             _.user.designation,
-                            style: TextStyle(fontSize: 13),
+                            style: Theme.of(context).textTheme.headline5,
                           ),
                         ]);
                       },
@@ -67,10 +65,11 @@ class Profile extends StatelessWidget {
               ),
             ],
             bottom: TabBar(
-              tabs: [
+              tabs: const [
                 Tab(text: 'Informations'),
                 Tab(text: 'Documents'),
               ],
+              labelColor: Theme.of(context).secondaryHeaderColor,
             ),
           ),
           body: TabBarView(children: [
@@ -86,27 +85,25 @@ class ProfileDoc extends StatelessWidget {
 
   String getEmailFromUid(String uid) {
     print(uid);
-    UserModel? user =
-    Get.find<UserController>().users.firstWhereOrNull((user) => user.id == uid,);
+    UserModel? user = Get.find<UserController>().users.firstWhereOrNull(
+          (user) => user.id == uid,
+        );
     // String name = user.f_name + " " + user.l_name;
     // return name;
 
-    String email = user?.email == null ? "": "${user?.email}" ;
+    String email = user?.email == null ? "" : "${user?.email}";
     return email;
   }
 
-  List<String> getEmailFromUidList(List<dynamic> listOfUidOfassignedUsers ){
+  List<String> getEmailFromUidList(List<dynamic> listOfUidOfassignedUsers) {
     List<String> listOfNamesOfAssignedUsers = [];
 
     print(listOfUidOfassignedUsers.length);
 
-    if(listOfUidOfassignedUsers.length != null){
-
+    if (listOfUidOfassignedUsers.length != null) {
       for (var uid in listOfUidOfassignedUsers) {
-
         listOfNamesOfAssignedUsers.add(getEmailFromUid(uid));
       }
-
     }
 
     return listOfNamesOfAssignedUsers;
@@ -141,9 +138,8 @@ class ProfileDoc extends StatelessWidget {
                       //TODO remove assigned_by and due_date after changes to TaskTile
                       leading: Icon(Icons.account_circle_outlined),
                       title: Text(filesController.createdFiles[index].name),
-                      subtitle: Text("${ getEmailFromUidList(filesController
-                          .createdFiles[index].assigned_person_uid)
-                          .toString().replaceAll("[", "").replaceAll("]", "")}"),
+                      subtitle: Text(
+                          "${getEmailFromUidList(filesController.createdFiles[index].assigned_person_uid).toString().replaceAll("[", "").replaceAll("]", "")}"),
                       onTap: () {
                         Get.toNamed(Routes.DOC_EDITING,
                             id: Constants.profileId,
@@ -194,28 +190,28 @@ class UserInfo extends GetWidget<UserController> {
                 Text(
                   "Name : ${_.user.f_name} ${_.user.l_name}",
                   textAlign: TextAlign.left,
-                  style: TextStyle(color: Colors.white, fontSize: 16),
+                  style: Theme.of(context).textTheme.headline5,
                 ),
                 Text(
                   "Email: ${_.user.email}",
                   textAlign: TextAlign.left,
-                  style: TextStyle(color: Colors.white, fontSize: 16),
+                  style: Theme.of(context).textTheme.headline5,
                 ),
                 Text(
                   "Phone: ${_.user.phone}",
                   textAlign: TextAlign.left,
-                  style: TextStyle(color: Colors.white, fontSize: 16),
+                  style: Theme.of(context).textTheme.headline5,
                 ),
                 Text(
                   "Designation: ${_.user.designation}",
                   textAlign: TextAlign.left,
-                  style: TextStyle(color: Colors.white, fontSize: 16),
+                  style: Theme.of(context).textTheme.headline5,
                 ),
                 _.user.joining_date != null
                     ? Text(
                         "Joining Date: ${_.getDateFromTimeStamp(_.user.joining_date!.seconds.toString())}",
                         textAlign: TextAlign.left,
-                        style: TextStyle(color: Colors.white, fontSize: 16),
+                        style: Theme.of(context).textTheme.headline5,
                       )
                     : Text("Joining Date : ")
               ],
@@ -229,7 +225,7 @@ class UserInfo extends GetWidget<UserController> {
 // Created : Jan 31, 2021
 // Modified : Jun 24, 2021
 // Permission : User1, user2 .''',
-//           textAlign: TextAlign.left, style: TextStyle(color: Colors.white, fontSize: 16),
+//           textAlign: TextAlign.left, style: Theme.of(context).textTheme.headline5,
 //         ),
       ],
     );

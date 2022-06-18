@@ -29,28 +29,27 @@ class _OrganizationState extends State<Organization> {
               children: [
                 Column(
                   children: [
-                    new Text(
+                    Text(
                       "Organization Name",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w400,
-                      ),
+                      style: Theme.of(context).textTheme.headline3,
                     ),
-                    new Text(
+                    Text(
                       "Organization Code",
-                      style: TextStyle(fontSize: 13),
+                      style: Theme.of(context).textTheme.headline6,
                     ),
                   ],
                 ),
               ],
             ),
             bottom: TabBar(
-              tabs: [
+              tabs: const [
                 Tab(text: 'Informations'),
                 Tab(text: 'Employees'),
               ],
+              labelColor: Theme.of(context).secondaryHeaderColor,
             ),
           ),
-          body: TabBarView(children: [
+          body: const TabBarView(children: [
             UserInfo(),
             OrganizationDoc(),
           ]),
@@ -76,7 +75,7 @@ class OrganizationDoc extends StatelessWidget {
                     itemBuilder: (_, index) {
                       return ListTile(
                         //TODO remove assigned_by and due_date after changes to TaskTile
-                        leading: Icon(Icons.account_circle_outlined),
+                        leading: const Icon(Icons.account_circle_outlined),
                         title: Text(userController.users[index].f_name +
                             " " +
                             userController.users[index].l_name),
@@ -92,10 +91,10 @@ class OrganizationDoc extends StatelessWidget {
                     },
                   );
                 } else {
-                  return Center(child: CircularProgressIndicator());
+                  return const Center(child: const CircularProgressIndicator());
                 }
               } else {
-                return Center(
+                return const Center(
                     child: Text(
                         "Please ask your Employer to add you to their organization"));
               }
@@ -115,14 +114,14 @@ class UserInfo extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(
+        const SizedBox(
           height: 15,
         ),
         Text(
           'Information',
-          style: TextStyle(color: Colors.white, fontSize: 20),
+          style: Theme.of(context).textTheme.headline3,
         ),
-        SizedBox(
+        const SizedBox(
           height: 10,
         ),
         Text(
@@ -132,7 +131,7 @@ Owner : User_example
 Created : Jan 31, 2021
 Admins : User1, user2 .''',
           textAlign: TextAlign.left,
-          style: TextStyle(color: Colors.white, fontSize: 16),
+          style: Theme.of(context).textTheme.headline5,
         ),
       ],
     );
