@@ -15,6 +15,7 @@ import 'package:ai_barcode/ai_barcode.dart';
 import 'package:get/get.dart';
 
 import '../../controllers/docCreationController.dart';
+import '../../models/user.dart';
 
 class MetaDataPage extends StatelessWidget {
   final FilesModel File;
@@ -27,6 +28,7 @@ class MetaDataPage extends StatelessWidget {
     return GetBuilder<MetaDataController>(
         init: Get.put<MetaDataController>(MetaDataController()),
         builder: (controller) {
+          print(getNameFromUidList(File.assigned_person_uid));
           if (controller.initialized == false) {
             for (String id in File.assigned_person_uid) {
               controller.initializeAssignedList(id);
@@ -229,7 +231,8 @@ class MetaDataPage extends StatelessWidget {
                       ),
                       TextFormField(
                         enabled: false,
-                        initialValue: File.assigned_person_uid.toString(),
+                        // initialValue: File.assigned_person_uid.toString(),
+                        initialValue: getNameFromUidList(File.assigned_person_uid).toString(),
                         decoration: InputDecoration(
                           focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
@@ -440,5 +443,25 @@ class MetaDataPage extends StatelessWidget {
             ),
           );
         });
+  }
+
+
+  String getNameFromUid(String uid) {
+    UserModel user =
+    Get.find<UserController>().users.firstWhere((user) => user.id == uid);
+    // String name = user.f_name + " " + user.l_name;
+    // return name;
+
+    String email = "${user.email}";
+    return email;
+  }
+
+  List<String> getNameFromUidList(List<dynamic> listOfUidOfassignedUsers ){
+    List<String> listOfNamesOfAssignedUsers = [];
+    for (var name in listOfUidOfassignedUsers) {
+      listOfNamesOfAssignedUsers.add(getNameFromUid(name));
+    }
+
+    return listOfNamesOfAssignedUsers;
   }
 }
