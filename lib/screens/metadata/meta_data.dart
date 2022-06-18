@@ -249,7 +249,7 @@ class MetaDataPage extends StatelessWidget {
                         ),
                         TextFormField(
                           enabled: false,
-                          initialValue: getNameFromUidList(File.assigned_person_uid).toString(),
+                          initialValue: getEmailFromUidList(File.assigned_person_uid).toString().replaceAll("[", "").replaceAll("]", ""),
                           decoration: InputDecoration(
                             focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(
@@ -468,20 +468,29 @@ class MetaDataPage extends StatelessWidget {
           });
     }
   }
-  String getNameFromUid(String uid) {
-    UserModel user =
-    Get.find<UserController>().users.firstWhere((user) => user.id == uid);
+  String getEmailFromUid(String uid) {
+    print(uid);
+    UserModel? user =
+    Get.find<UserController>().users.firstWhereOrNull((user) => user.id == uid,);
     // String name = user.f_name + " " + user.l_name;
     // return name;
 
-    String email = "${user.email}";
+    String email = user?.email == null ? "": "${user?.email}" ;
     return email;
   }
 
-  List<String> getNameFromUidList(List<dynamic> listOfUidOfassignedUsers ){
+  List<String> getEmailFromUidList(List<dynamic> listOfUidOfassignedUsers ){
     List<String> listOfNamesOfAssignedUsers = [];
-    for (var name in listOfUidOfassignedUsers) {
-      listOfNamesOfAssignedUsers.add(getNameFromUid(name));
+
+    print(listOfUidOfassignedUsers.length);
+
+    if(listOfUidOfassignedUsers.length != null){
+
+      for (var uid in listOfUidOfassignedUsers) {
+
+        listOfNamesOfAssignedUsers.add(getEmailFromUid(uid));
+      }
+
     }
 
     return listOfNamesOfAssignedUsers;

@@ -7,6 +7,8 @@ import 'package:velocityx/controllers/userController.dart';
 import 'package:velocityx/routes/app_pages.dart';
 import 'package:velocityx/shared/constants.dart';
 
+import '../../models/user.dart';
+
 // class Profile extends StatefulWidget {
 //   @override
 //   State<Profile> createState() => _ProfileState();
@@ -82,6 +84,34 @@ class Profile extends StatelessWidget {
 class ProfileDoc extends StatelessWidget {
   const ProfileDoc({Key? key}) : super(key: key);
 
+  String getEmailFromUid(String uid) {
+    print(uid);
+    UserModel? user =
+    Get.find<UserController>().users.firstWhereOrNull((user) => user.id == uid,);
+    // String name = user.f_name + " " + user.l_name;
+    // return name;
+
+    String email = user?.email == null ? "": "${user?.email}" ;
+    return email;
+  }
+
+  List<String> getEmailFromUidList(List<dynamic> listOfUidOfassignedUsers ){
+    List<String> listOfNamesOfAssignedUsers = [];
+
+    print(listOfUidOfassignedUsers.length);
+
+    if(listOfUidOfassignedUsers.length != null){
+
+      for (var uid in listOfUidOfassignedUsers) {
+
+        listOfNamesOfAssignedUsers.add(getEmailFromUid(uid));
+      }
+
+    }
+
+    return listOfNamesOfAssignedUsers;
+  }
+
   @override
   Widget build(BuildContext context) {
     // return ListView(
@@ -105,13 +135,15 @@ class ProfileDoc extends StatelessWidget {
                 return ListView.builder(
                   itemCount: filesController.createdFiles.length,
                   itemBuilder: (_, index) {
+                    print(filesController
+                        .createdFiles[index].assigned_person_uid);
                     return ListTile(
                       //TODO remove assigned_by and due_date after changes to TaskTile
                       leading: Icon(Icons.account_circle_outlined),
                       title: Text(filesController.createdFiles[index].name),
-                      subtitle: Text(filesController
-                          .createdFiles[index].assigned_person_uid
-                          .toString()),
+                      subtitle: Text("${ getEmailFromUidList(filesController
+                          .createdFiles[index].assigned_person_uid)
+                          .toString().replaceAll("[", "").replaceAll("]", "")}"),
                       onTap: () {
                         Get.toNamed(Routes.DOC_EDITING,
                             id: Constants.profileId,
