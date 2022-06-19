@@ -118,7 +118,7 @@ class _DocumentEditingState extends State<DocumentEditing> {
                             margin: EdgeInsets.all(40),
                             child: PlatformAiBarcodeCreatorWidget(
                               creatorController: controller.creatorController!,
-                              initialValue: "Hello",
+                              initialValue: widget.File.files_uniqueId,
                             ),
                           ),
                         ),

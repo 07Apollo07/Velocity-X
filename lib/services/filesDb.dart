@@ -168,7 +168,31 @@ class FilesDb {
     }
   }
 
-  Future<FilesModel> GetFile(String fileId) async {
+  Future<bool> AddScanStats(String fileId) async {
+    try {
+      List<dynamic> tracking = [
+        {
+          "Operation": "Scanned",
+          "By": Get.find<UserController>().user.id,
+          "Time": Timestamp.now(),
+        }
+      ];
+      await _firestore
+          .collection("Files")
+          .doc(fileId)
+          .collection("File_Stats")
+          .doc("Stats")
+          .update({
+        "tracking": FieldValue.arrayUnion(tracking),
+      });
+      return true;
+    } catch (e) {
+      print(e.toString());
+      return false;
+    }
+  }
+
+  Future<FilesModel> GetFile(String fileId, bool Scanned) async {
     try {
       FilesModel _fileStat = FilesModel();
       await _firestore.collection("Files").doc(fileId).get().then(
@@ -176,6 +200,9 @@ class FilesDb {
           _fileStat = FilesModel.fromDocumentSnapshot(documentSnapshot: doc);
         },
       );
+      if (Scanned) {
+        AddScanStats(_fileStat.files_uniqueId);
+      }
       return _fileStat;
     } catch (e) {
       print(e.toString());

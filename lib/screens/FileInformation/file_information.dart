@@ -122,11 +122,10 @@ class _TimelineActivity extends StatelessWidget {
         //     FileStats.tracking![index].runtimeType.toString();
         Map<String, dynamic> Operation = FileStats.tracking![index];
 
-        // final IndicatorStyle indicator = step.isCheckpoint
-        //     ? _indicatorStyleCheckpoint(step)
-        //     : const IndicatorStyle(width: 0);
+        final IndicatorStyle indicator =
+            _indicatorStyleCheckpoint(Operation["Operation"]);
 
-        final IndicatorStyle indicator = const IndicatorStyle(width: 0);
+        // final IndicatorStyle indicator = const IndicatorStyle(width: 0);
 
         final righChild = _RightChildTimeline(
           FileStats: Operation,
@@ -139,11 +138,11 @@ class _TimelineActivity extends StatelessWidget {
           alignment: TimelineAlign.manual,
           isFirst: index == 0,
           isLast: index == (FileStats.tracking?.length ?? 1) - 1,
-          lineXY: 0.5,
+          lineXY: 0.3,
           indicatorStyle: indicator,
           startChild: leftChild,
           endChild: righChild,
-          // hasIndicator: step.isCheckpoint,
+          hasIndicator: true,
           beforeLineStyle: LineStyle(
             color: Theme.of(context).primaryColor,
             thickness: 8,
@@ -151,6 +150,37 @@ class _TimelineActivity extends StatelessWidget {
         );
       },
     );
+  }
+
+  IndicatorStyle _indicatorStyleCheckpoint(String action) {
+    return IndicatorStyle(
+      width: 40,
+      height: 40,
+      indicator: Container(
+        decoration: BoxDecoration(
+          color: Colors.blue,
+          borderRadius: const BorderRadius.all(
+            Radius.circular(20),
+          ),
+        ),
+        child: Center(
+          child: Icon(
+            getIcon(action),
+            color: const Color(0xFF1D1E20),
+          ),
+        ),
+      ),
+    );
+  }
+
+  IconData getIcon(String action) {
+    if (action == "Creation") {
+      return Icons.add;
+    } else if (action == "FinalApproverAdded") {
+      return Icons.person_pin_rounded;
+    } else {
+      return Icons.add_card;
+    }
   }
 }
 
@@ -160,11 +190,13 @@ class _LeftChildTimeline extends StatelessWidget {
   final Map<String, dynamic> FileStats;
   @override
   Widget build(BuildContext context) {
-    String RunTypeType;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: <Widget>[Text(getLeftText(FileStats))],
-    );
+    final double minHeight = 80;
+    return ConstrainedBox(
+        constraints: BoxConstraints(minHeight: minHeight),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: <Widget>[Text(getLeftText(FileStats))],
+        ));
   }
 }
 
@@ -208,6 +240,9 @@ String getRightText(Map<String, dynamic> FileStats) {
   } else if (FileStats["Operation"] == "Opened") {
     String message = "File Opened by " + getNameFromUid(FileStats["User"]);
     return message;
+  } else if (FileStats["Operation"] == "Scanned") {
+    String message = "File Scanned by " + getNameFromUid(FileStats["By"]);
+    return message;
   }
 
   return "";
@@ -226,20 +261,23 @@ class _RightChildTimeline extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: <Widget>[
-        Padding(
-          padding: EdgeInsets.only(right: 29),
-          child: Text(getRightText(FileStats)
-              // style: GoogleFonts.patrickHand(
-              //   fontSize: 16,
-              //   color: Colors.white.withOpacity(0.6),
-              // ),
-              ),
-        )
-      ],
-    );
+    final double minHeight = 80;
+    return ConstrainedBox(
+        constraints: BoxConstraints(minHeight: minHeight),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(right: 29),
+              child: Text(getRightText(FileStats)
+                  // style: GoogleFonts.patrickHand(
+                  //   fontSize: 16,
+                  //   color: Colors.white.withOpacity(0.6),
+                  // ),
+                  ),
+            )
+          ],
+        ));
   }
 }
 
@@ -251,8 +289,9 @@ String getDateFromTimeStamp(String timestamp) {
 }
 
 String getNameFromUid(String uid) {
-  UserModel user =
-      Get.find<UserController>().users.firstWhere((user) => user.id == uid);
+  UserModel user = Get.find<UserController>().users.firstWhere(
+      (user) => user.id == uid,
+      orElse: () => UserModel(f_name: "Anonymous", l_name: "User"));
   String name = user.f_name + " " + user.l_name;
   return name;
 }

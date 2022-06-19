@@ -9,11 +9,11 @@ class ScannerV2Controller extends GetxController {
 
   void setCode(String code) {
     Code = code;
-    update();
+    // update();
   }
 
   void setResult(String code) {
     qrResult = code;
-    update();
+    // update();
   }
 }

@@ -9,7 +9,7 @@ import 'package:velocityx/services/filesDb.dart';
 class ScannerLoad extends GetWidget<ScannerV2Controller> {
   @override
   Widget build(BuildContext context) {
-    Future<FilesModel> fetchFile() => FilesDb().GetFile(controller.Code);
+    Future<FilesModel> fetchFile() => FilesDb().GetFile(controller.Code, true);
     return FutureBuilder<FilesModel>(
         future: fetchFile(),
         builder: (context, AsyncSnapshot<FilesModel> file) {
@@ -31,9 +31,7 @@ class ScannerLoad extends GetWidget<ScannerV2Controller> {
               );
             }
           } else {
-            return Scaffold(
-              body: Center(child: CircularProgressIndicator()),
-            );
+            return Scaffold(body: Center(child: CircularProgressIndicator()));
           }
         });
   }
