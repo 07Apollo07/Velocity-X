@@ -62,7 +62,7 @@ class _DocumentCreationState extends State<DocumentCreation> {
                       children: [
                         Text(
                           "Create Document",
-                          style: Theme.of(context).textTheme.headline2,
+                          style: Theme.of(context).textTheme.headline3,
                         ),
                       ],
                     ),
@@ -101,7 +101,6 @@ class _DocumentCreationState extends State<DocumentCreation> {
                                           color: Theme.of(context).primaryColor,
                                           width: 2.0),
                                     ),
-                                    fillColor: Colors.black54,
                                     filled: true,
                                     label: Text("Document Name"),
                                     hintText: "Name",
@@ -143,7 +142,6 @@ class _DocumentCreationState extends State<DocumentCreation> {
                                           color: Theme.of(context).primaryColor,
                                           width: 2.0),
                                     ),
-                                    fillColor: Colors.black54,
                                     filled: true,
                                     label: Text(
                                         "Who do you want to assign this Document? "),
@@ -258,7 +256,6 @@ class _DocumentCreationState extends State<DocumentCreation> {
                                       color: Theme.of(context).primaryColor,
                                       width: 2.0),
                                 ),
-                                fillColor: Colors.black54,
                                 filled: true,
                                 label: Text("Final Approver Name "),
                                 hintText: "Enter Names",

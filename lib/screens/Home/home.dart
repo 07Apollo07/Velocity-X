@@ -63,7 +63,11 @@ class _HomeState extends State<Home> {
                 ]),
             child: IconButton(
                 onPressed: () {
-                  AuthController.instance.signOut();
+                  print("theme changed");
+                  if (Get.isDarkMode)
+                    Get.changeThemeMode(ThemeMode.light);
+                  else
+                    Get.changeThemeMode(ThemeMode.dark);
                 },
                 icon: Icon(CustomIcons.bell),
                 color: Theme.of(context).primaryColor),
