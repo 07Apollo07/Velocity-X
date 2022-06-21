@@ -13,7 +13,6 @@ import 'package:velocityx/services/filesDb.dart';
 import 'package:file_picker/file_picker.dart';
 
 class DocCreationController extends GetxController {
-
   // final TextEditingController documentNameController = TextEditingController();
   // final TextEditingController assignedPersonNameController =
   // TextEditingController();
@@ -28,7 +27,6 @@ class DocCreationController extends GetxController {
   var name = ''.obs;
   var assignedDocument = ''.obs;
   var finalApproverText = ''.obs;
-
 
   List<UserModel> userList = Get.find<UserController>().users;
 
@@ -49,7 +47,7 @@ class DocCreationController extends GetxController {
   List<UserModel> get finApproverList => finalApproverList.value;
   List<String?> get finApproverIdList => finalApproverIdList.value;
 
-  void updateDocName(var docName){
+  void updateDocName(var docName) {
     name.value = docName;
     print(name.value);
     update();
@@ -191,6 +189,7 @@ class DocCreationController extends GetxController {
             : "No Final Approver",
         organization_no: _user.organization_no,
         storage_link: StorageLink,
+        fileModifiedDateTime: Timestamp.fromDate(DateTime.now()),
       );
       if (await FilesDb().createNewFile(_file)) {
         finApproverList.clear();

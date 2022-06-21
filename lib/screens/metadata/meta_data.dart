@@ -65,43 +65,6 @@ class MetaDataPage extends StatelessWidget {
                     style: TextStyle(color: Theme.of(context).primaryColor),
                   ),
                   elevation: 0.0,
-                  actions: <Widget>[
-                    Container(
-                        margin: EdgeInsets.only(right: 15.0),
-                        decoration: BoxDecoration(
-                            color: Theme.of(context).scaffoldBackgroundColor,
-                            shape: BoxShape.circle,
-                            boxShadow: [
-                              BoxShadow(
-                                color: Theme.of(context).primaryColor,
-                                blurRadius: 5.0,
-                              ),
-                            ]),
-                        child: IconButton(
-                            onPressed: () {
-                              // Navigator.pushNamed(context, '/MetaData');
-                            },
-                            icon: Icon(CustomIcons.search_1),
-                            color: Theme.of(context).primaryColor)),
-                    Container(
-                      margin: EdgeInsets.only(right: 15.0),
-                      decoration: BoxDecoration(
-                          color: Theme.of(context).scaffoldBackgroundColor,
-                          shape: BoxShape.circle,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Theme.of(context).primaryColor,
-                              blurRadius: 5.0,
-                            ),
-                          ]),
-                      child: IconButton(
-                          onPressed: () {
-                            AuthController.instance.signOut();
-                          },
-                          icon: Icon(CustomIcons.bell),
-                          color: Theme.of(context).primaryColor),
-                    ),
-                  ],
                 ),
                 body: SingleChildScrollView(
                   child: Padding(
@@ -249,7 +212,11 @@ class MetaDataPage extends StatelessWidget {
                         ),
                         TextFormField(
                           enabled: false,
-                          initialValue: getEmailFromUidList(File.assigned_person_uid).toString().replaceAll("[", "").replaceAll("]", ""),
+                          initialValue:
+                              getEmailFromUidList(File.assigned_person_uid)
+                                  .toString()
+                                  .replaceAll("[", "")
+                                  .replaceAll("]", ""),
                           decoration: InputDecoration(
                             focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(
@@ -468,33 +435,30 @@ class MetaDataPage extends StatelessWidget {
           });
     }
   }
+
   String getEmailFromUid(String uid) {
     print(uid);
-    UserModel? user =
-    Get.find<UserController>().users.firstWhereOrNull((user) => user.id == uid,);
+    UserModel? user = Get.find<UserController>().users.firstWhereOrNull(
+          (user) => user.id == uid,
+        );
     // String name = user.f_name + " " + user.l_name;
     // return name;
 
-    String email = user?.email == null ? "": "${user?.email}" ;
+    String email = user?.email == null ? "" : "${user?.email}";
     return email;
   }
 
-  List<String> getEmailFromUidList(List<dynamic> listOfUidOfassignedUsers ){
+  List<String> getEmailFromUidList(List<dynamic> listOfUidOfassignedUsers) {
     List<String> listOfNamesOfAssignedUsers = [];
 
     print(listOfUidOfassignedUsers.length);
 
-    if(listOfUidOfassignedUsers.length != null){
-
+    if (listOfUidOfassignedUsers.length != null) {
       for (var uid in listOfUidOfassignedUsers) {
-
         listOfNamesOfAssignedUsers.add(getEmailFromUid(uid));
       }
-
     }
 
     return listOfNamesOfAssignedUsers;
   }
 }
-
-

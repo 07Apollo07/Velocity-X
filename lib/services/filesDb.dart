@@ -46,7 +46,7 @@ class FilesDb {
         .collection("Files")
         //TODO change array Contains value to logged in users's Uid
         .where('assigned_person_uid', arrayContains: uid)
-        // .orderBy("name", descending: true)
+        .orderBy("fileModifiedDateTime", descending: true)
         .snapshots()
         .map((QuerySnapshot query) {
       print(query.docs);
@@ -65,6 +65,7 @@ class FilesDb {
         .collection("Files")
         //TODO change array Contains value to logged in users's Uid
         .where('creator_uid', isEqualTo: uid)
+        .orderBy('creation_datetime', descending: true)
         // .orderBy("name", descending: true)
         .snapshots()
         .map((QuerySnapshot query) {
@@ -83,11 +84,13 @@ class FilesDb {
     String storageLink = "";
     final ref = FirebaseStorage.instance.ref().child(path);
     if (kIsWeb) {
-      UploadTask uploadTask = ref.putData(fileBytes);
+      UploadTask uploadTask = ref.putData(
+          fileBytes, SettableMetadata(contentType: "application/pdf"));
       storageLink = await (await uploadTask).ref.getDownloadURL();
       return storageLink;
     } else {
-      UploadTask uploadTask = ref.putFile(file);
+      UploadTask uploadTask =
+          ref.putFile(file, SettableMetadata(contentType: "application/pdf"));
       storageLink = await (await uploadTask).ref.getDownloadURL();
       return storageLink;
     }
@@ -108,7 +111,8 @@ class FilesDb {
         "assigned_person_uid": file.assigned_person_uid,
         "creator_name": file.creator_name,
         "download": file.download,
-        "final_approver_set": file.final_approver_set
+        "final_approver_set": file.final_approver_set,
+        "fileModifiedDateTime": file.fileModifiedDateTime
       }).then((value) async {
         await CreateStarterStats(FileRef.id, file);
       });

@@ -93,7 +93,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.PDFWEBVIEWER,
-      page: () => PdfViewerWeb(),
+      page: () => PdfViewerWeb(document: ""),
       // binding: HomeBinding(),
     ),
     GetPage(

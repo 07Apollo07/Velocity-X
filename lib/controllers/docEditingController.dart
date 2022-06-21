@@ -15,7 +15,6 @@ class DocEditingController extends GetxController {
   PlatformFile? pickedFile;
   bool isFilePicked = false;
 
-
   CreatorController? creatorController;
   TextEditingController documentNameController = TextEditingController();
   TextEditingController assignedPersonNameController = TextEditingController();
@@ -268,11 +267,6 @@ class DocEditingController extends GetxController {
         newUserListId.add(user!);
       }
     });
-    String deletedFinalApprover = "";
-    String newFinalAPprover = "";
-
-    if (finApproverIdList.contains(oldIdList.first)) {}
-    ;
     if (await FilesDb()
         .UpdateFile(fileId, _file, deletedUsersId, newUserListId)) {
       update();

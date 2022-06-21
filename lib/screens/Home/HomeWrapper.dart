@@ -62,7 +62,9 @@ class HomeWrapper extends StatelessWidget {
               page: () {
                 if (kIsWeb) {
                   // It's running on the web!
-                  return PdfViewerWeb();
+                  return PdfViewerWeb(
+                    document: routeSettings.arguments.toString(),
+                  );
                 } else {
                   return Viewer(
                     document: routeSettings.arguments.toString(),

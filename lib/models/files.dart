@@ -13,6 +13,7 @@ class FilesModel {
   late String creator_name;
   late bool download;
   late bool final_approver_set;
+  late Timestamp? fileModifiedDateTime;
 
   FilesModel(
       {this.creator_uid = "Not Set",
@@ -26,7 +27,8 @@ class FilesModel {
       this.assigned_person_uid = const [0],
       this.creator_name = "Not Set",
       this.download = false,
-      this.final_approver_set = false});
+      this.final_approver_set = false,
+      this.fileModifiedDateTime});
 
   FilesModel.fromDocumentSnapshot({DocumentSnapshot? documentSnapshot}) {
     creator_uid = documentSnapshot!.data().toString().contains("creator_uid")
@@ -71,5 +73,9 @@ class FilesModel {
         documentSnapshot.data().toString().contains("final_approver_set")
             ? documentSnapshot["final_approver_set"]
             : false;
+    fileModifiedDateTime =
+        documentSnapshot.data().toString().contains("fileModifiedDateTime")
+            ? documentSnapshot["creation_datetime"] as Timestamp
+            : Timestamp(0, 0);
   }
 }
