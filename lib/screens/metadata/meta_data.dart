@@ -1,4 +1,6 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
 import 'package:get/get.dart';
 import 'package:html_editor_enhanced/utils/utils.dart';
 import 'package:velocityx/assets/custom_icons_icons.dart';
@@ -13,9 +15,14 @@ import 'package:velocityx/shared/constants.dart';
 import 'package:velocityx/shared/icon_logo.dart';
 import 'package:ai_barcode/ai_barcode.dart';
 import 'package:get/get.dart';
-
+import 'package:path_provider/path_provider.dart';
 import '../../controllers/docCreationController.dart';
 import '../../models/user.dart';
+import 'dart:async';
+import 'dart:io';
+import 'package:universal_html/html.dart' as html;
+
+
 
 class MetaDataPage extends StatelessWidget {
   final FilesModel File;
@@ -23,8 +30,10 @@ class MetaDataPage extends StatelessWidget {
   final TextEditingController assignedPersonNameController =
       TextEditingController();
 
+
   @override
   Widget build(BuildContext context) {
+
     if (File.organization_no !=
         Get.find<UserController>().user.organization_no) {
       return Scaffold(
@@ -274,7 +283,16 @@ class MetaDataPage extends StatelessWidget {
                               IconButton(
                                 color: Theme.of(context).primaryColor,
                                 icon: Icon(Icons.download),
-                                onPressed: () {},
+                                onPressed: () {
+                                  print(File.storage_link);
+                                  if(kIsWeb){
+                                    html.window.open(File.storage_link, "_blank");
+                                  }else{
+                                    controller.download(url: File.storage_link);
+                                  }
+
+                                  print(File.storage_link);
+                                },
                               ),
                             ],
                           ),

@@ -54,6 +54,10 @@ dependencies:
   syncfusion_flutter_pdfviewer: ^20.1.59-beta
   file_picker: ^4.6.1
   firebase_storage: ^10.2.17
+  path_provider: ^2.0.11
+  universal_html: ^2.0.8
+  dio: ^4.0.4
+  open_file: ^3.2.1
 
 
 dev_dependencies:

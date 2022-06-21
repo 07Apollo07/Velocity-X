@@ -12,11 +12,13 @@ import 'package:velocityx/controllers/authController.dart';
 import 'firebase_options.dart';
 import 'custom_theme.dart';
 
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   ).then((value) => Get.put(AuthController(), permanent: true));
+
   runApp(MyApp());
   // runApp(MaterialApp(
   //   initialRoute: '/SignIn',s
@@ -39,7 +41,7 @@ class MyApp extends StatelessWidget {
       home: SplashScreen(),
       // initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,
-      theme: Themes.light,
+      theme: Themes.dark,
       darkTheme: Themes.dark,
       // themeMode: ThemeMode.system,
     );
