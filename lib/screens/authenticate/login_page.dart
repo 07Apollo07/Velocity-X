@@ -63,6 +63,10 @@ class Login extends GetWidget<AuthController> {
                       child: TextFormField(
                           decoration: InputDecoration(
                               hintText: "Email", icon: Icon(Icons.email)),
+                          cursorColor: Colors.white,
+                          style: TextStyle(
+                            color: Color(0xFF78D6FF),
+                          ),
                           controller: emailController,
                           validator: (val) {
                             if (val != null &&
@@ -80,6 +84,10 @@ class Login extends GetWidget<AuthController> {
                       child: TextFormField(
                         decoration: InputDecoration(
                             hintText: "Password", icon: Icon(Icons.password)),
+                        cursorColor: Colors.white,
+                        style: TextStyle(
+                          color: Color(0xFF78D6FF),
+                        ),
                         controller: passwordController,
                         obscureText: true,
                         validator: (val) {

@@ -18,9 +18,11 @@ class Scanner extends StatelessWidget {
             child: Container(
               child: Scaffold(
                 appBar: AppBar(
+                  backgroundColor: Colors.black38,
                   title: Text(
                     "QR Scanner",
-                    style: TextStyle(color: Theme.of(context).primaryColor),
+                    style: TextStyle(
+                        color: Theme.of(context).primaryColor, fontSize: 20),
                   ),
                   elevation: 0.0,
                   actions: <Widget>[
@@ -63,6 +65,9 @@ class Scanner extends StatelessWidget {
                 ),
                 // backgroundColor: Color.fromRGBO(36, 36, 36, 1.0),
                 body: Column(
+                  mainAxisAlignment: (MediaQuery.of(context).size.width > 600)
+                      ? MainAxisAlignment.center
+                      : MainAxisAlignment.end,
                   children: [
                     // Text(controller.qrResult, style: TextStyle(color: Colors.white)),
                     ElevatedButton(
@@ -84,8 +89,9 @@ class Scanner extends StatelessWidget {
                           padding: const EdgeInsets.all(30.0),
                           child: Container(
                             margin: EdgeInsets.all(15.0),
-                            decoration: const BoxDecoration(
-                                color: Color.fromRGBO(36, 36, 36, 1.0),
+                            decoration: BoxDecoration(
+                                color:
+                                    Theme.of(context).scaffoldBackgroundColor,
                                 shape: BoxShape.circle,
                                 boxShadow: [
                                   BoxShadow(
@@ -107,8 +113,9 @@ class Scanner extends StatelessWidget {
                           padding: const EdgeInsets.all(30.0),
                           child: Container(
                             margin: EdgeInsets.only(right: 15.0),
-                            decoration: const BoxDecoration(
-                                color: Color.fromRGBO(36, 36, 36, 1.0),
+                            decoration: BoxDecoration(
+                                color:
+                                    Theme.of(context).scaffoldBackgroundColor,
                                 shape: BoxShape.circle,
                                 boxShadow: [
                                   BoxShadow(
@@ -127,8 +134,9 @@ class Scanner extends StatelessWidget {
                           padding: const EdgeInsets.all(30.0),
                           child: Container(
                             margin: EdgeInsets.only(right: 15.0),
-                            decoration: const BoxDecoration(
-                                color: Color.fromRGBO(36, 36, 36, 1.0),
+                            decoration: BoxDecoration(
+                                color:
+                                    Theme.of(context).scaffoldBackgroundColor,
                                 shape: BoxShape.circle,
                                 boxShadow: [
                                   BoxShadow(
@@ -144,6 +152,9 @@ class Scanner extends StatelessWidget {
                           ),
                         ),
                       ],
+                    ),
+                    SizedBox(
+                      height: 30,
                     ),
                   ],
                 ),

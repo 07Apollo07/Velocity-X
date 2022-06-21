@@ -8,20 +8,37 @@ class CategoryTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 140.0,
-      width: 140.0,
+      height: 150.0,
+      width: 150.0,
       decoration: BoxDecoration(
         border: Border.all(
-          width: 4,
+          width: 3,
           color: Theme.of(context).primaryColor,
         ),
-        borderRadius: BorderRadius.all(Radius.circular(45)),
+        borderRadius: BorderRadius.all(Radius.circular(30)),
       ),
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(8.0, 45, 8, 5),
-        child: Center(
-          child: Text(title, style: Theme.of(context).textTheme.bodyText2),
-        ),
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(5, 15, 5, 0),
+            child: Center(
+              child: Text(
+                title,
+                style: Theme.of(context).textTheme.headline5,
+                textAlign: TextAlign.left,
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 70,
+          ),
+          Row(
+            children: [
+              SizedBox(width: 110),
+              Icon(Icons.arrow_forward, color: Theme.of(context).primaryColor),
+            ],
+          ),
+        ],
       ),
     );
   }
