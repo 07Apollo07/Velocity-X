@@ -212,7 +212,7 @@ class MetaDataController extends GetxController {
     assignedUserIdList.value = [];
   }
 
-  Future<void> download({required String url}) async {
+  Future<void> download({required String url,required String fileName}) async {
     // requests permission for downloading the file
     bool hasPermission = await _requestWritePermission();
     if (!hasPermission) return;
@@ -222,7 +222,7 @@ class MetaDataController extends GetxController {
 
     // You should put the name you want for the file here.
     // Take in account the extension.
-    String fileName = 'myFile';
+    // String fileName = '${fileName}';
 
     // downloads the file
     Dio dio = Dio();

@@ -288,7 +288,7 @@ class MetaDataPage extends StatelessWidget {
                                   if(kIsWeb){
                                     html.window.open(File.storage_link, "_blank");
                                   }else{
-                                    controller.download(url: File.storage_link);
+                                    controller.download(url: File.storage_link,fileName: File.name);
                                   }
 
                                   print(File.storage_link);
