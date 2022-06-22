@@ -1,4 +1,5 @@
 import 'package:ai_barcode/ai_barcode.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:velocityx/controllers/docEditingController.dart';
@@ -7,6 +8,8 @@ import 'package:velocityx/models/files.dart';
 import 'package:velocityx/routes/app_pages.dart';
 import 'package:velocityx/services/filesDb.dart';
 import 'package:velocityx/shared/constants.dart';
+import 'package:universal_html/html.dart' as html;
+import '../../controllers/userController.dart';
 
 class DocumentEditing extends StatefulWidget {
   final FilesModel File;
@@ -376,39 +379,13 @@ class _DocumentEditingState extends State<DocumentEditing> {
                                   : Container()),
                         ),
                         SizedBox(height: 20),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Upload Document',
-                                  style: TextStyle(fontSize: 20),
-                                ),
-                                // Text(
-                                //     '(Proof of Address)'
-                                // )
-                              ],
-                            ),
-                            IconButton(
-                              onPressed: () {},
-                              iconSize: 40,
-                              icon: Icon(
-                                Icons.upload_file,
-                                color: Color(0xFF4784F1),
-                              ),
-                            )
-                          ],
-                        ),
-                        SizedBox(height: 20),
                         Center(
                           child: TextButton(
                             style: ElevatedButton.styleFrom(
                                 primary: Color(0xFF4784F1),
                                 padding: EdgeInsets.fromLTRB(40, 20, 40, 20)),
                             child: Text(
-                              "Upload",
+                              "Update",
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold),
@@ -439,6 +416,41 @@ class _DocumentEditingState extends State<DocumentEditing> {
                           error,
                           style: TextStyle(color: Colors.red, fontSize: 14.0),
                         ),
+                        SizedBox(height: 20,),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+
+                            IconButton(
+                              color: Theme.of(context).primaryColor,
+                              icon: Icon(Icons.open_in_new),
+                              onPressed: () {
+                                controller.OpenedDocument(widget.File.files_uniqueId,
+                                    Get.find<UserController>().user.id ?? "");
+                                Get.toNamed(
+                                  Routes.PDFVIEWER,
+                                  id: Constants.profileId,
+                                  arguments: widget.File.storage_link,
+                                );
+                              },
+                            ),
+                            IconButton(
+                              color: Theme.of(context).primaryColor,
+                              icon: Icon(Icons.download),
+                              onPressed: () {
+                                print(widget.File.storage_link);
+                                if(kIsWeb){
+                                  html.window.open(widget.File.storage_link, "_blank");
+                                }else{
+                                  controller.download(url: widget.File.storage_link,fileName: widget.File.name);
+                                }
+
+                                print(widget.File.storage_link);
+                              },
+                            ),
+                          ],
+                        ),
+
                       ],
                     ),
                   ),
