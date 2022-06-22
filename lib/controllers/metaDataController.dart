@@ -11,6 +11,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
+import 'package:http/http.dart' as http;
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:open_file/open_file.dart';
@@ -212,7 +213,7 @@ class MetaDataController extends GetxController {
     assignedUserIdList.value = [];
   }
 
-  Future<void> download({required String url,required String fileName}) async {
+  Future<void> download({required String url, required String fileName}) async {
     // requests permission for downloading the file
     bool hasPermission = await _requestWritePermission();
     if (!hasPermission) return;
@@ -237,13 +238,4 @@ class MetaDataController extends GetxController {
     await Permission.storage.request();
     return await Permission.storage.request().isGranted;
   }
-
-
-
-
-
-
-
-
-
 }

@@ -44,10 +44,7 @@ class TaskTile extends StatelessWidget {
                 children: [
                   Text(
                     filesModel.name,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                    ),
+                    style: Theme.of(context).textTheme.headline4,
                   ),
                   SizedBox(
                     height: 3,

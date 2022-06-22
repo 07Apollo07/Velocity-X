@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -23,6 +24,7 @@ class DocCreationController extends GetxController {
   PlatformFile? pickedFile;
   bool isFilePicked = false;
   String storageLink = "";
+  bool loading = false;
 
   var name = ''.obs;
   var assignedDocument = ''.obs;
@@ -46,6 +48,11 @@ class DocCreationController extends GetxController {
   List<String?> get assignedIdList => assignedUserIdList.value;
   List<UserModel> get finApproverList => finalApproverList.value;
   List<String?> get finApproverIdList => finalApproverIdList.value;
+
+  void changeLoading(bool load) {
+    loading = load;
+    update();
+  }
 
   void updateDocName(var docName) {
     name.value = docName;
@@ -172,6 +179,7 @@ class DocCreationController extends GetxController {
       List<String?> finalApproverNameId,
       String StorageLink) async {
     UserModel _user = Get.find<UserController>().user;
+
     try {
       print("inside FileModel to create file");
       print("controller storagrLink is ${storageLink}");
@@ -200,40 +208,76 @@ class DocCreationController extends GetxController {
         finalApprover = false;
         pickedFile = null;
         isFilePicked = false;
+        storageLink = "";
         update();
         Get.snackbar("Success", "File Created");
       }
+      changeLoading(false);
       return true;
     } catch (e) {
+      changeLoading(false);
       print(e.toString());
       return false;
     }
   }
 
   Future<String> updateStorageLink() async {
-    if (isFilePicked) {
-      print("inside storage function in controller");
-      UserModel _user = Get.find<UserController>().user;
+    print("inside storage function in controller");
+    UserModel _user = Get.find<UserController>().user;
 
-      final storagePath = "${_user.organization_no}/${pickedFile!.name}";
-      File file = File("");
-      if (kIsWeb) {
-        file = File("");
-      } else {
-        file = File(pickedFile!.path!);
-      }
-      final fileBytes = pickedFile?.bytes;
-
-      String StorageLink =
-          await FilesDb().UploadFileInStorage(storagePath, file, fileBytes);
-      print("recieved storage link");
-      storageLink = StorageLink;
-      print(StorageLink);
-
-      return StorageLink;
-    } else {
-      return "";
+    final storagePath = "${_user.organization_no}/${pickedFile!.name}";
+    String extension = "";
+    switch (pickedFile?.extension) {
+      case "pdf":
+        extension = "pdf";
+        break;
+      case "doc":
+        extension =
+            "vnd.openxmlformats-officedocument.wordprocessingml.document";
+        break;
+      case "docx":
+        extension =
+            "vnd.openxmlformats-officedocument.wordprocessingml.document";
+        break;
+      case "xls":
+        extension = "vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+        break;
+      case "xlsx":
+        extension = "vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+        break;
+      case "csv":
+        extension = "vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+        break;
+      case "ppt":
+        extension =
+            "vnd.openxmlformats-officedocument.presentationml.presentation";
+        break;
+      case "pptx":
+        extension =
+            "vnd.openxmlformats-officedocument.presentationml.presentation";
+        break;
+      case "zip":
+        extension = "x-zip-compressed";
+        break;
+      default:
+        {
+          print("Invalid");
+        }
+        break;
     }
+    File file = File("");
+    if (kIsWeb) {
+      file = File("");
+    } else {
+      file = File(pickedFile!.path!);
+    }
+    final fileBytes = pickedFile?.bytes;
+    String StorageLink = await FilesDb()
+        .UploadFileInStorage(storagePath, file, fileBytes!, extension);
+    print("recieved storage link");
+    storageLink = StorageLink;
+    print(StorageLink);
+    return StorageLink;
 
     // await FilesDb().UpdateStorageLinkInFile()
   }

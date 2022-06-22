@@ -84,24 +84,13 @@ class _DocumentCreationState extends State<DocumentCreation> {
                             child: Column(
                               children: [
                                 TextFormField(
-                                  // onChanged: (val){
-                                  //
-                                  //   // name = val;
-                                  //
-                                  //     // controller.updateDocName(val);
-                                  //   // documentNameController.text = "${val}";
-                                  //   // documentNameController.value = TextEditingValue(
-                                  //   //     text: val,
-                                  //   //     selection: TextSelection.collapsed(offset: val.length));
-                                  //
-                                  // },
                                   decoration: InputDecoration(
                                     focusedBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
                                           color: Theme.of(context).primaryColor,
                                           width: 2.0),
                                     ),
-                                    filled: true,
+                                    // filled: true,
                                     label: Text("Document Name"),
                                     hintText: "Name",
                                     focusColor: Colors.blue,
@@ -142,7 +131,7 @@ class _DocumentCreationState extends State<DocumentCreation> {
                                           color: Theme.of(context).primaryColor,
                                           width: 2.0),
                                     ),
-                                    filled: true,
+                                    // filled: true,
                                     label: Text(
                                         "Who do you want to assign this Document? "),
                                     hintText: "Enter Names",
@@ -256,7 +245,7 @@ class _DocumentCreationState extends State<DocumentCreation> {
                                       color: Theme.of(context).primaryColor,
                                       width: 2.0),
                                 ),
-                                filled: true,
+                                // filled: true,
                                 label: Text("Final Approver Name "),
                                 hintText: "Enter Names",
                                 focusColor: Colors.blue,
@@ -344,7 +333,16 @@ class _DocumentCreationState extends State<DocumentCreation> {
                                   final result =
                                       await FilePicker.platform.pickFiles(
                                     type: FileType.custom,
-                                    allowedExtensions: ['pdf'],
+                                    allowedExtensions: [
+                                      'pdf',
+                                      'doc',
+                                      'docx',
+                                      'xls',
+                                      'csv',
+                                      'ppt',
+                                      'pptx',
+                                      'zip',
+                                    ],
                                   );
                                   print(result);
                                   if (result == null) {
@@ -352,6 +350,7 @@ class _DocumentCreationState extends State<DocumentCreation> {
                                   } else {
                                     controller.updatePickedFile(result);
                                     print(controller.pickedFile?.name);
+                                    print(controller.pickedFile?.extension);
                                   }
                                 },
                                 iconSize: 40,
@@ -417,37 +416,59 @@ class _DocumentCreationState extends State<DocumentCreation> {
                                   primary: Color(0xFF4784F1),
                                   padding: EdgeInsets.fromLTRB(40, 20, 40, 20)),
                               child: Text(
-                                "Upload",
+                                controller.loading ? "Uploaing" : "Upload",
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold),
                               ),
                               onPressed: () async {
-                                if (DocumentCreation._formkey.currentState!
-                                    .validate()) {
-                                  print("sending for upload");
-                                  controller.storageLink = await controller
-                                      .updateStorageLink()
-                                      .whenComplete(() async {
-                                    print("creating file now");
-                                    print(
-                                        "controller storageLink is${controller.storageLink}");
-                                    await controller.createDocument(
-                                        documentNameController.text.trim(),
-                                        controller.assignedIdList,
-                                        controller.downloadDocument,
-                                        controller.finalApproverIdList.value
-                                                    .length >
-                                                0
-                                            ? true
-                                            : false,
-                                        controller.finApproverIdList,
-                                        controller.storageLink);
-                                  });
-                                  documentNameController.text = "";
-                                  assignedPersonNameController.text = "";
-                                  finalApproverController.text = "";
-                                }
+                                controller.loading
+                                    ? null
+                                    : {
+                                        controller.changeLoading(true),
+                                        if (DocumentCreation
+                                                ._formkey.currentState!
+                                                .validate() &&
+                                            controller.isFilePicked)
+                                          {
+                                            print("sending for upload"),
+                                            controller.storageLink =
+                                                await controller
+                                                    .updateStorageLink()
+                                                    .whenComplete(() async {
+                                              if (controller.storageLink !=
+                                                  "") {
+                                                await controller.createDocument(
+                                                    documentNameController.text
+                                                        .trim(),
+                                                    controller.assignedIdList,
+                                                    controller.downloadDocument,
+                                                    controller.finalApproverIdList
+                                                                .value.length >
+                                                            0
+                                                        ? true
+                                                        : false,
+                                                    controller
+                                                        .finApproverIdList,
+                                                    controller.storageLink);
+                                              } else {
+                                                controller.changeLoading(false);
+                                                // Get.snackbar("Duplicate",
+                                                //     "This File Already Exists");
+                                              }
+                                            }),
+                                            documentNameController.text = "",
+                                            assignedPersonNameController.text =
+                                                "",
+                                            finalApproverController.text = "",
+                                          }
+                                        else
+                                          {
+                                            controller.changeLoading(false),
+                                            Get.snackbar("Required",
+                                                "Document name not set or File not uploaded")
+                                          }
+                                      };
                               },
                             ),
                           ),

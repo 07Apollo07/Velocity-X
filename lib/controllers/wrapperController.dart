@@ -1,9 +1,23 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'dart:io' show Platform;
 import 'package:velocityx/controllers/docCreationController.dart';
 
 class WrapperController extends GetxController {
+  bool isDarkMode = true;
+
+  void toggleDarkMode() {
+    print("trying to change");
+    isDarkMode = !isDarkMode;
+    if (isDarkMode) {
+      Get.changeTheme(ThemeData.dark());
+    } else {
+      Get.changeTheme(ThemeData.light());
+    }
+    update();
+  }
+
   var tabIndex = 0;
   var floatingActive = false;
 
