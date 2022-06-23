@@ -19,6 +19,7 @@ class Themes {
       headline6: TextStyle(fontSize: 10, color: Colors.white),
       bodyText1: TextStyle(letterSpacing: 1.8, color: Colors.white),
     ),
+    // disabledColor: Color.fromRGBO(255, 0, 0, 1.0),
 
     // fontFamily: 'Lato', //3
     // elevatedButtonTheme: ElevatedButtonThemeData(
@@ -59,6 +60,7 @@ class Themes {
       headline6: TextStyle(fontSize: 10),
       bodyText1: TextStyle(letterSpacing: 1.8),
     ),
+    // disabledColor: Color.fromRGBO(158, 158, 158, 1),
     // bottomAppBarColor: const Color(0xFF4784F1)
     // fontFamily: 'Lato', //3,
     // elevatedButtonTheme: ElevatedButtonThemeData(

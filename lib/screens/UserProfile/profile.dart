@@ -137,9 +137,12 @@ class ProfileDoc extends StatelessWidget {
                     return ListTile(
                       //TODO remove assigned_by and due_date after changes to TaskTile
                       leading: Icon(Icons.account_circle_outlined),
-                      title: Text(filesController.createdFiles[index].name),
+                      title: Text(filesController.createdFiles[index].name,
+                          style: Theme.of(context).textTheme.headline5),
                       subtitle: Text(
-                          "${getEmailFromUidList(filesController.createdFiles[index].assigned_person_uid).toString().replaceAll("[", "").replaceAll("]", "")}"),
+                        "${getEmailFromUidList(filesController.createdFiles[index].assigned_person_uid).toString().replaceAll("[", "").replaceAll("]", "")}",
+                        style: Theme.of(context).textTheme.headline5,
+                      ),
                       onTap: () {
                         Get.toNamed(Routes.DOC_EDITING,
                             id: Constants.profileId,
@@ -149,8 +152,11 @@ class ProfileDoc extends StatelessWidget {
                   },
                 );
               } else if (filesController.createdFiles.isEmpty) {
-                return const Center(
-                  child: Text("You have not created any Files"),
+                return Center(
+                  child: Text(
+                    "You have not created any Files",
+                    style: Theme.of(context).textTheme.headline5,
+                  ),
                 );
               } else {
                 return const Center(child: CircularProgressIndicator());
@@ -190,7 +196,10 @@ class UserInfo extends GetWidget<UserController> {
                     builder: (_) {
                       return Column(
                         children: [
-                          Row(
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 12.0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Column(
@@ -199,9 +208,11 @@ class UserInfo extends GetWidget<UserController> {
                                     Text(
                                       'NAME',
                                       textAlign: TextAlign.start,
+                                      style:
+                                          Theme.of(context).textTheme.headline5,
                                     ),
                                     Container(
-                                      width: 500,
+                                      width: 400,
                                       child: TextFormField(
                                         enabled: false,
                                         decoration: InputDecoration(
@@ -221,109 +232,160 @@ class UserInfo extends GetWidget<UserController> {
                                     ),
                                   ],
                                 )
-                              ]),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 12.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Email',
+                                      textAlign: TextAlign.start,
+                                      style:
+                                          Theme.of(context).textTheme.headline5,
+                                    ),
+                                    Container(
+                                      width: 400,
+                                      child: TextFormField(
+                                        enabled: false,
+                                        decoration: InputDecoration(
+                                          hintText: "${_.user.email}",
+                                          enabledBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Color(
+                                                    int.parse(("0xff3D3A3A"))),
+                                                width: 2.0),
+                                          ),
+                                          fillColor:
+                                              Color(int.parse(("0xff3D3A3A"))),
+                                          filled: true,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 12.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'PHONE NUMBER',
+                                      textAlign: TextAlign.start,
+                                      style:
+                                          Theme.of(context).textTheme.headline5,
+                                    ),
+                                    Container(
+                                      width: 400,
+                                      child: TextFormField(
+                                        enabled: false,
+                                        decoration: InputDecoration(
+                                          hintText: "${_.user.phone}",
+                                          enabledBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Color(
+                                                    int.parse(("0xff3D3A3A"))),
+                                                width: 2.0),
+                                          ),
+                                          fillColor:
+                                              Color(int.parse(("0xff3D3A3A"))),
+                                          filled: true,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 12.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'DESIGNATION',
+                                      textAlign: TextAlign.start,
+                                      style:
+                                          Theme.of(context).textTheme.headline5,
+                                    ),
+                                    Container(
+                                      width: 400,
+                                      child: TextFormField(
+                                        enabled: false,
+                                        decoration: InputDecoration(
+                                          hintText: "${_.user.designation}",
+                                          enabledBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Color(
+                                                    int.parse(("0xff3D3A3A"))),
+                                                width: 2.0),
+                                          ),
+                                          fillColor:
+                                              Color(int.parse(("0xff3D3A3A"))),
+                                          filled: true,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 12.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'JOINING DATE',
+                                      textAlign: TextAlign.start,
+                                      style:
+                                          Theme.of(context).textTheme.headline5,
+                                    ),
+                                    Container(
+                                      width: 400,
+                                      child: TextFormField(
+                                        enabled: false,
+                                        decoration: InputDecoration(
+                                          hintText: _.user.joining_date != null
+                                              ? "${_.getDateFromTimeStamp(_.user.joining_date!.seconds.toString())}"
+                                              : "Date Not set",
+                                          enabledBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Color(
+                                                    int.parse(("0xff3D3A3A"))),
+                                                width: 2.0),
+                                          ),
+                                          fillColor:
+                                              Color(int.parse(("0xff3D3A3A"))),
+                                          filled: true,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
 
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 20, 560, 5),
-                            child: Text(
-                              'EMAIL',
-                              textAlign: TextAlign.start,
-                            ),
-                          ),
-                          Container(
-                            width: 600,
-                            child: TextField(
-                              enabled: false,
-                              decoration: InputDecoration(
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Color(int.parse(("0xff3D3A3A"))),
-                                      width: 2.0),
-                                ),
-                                // hintText: '${snapshot.data?.phoneNumber}',
-                                hintText: "${_.user.email}",
-                                fillColor: Color(int.parse(("0xff3D3A3A"))),
-                                filled: true,
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 20, 495, 5),
-                            child: Text(
-                              'PHONE NUMBER',
-                              textAlign: TextAlign.start,
-                            ),
-                          ),
-                          Container(
-                            width: 600,
-                            child: TextField(
-                              enabled: false,
-                              decoration: InputDecoration(
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Color(int.parse(("0xff3D3A3A"))),
-                                      width: 2.0),
-                                ),
-                                // hintText: '${snapshot.data?.phoneNumber}',
-                                hintText: "${_.user.phone}",
-                                fillColor: Color(int.parse(("0xff3D3A3A"))),
-                                filled: true,
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 20, 510, 5),
-                            child: Text(
-                              'DESIGNATION',
-                              textAlign: TextAlign.start,
-                            ),
-                          ),
-                          Container(
-                            width: 600,
-                            child: TextFormField(
-                              enabled: false,
-                              decoration: InputDecoration(
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Color(int.parse(("0xff3D3A3A"))),
-                                      width: 2.0),
-                                ),
-                                // hintText: '${snapshot.data?.address}',
-                                hintText: "${_.user.designation}",
-                                fillColor: Color(int.parse(("0xff3D3A3A"))),
-                                filled: true,
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 20, 510, 5),
-                            child: Text(
-                              'JOINING DATE',
-                              textAlign: TextAlign.start,
-                            ),
-                          ),
-                          Container(
-                            width: 600,
-                            child: TextFormField(
-                              enabled: false,
-                              decoration: InputDecoration(
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Color(int.parse(("0xff3D3A3A"))),
-                                      width: 2.0),
-                                ),
-                                // hintText: '${snapshot.data?.address}',
-                                hintText: _.user.joining_date != null
-                                    ? "${_.getDateFromTimeStamp(_.user.joining_date!.seconds.toString())}"
-                                    : "Date Not set",
-                                fillColor: Color(int.parse(("0xff3D3A3A"))),
-                                filled: true,
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 40,
-                          ),
                           // Text(
                           //   error,
                           //   style: TextStyle(color: Colors.red, fontSize: 14.0),
@@ -339,60 +401,6 @@ class UserInfo extends GetWidget<UserController> {
           ),
         ),
       ),
-    );
-
-    Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Expanded(
-          child: GetX<UserController>(
-            init: Get.put<UserController>(UserController()),
-            builder: (_) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Name : ${_.user.f_name} ${_.user.l_name}",
-                    textAlign: TextAlign.left,
-                    style: Theme.of(context).textTheme.headline5,
-                  ),
-                  Text(
-                    "Email: ${_.user.email}",
-                    textAlign: TextAlign.left,
-                    style: Theme.of(context).textTheme.headline5,
-                  ),
-                  Text(
-                    "Phone: ${_.user.phone}",
-                    textAlign: TextAlign.left,
-                    style: Theme.of(context).textTheme.headline5,
-                  ),
-                  Text(
-                    "Designation: ${_.user.designation}",
-                    textAlign: TextAlign.left,
-                    style: Theme.of(context).textTheme.headline5,
-                  ),
-                  _.user.joining_date != null
-                      ? Text(
-                          "Joining Date: ${_.getDateFromTimeStamp(_.user.joining_date!.seconds.toString())}",
-                          textAlign: TextAlign.left,
-                          style: Theme.of(context).textTheme.headline5,
-                        )
-                      : Text("Joining Date : ")
-                ],
-              );
-            },
-          ),
-        ),
-//         Text(
-//           '''Name : Document_1.pdf,
-// Size : 246kb ,
-// File Owner : User_example
-// Created : Jan 31, 2021
-// Modified : Jun 24, 2021
-// Permission : User1, user2 .''',
-//           textAlign: TextAlign.left, style: Theme.of(context).textTheme.headline5,
-//         ),
-      ],
     );
   }
 }

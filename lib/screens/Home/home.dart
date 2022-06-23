@@ -182,8 +182,9 @@ class _HomeState extends State<Home> {
                                 ));
                           });
                 } else if (filesController.assignedFiles.isEmpty) {
-                  return const Center(
-                      child: Text("No Documents have Been Assigned to you"));
+                  return Center(
+                      child: Text("No Documents have Been Assigned to you",
+                          style: Theme.of(context).textTheme.headline5));
                 } else {
                   return const Center(child: CircularProgressIndicator());
                 }

@@ -84,6 +84,7 @@ class _DocumentCreationState extends State<DocumentCreation> {
                             child: Column(
                               children: [
                                 TextFormField(
+                                  style: Theme.of(context).textTheme.headline5,
                                   decoration: InputDecoration(
                                     focusedBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
@@ -104,6 +105,7 @@ class _DocumentCreationState extends State<DocumentCreation> {
                                 ),
                                 SizedBox(height: 20),
                                 TextFormField(
+                                  style: Theme.of(context).textTheme.headline5,
                                   decoration: InputDecoration(
                                     suffixIcon: IconButton(
                                       onPressed: () {
@@ -196,7 +198,12 @@ class _DocumentCreationState extends State<DocumentCreation> {
                           SizedBox(height: 20),
                           CheckboxListTile(
                             title: Text(
-                                "Do you want the assigned person to download this document?"),
+                              "Do you want the assigned person to download this document?",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline5
+                                  ?.copyWith(fontSize: 18),
+                            ),
                             value: controller.downloadDocument,
                             onChanged: (newValue) {
                               controller.changeDownloadDocumentCheck(newValue!);
@@ -209,7 +216,12 @@ class _DocumentCreationState extends State<DocumentCreation> {
                           SizedBox(height: 20),
                           CheckboxListTile(
                             title: Text(
-                                "Do you want to appoint a final approver?"),
+                              "Do you want to appoint a final approver?",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline5
+                                  ?.copyWith(fontSize: 18),
+                            ),
                             value: controller.finalApprover,
                             onChanged: (newValue) {
                               controller.changeFinalApproverCheck(newValue!);
@@ -223,6 +235,7 @@ class _DocumentCreationState extends State<DocumentCreation> {
                           Visibility(
                             visible: controller.finalApprover,
                             child: TextFormField(
+                              style: Theme.of(context).textTheme.headline5,
                               decoration: InputDecoration(
                                 suffixIcon: IconButton(
                                   onPressed: () {
@@ -321,7 +334,8 @@ class _DocumentCreationState extends State<DocumentCreation> {
                                 children: [
                                   Text(
                                     'Upload Document',
-                                    style: TextStyle(fontSize: 20),
+                                    style:
+                                        Theme.of(context).textTheme.headline4,
                                   ),
                                   // Text(
                                   //     '(Proof of Address)'

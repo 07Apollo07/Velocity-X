@@ -76,10 +76,16 @@ class OrganizationDoc extends StatelessWidget {
                       return ListTile(
                         //TODO remove assigned_by and due_date after changes to TaskTile
                         leading: const Icon(Icons.account_circle_outlined),
-                        title: Text(userController.users[index].f_name +
-                            " " +
-                            userController.users[index].l_name),
-                        subtitle: Text(userController.users[index].designation),
+                        title: Text(
+                          userController.users[index].f_name +
+                              " " +
+                              userController.users[index].l_name,
+                          style: Theme.of(context).textTheme.headline5,
+                        ),
+                        subtitle: Text(
+                          userController.users[index].designation,
+                          style: Theme.of(context).textTheme.headline5,
+                        ),
                         onTap: () {
                           Get.toNamed(
                             Routes.CONTACT_CARD,

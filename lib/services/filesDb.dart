@@ -83,7 +83,7 @@ class FilesDb {
   }
 
   Future<String> UploadFileInStorage(
-      String path, File file, Uint8List fileBytes, String extension) async {
+      String path, File file, Uint8List? fileBytes, String extension) async {
     String storageLink = "";
     final ref = FirebaseStorage.instance.ref().child(path);
     if (await CheckIfFileExistsInStorage(ref, path)) {
@@ -92,7 +92,7 @@ class FilesDb {
     } else {
       if (kIsWeb) {
         UploadTask uploadTask = ref.putData(
-            fileBytes,
+            fileBytes!,
             SettableMetadata(
                 contentType: "application/${extension}",
                 customMetadata: {"code": "special code"}));
@@ -268,7 +268,7 @@ class FilesDb {
       await _firestore.collection("Files").doc(fileId).update({
         "final_approver": file.final_approver,
         "name": file.name,
-        "storage_link": file.storage_link,
+        // "storage_link": file.storage_link,
         "assigned_person_uid": file.assigned_person_uid,
         "download": file.download,
         "final_approver_set": file.final_approver_set

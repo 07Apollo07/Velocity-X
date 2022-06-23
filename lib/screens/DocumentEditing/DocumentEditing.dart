@@ -54,12 +54,8 @@ class _DocumentEditingState extends State<DocumentEditing> {
                 children: [
                   Column(
                     children: [
-                      new Text(
-                        "Document Editing",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
+                      new Text("Document Editing",
+                          style: Theme.of(context).textTheme.headline4),
                     ],
                   ),
                 ],
@@ -143,7 +139,7 @@ class _DocumentEditingState extends State<DocumentEditing> {
                           child: Column(
                             children: [
                               TextFormField(
-                                // initialValue: "hey",
+                                style: Theme.of(context).textTheme.headline5,
                                 decoration: InputDecoration(
                                   focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide(

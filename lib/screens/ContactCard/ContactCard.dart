@@ -110,7 +110,7 @@ class ContactPage extends GetWidget<UserController> {
                     builder: (_) {
                       return Column(
                         mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           SizedBox(
                             height: 10,

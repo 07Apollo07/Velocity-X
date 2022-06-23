@@ -138,7 +138,7 @@ class _TimelineActivity extends StatelessWidget {
           alignment: TimelineAlign.manual,
           isFirst: index == 0,
           isLast: index == (FileStats.tracking?.length ?? 1) - 1,
-          lineXY: 0.3,
+          lineXY: 0.5,
           indicatorStyle: indicator,
           startChild: leftChild,
           endChild: righChild,

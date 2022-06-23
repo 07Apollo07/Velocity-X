@@ -267,6 +267,7 @@ class DocCreationController extends GetxController {
         break;
     }
     File file = File("");
+
     if (kIsWeb) {
       file = File("");
     } else {
@@ -274,7 +275,7 @@ class DocCreationController extends GetxController {
     }
     final fileBytes = pickedFile?.bytes;
     String StorageLink = await FilesDb()
-        .UploadFileInStorage(storagePath, file, fileBytes!, extension);
+        .UploadFileInStorage(storagePath, file, fileBytes, extension);
     print("recieved storage link");
     storageLink = StorageLink;
     print(StorageLink);
