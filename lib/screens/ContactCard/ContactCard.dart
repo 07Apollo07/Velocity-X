@@ -63,49 +63,22 @@ class ContactPage extends GetWidget<UserController> {
             ),
           ],
         ),
-        body: Container(
-          child: Stack(
-            children: <Widget>[
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 250,
-                    margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                    child: Column(
-                      children: [
-                        Container(
-                          child: Icon(
-                            Icons.supervised_user_circle,
-                            size: 100,
-                          ),
-                          //   padding: EdgeInsets.all(10.0),
-                          //
-                          //   width: MediaQuery.of(context).size.width/4,
-                          //   height: MediaQuery.of(context).size.width/4,
-                          //   decoration: BoxDecoration(
-                          //     border: Border.all(color: Colors.white,width: 5),
-                          //     shape: BoxShape.circle,
-                          //     color: Colors.white,
-                          //     image: DecorationImage(
-                          //       fit: BoxFit.cover,
-                          //       image: AssetImage('assets/profile_image.webp'),
-                          //     ),
-                          //   ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              Positioned(
-                top: 100,
-                left: 30,
-                right: 30,
-                child: Form(
-                  child: GetX<UserController>(
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Icon(
+                  Icons.supervised_user_circle,
+                  size: 100,
+                ),
+              ],
+            ),
+            Column(
+                  children: [
+                    GetX<UserController>(
                     init: Get.put<UserController>(UserController()),
                     builder: (_) {
                       return Column(
@@ -115,95 +88,142 @@ class ContactPage extends GetWidget<UserController> {
                           SizedBox(
                             height: 10,
                           ),
-                          Text('NAME',
-                              textAlign: TextAlign.start,
-                              style: Theme.of(context).textTheme.headline5),
-                          Container(
-                            width: 600,
-                            child: TextFormField(
-                              enabled: false,
-                              decoration: InputDecoration(
-                                hintText:
-                                    "${_.users[int.parse(index)].f_name} ${_.users[int.parse(index)].l_name}",
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Color(int.parse(("0xff3D3A3A"))),
-                                      width: 2.0),
-                                ),
-                                fillColor: Color(int.parse(("0xff3D3A3A"))),
-                                filled: true,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('NAME',
+                                      textAlign: TextAlign.start,
+                                      style: Theme.of(context).textTheme.headline5
+                                  ),
+                                  SizedBox(height: 5.0),
+                                  Container(
+                                    width: 500,
+                                    child: TextFormField(
+                                      enabled: false,
+                                      decoration: InputDecoration(
+                                        hintText:
+                                        "${_.users[int.parse(index)].f_name} ${_.users[int.parse(index)].l_name}",
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: Color(int.parse(("0xff3D3A3A"))),
+                                              width: 2.0),
+                                        ),
+                                        fillColor: Color(int.parse(("0xff3D3A3A"))),
+                                        filled: true,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
+                            ],
                           ),
                           SizedBox(
-                            height: 10,
+                            height: 20,
                           ),
-                          Text('EMAIL',
-                              textAlign: TextAlign.start,
-                              style: Theme.of(context).textTheme.headline5),
-                          Container(
-                            width: 600,
-                            child: TextField(
-                              enabled: false,
-                              decoration: InputDecoration(
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Color(int.parse(("0xff3D3A3A"))),
-                                      width: 2.0),
-                                ),
-                                // hintText: '${snapshot.data?.phoneNumber}',
-                                hintText: "${_.users[int.parse(index)].email}",
-                                fillColor: Color(int.parse(("0xff3D3A3A"))),
-                                filled: true,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('EMAIL',
+                                      textAlign: TextAlign.start,
+                                      style: Theme.of(context).textTheme.headline5
+                                  ),
+                                  SizedBox(height: 5.0),
+                                  Container(
+                                    width: 500,
+                                    child: TextFormField(
+                                      enabled: false,
+                                      decoration: InputDecoration(
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: Color(int.parse(("0xff3D3A3A"))),
+                                              width: 2.0),
+                                        ),
+                                        // hintText: '${snapshot.data?.phoneNumber}',
+                                        hintText: "${_.users[int.parse(index)].email}",
+                                        fillColor: Color(int.parse(("0xff3D3A3A"))),
+                                        filled: true,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
+                            ],
                           ),
                           SizedBox(
-                            height: 10,
+                            height: 20,
                           ),
-                          Text('PHONE NUMBER',
-                              textAlign: TextAlign.start,
-                              style: Theme.of(context).textTheme.headline5),
-                          Container(
-                            width: 600,
-                            child: TextField(
-                              enabled: false,
-                              decoration: InputDecoration(
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Color(int.parse(("0xff3D3A3A"))),
-                                      width: 2.0),
-                                ),
-                                // hintText: '${snapshot.data?.phoneNumber}',
-                                hintText: "${_.users[int.parse(index)].phone}",
-                                fillColor: Color(int.parse(("0xff3D3A3A"))),
-                                filled: true,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('PHONE NUMBER',
+                                      textAlign: TextAlign.start,
+                                      style: Theme.of(context).textTheme.headline5
+                                  ),
+                                  SizedBox(height: 5.0),
+                                  Container(
+                                    width: 500,
+                                    child: TextFormField(
+                                      enabled: false,
+                                      decoration: InputDecoration(
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: Color(int.parse(("0xff3D3A3A"))),
+                                              width: 2.0),
+                                        ),
+                                        // hintText: '${snapshot.data?.phoneNumber}',
+                                        hintText: "${_.users[int.parse(index)].phone}",
+                                        fillColor: Color(int.parse(("0xff3D3A3A"))),
+                                        filled: true,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
+                            ],
                           ),
                           SizedBox(
-                            height: 10,
+                            height: 20.0,
                           ),
-                          Text('DESIGNATION',
-                              textAlign: TextAlign.start,
-                              style: Theme.of(context).textTheme.headline5),
-                          Container(
-                            width: 600,
-                            child: TextFormField(
-                              enabled: false,
-                              decoration: InputDecoration(
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Color(int.parse(("0xff3D3A3A"))),
-                                      width: 2.0),
-                                ),
-                                // hintText: '${snapshot.data?.address}',
-                                hintText:
-                                    "${_.users[int.parse(index)].designation}",
-                                fillColor: Color(int.parse(("0xff3D3A3A"))),
-                                filled: true,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('DESIGNATION',
+                                      textAlign: TextAlign.start,
+                                      style: Theme.of(context).textTheme.headline5),
+                                  SizedBox(height: 5.0),
+                                  Container(
+                                    width: 500,
+                                    child: TextFormField(
+                                      enabled: false,
+                                      decoration: InputDecoration(
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: Color(int.parse(("0xff3D3A3A"))),
+                                              width: 2.0),
+                                        ),
+                                        // hintText: '${snapshot.data?.address}',
+                                        hintText:
+                                        "${_.users[int.parse(index)].designation}",
+                                        fillColor: Color(int.parse(("0xff3D3A3A"))),
+                                        filled: true,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
+                            ],
                           ),
                           SizedBox(
                             height: 40,
@@ -216,13 +236,15 @@ class ContactPage extends GetWidget<UserController> {
                       );
                     },
                   ),
+                ],
                   // key: _formkey,
                 ),
-              ),
-            ],
+
+              ],
+            ),
           ),
-        ),
-      ),
+        )
     );
+
   }
 }

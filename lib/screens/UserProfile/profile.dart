@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:velocityx/assets/custom_icons_icons.dart';
@@ -200,6 +201,7 @@ class UserInfo extends GetWidget<UserController> {
                                       'NAME',
                                       textAlign: TextAlign.start,
                                     ),
+                                    SizedBox(height: 5.0),
                                     Container(
                                       width: 500,
                                       child: TextFormField(
@@ -222,107 +224,142 @@ class UserInfo extends GetWidget<UserController> {
                                   ],
                                 )
                               ]),
-
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 20, 560, 5),
-                            child: Text(
-                              'EMAIL',
-                              textAlign: TextAlign.start,
-                            ),
-                          ),
-                          Container(
-                            width: 600,
-                            child: TextField(
-                              enabled: false,
-                              decoration: InputDecoration(
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Color(int.parse(("0xff3D3A3A"))),
-                                      width: 2.0),
-                                ),
-                                // hintText: '${snapshot.data?.phoneNumber}',
-                                hintText: "${_.user.email}",
-                                fillColor: Color(int.parse(("0xff3D3A3A"))),
-                                filled: true,
+                          SizedBox(height: 20.0),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'EMAIL',
+                                    textAlign: TextAlign.start,
+                                  ),
+                                  SizedBox(height: 5.0),
+                                  Container(
+                                    width: 500,
+                                    child: TextField(
+                                      enabled: false,
+                                      decoration: InputDecoration(
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: Color(int.parse(("0xff3D3A3A"))),
+                                              width: 2.0),
+                                        ),
+                                        // hintText: '${snapshot.data?.phoneNumber}',
+                                        hintText: "${_.user.email}",
+                                        fillColor: Color(int.parse(("0xff3D3A3A"))),
+                                        filled: true,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
+                            ],
                           ),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 20, 495, 5),
-                            child: Text(
-                              'PHONE NUMBER',
-                              textAlign: TextAlign.start,
-                            ),
-                          ),
-                          Container(
-                            width: 600,
-                            child: TextField(
-                              enabled: false,
-                              decoration: InputDecoration(
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Color(int.parse(("0xff3D3A3A"))),
-                                      width: 2.0),
-                                ),
-                                // hintText: '${snapshot.data?.phoneNumber}',
-                                hintText: "${_.user.phone}",
-                                fillColor: Color(int.parse(("0xff3D3A3A"))),
-                                filled: true,
+                          SizedBox(height: 20.0),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'PHONE NUMBER',
+                                    textAlign: TextAlign.start,
+                                  ),
+                                  SizedBox(height: 5.0),
+                                  Container(
+                                    width: 500,
+                                    child: TextField(
+                                      enabled: false,
+                                      decoration: InputDecoration(
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: Color(int.parse(("0xff3D3A3A"))),
+                                              width: 2.0),
+                                        ),
+                                        // hintText: '${snapshot.data?.phoneNumber}',
+                                        hintText: "${_.user.phone}",
+                                        fillColor: Color(int.parse(("0xff3D3A3A"))),
+                                        filled: true,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
+                            ],
                           ),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 20, 510, 5),
-                            child: Text(
-                              'DESIGNATION',
-                              textAlign: TextAlign.start,
-                            ),
-                          ),
-                          Container(
-                            width: 600,
-                            child: TextFormField(
-                              enabled: false,
-                              decoration: InputDecoration(
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Color(int.parse(("0xff3D3A3A"))),
-                                      width: 2.0),
-                                ),
-                                // hintText: '${snapshot.data?.address}',
-                                hintText: "${_.user.designation}",
-                                fillColor: Color(int.parse(("0xff3D3A3A"))),
-                                filled: true,
+                          SizedBox(height: 20.0),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'DESIGNATION',
+                                    textAlign: TextAlign.start,
+                                  ),
+                                  SizedBox(height: 5.0),
+                                  Container(
+                                    width: 500,
+                                    child: TextFormField(
+                                      enabled: false,
+                                      decoration: InputDecoration(
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: Color(int.parse(("0xff3D3A3A"))),
+                                              width: 2.0),
+                                        ),
+                                        // hintText: '${snapshot.data?.address}',
+                                        hintText: "${_.user.designation}",
+                                        fillColor: Color(int.parse(("0xff3D3A3A"))),
+                                        filled: true,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
+                            ],
                           ),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 20, 510, 5),
-                            child: Text(
-                              'JOINING DATE',
-                              textAlign: TextAlign.start,
-                            ),
-                          ),
-                          Container(
-                            width: 600,
-                            child: TextFormField(
-                              enabled: false,
-                              decoration: InputDecoration(
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Color(int.parse(("0xff3D3A3A"))),
-                                      width: 2.0),
-                                ),
-                                // hintText: '${snapshot.data?.address}',
-                                hintText: _.user.joining_date != null
-                                    ? "${_.getDateFromTimeStamp(_.user.joining_date!.seconds.toString())}"
-                                    : "Date Not set",
-                                fillColor: Color(int.parse(("0xff3D3A3A"))),
-                                filled: true,
+                          SizedBox(height: 20.0),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'JOINING DATE',
+                                    textAlign: TextAlign.start,
+                                  ),
+                                  SizedBox(height: 5.0),
+                                  Container(
+                                    width: 500,
+                                    child: TextFormField(
+                                      enabled: false,
+                                      decoration: InputDecoration(
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: Color(int.parse(("0xff3D3A3A"))),
+                                              width: 2.0),
+                                        ),
+                                        // hintText: '${snapshot.data?.address}',
+                                        hintText: _.user.joining_date != null
+                                            ? "${_.getDateFromTimeStamp(_.user.joining_date!.seconds.toString())}"
+                                            : "Date Not set",
+                                        fillColor: Color(int.parse(("0xff3D3A3A"))),
+                                        filled: true,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
+                            ],
                           ),
                           SizedBox(
-                            height: 40,
+                            height: 40.0,
                           ),
                           // Text(
                           //   error,
