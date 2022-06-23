@@ -21,7 +21,7 @@ class Profile extends StatelessWidget {
         length: 2,
         child: Scaffold(
           appBar: AppBar(
-            leading: Icon(Icons.edit),
+
             title: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -111,16 +111,7 @@ class ProfileDoc extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // return ListView(
-    //   children: <Widget>[
-    //     ListTile(
-    //       leading: Icon(Icons.picture_as_pdf_rounded),
-    //       title: Text("Document_1"),
-    //       subtitle: Text("Assigned By : User_2"),
-    //       onTap: () {},
-    //     )
-    //   ],
-    // );
+
     return Column(
       children: [
         Expanded(
@@ -168,19 +159,188 @@ class UserInfo extends GetWidget<UserController> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Container(
+      child: Scaffold(
+        body: ListView(
+
+          children: [ Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Container(
+                width: MediaQuery.of(context).size.width,
+                height: 140,
+                margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                child: Column(
+                  children: [
+                    Container(
+                      child: Icon(
+                        Icons.supervised_user_circle,
+                        size: 100,
+                      ),
+
+                    ),
+
+                  ],
+                ),
+              ),
+            ],
+          ),
+            Positioned(
+              top: 100,
+              left: 30,
+              right: 30,
+              child: Form(
+                child: GetX<UserController>(
+                  init: Get.put<UserController>(UserController()),
+                  builder: (_) {
+                    return Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 30, 560, 5),
+                          child: Text(
+                            'NAME',
+                            textAlign: TextAlign.start,
+                          ),
+                        ),
+                        Container(
+                          width: 600,
+                          child: TextFormField(
+                            enabled: false,
+                            decoration: InputDecoration(
+                              hintText: "${_.user.f_name} ${_.user.l_name}",
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Color(int.parse(("0xff3D3A3A"))),
+                                    width: 2.0),
+                              ),
+                              fillColor: Color(int.parse(("0xff3D3A3A"))),
+                              filled: true,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 20, 560, 5),
+                          child: Text(
+                            'EMAIL',
+                            textAlign: TextAlign.start,
+                          ),
+                        ),
+                        Container(
+                          width: 600,
+                          child: TextField(
+                            enabled: false,
+                            decoration: InputDecoration(
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Color(int.parse(("0xff3D3A3A"))),
+                                    width: 2.0),
+                              ),
+                              // hintText: '${snapshot.data?.phoneNumber}',
+                              hintText: "${_.user.email}",
+                              fillColor: Color(int.parse(("0xff3D3A3A"))),
+                              filled: true,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 20, 495, 5),
+                          child: Text(
+                            'PHONE NUMBER',
+                            textAlign: TextAlign.start,
+                          ),
+                        ),
+                        Container(
+                          width: 600,
+                          child: TextField(
+                            enabled: false,
+                            decoration: InputDecoration(
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Color(int.parse(("0xff3D3A3A"))),
+                                    width: 2.0),
+                              ),
+                              // hintText: '${snapshot.data?.phoneNumber}',
+                              hintText: "${_.user.phone}",
+                              fillColor: Color(int.parse(("0xff3D3A3A"))),
+                              filled: true,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 20, 510, 5),
+                          child: Text(
+                            'DESIGNATION',
+                            textAlign: TextAlign.start,
+                          ),
+                        ),
+                        Container(
+                          width: 600,
+                          child: TextFormField(
+                            enabled: false,
+                            decoration: InputDecoration(
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Color(int.parse(("0xff3D3A3A"))),
+                                    width: 2.0),
+                              ),
+                              // hintText: '${snapshot.data?.address}',
+                              hintText: "${_.user.designation}",
+                              fillColor: Color(int.parse(("0xff3D3A3A"))),
+                              filled: true,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 20, 510, 5),
+                          child: Text(
+                            'JOINING DATE',
+                            textAlign: TextAlign.start,
+                          ),
+                        ),
+                        Container(
+                          width: 600,
+                          child: TextFormField(
+                            enabled: false,
+                            decoration: InputDecoration(
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Color(int.parse(("0xff3D3A3A"))),
+                                    width: 2.0),
+                              ),
+                              // hintText: '${snapshot.data?.address}',
+                              hintText: "${_.getDateFromTimeStamp(_.user.joining_date!.seconds.toString())}",
+                              fillColor: Color(int.parse(("0xff3D3A3A"))),
+                              filled: true,
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 40,
+                        ),
+                        // Text(
+                        //   error,
+                        //   style: TextStyle(color: Colors.red, fontSize: 14.0),
+                        // ),
+                      ],
+                    );
+                  },
+                ),
+                // key: _formkey,
+
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+
+
+      Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(
-          height: 15,
-        ),
-        Text(
-          'Information',
-          style: TextStyle(color: Colors.white, fontSize: 20),
-        ),
-        SizedBox(
-          height: 10,
-        ),
+        Expanded(
+          child:
         GetX<UserController>(
           init: Get.put<UserController>(UserController()),
           builder: (_) {
@@ -218,6 +378,7 @@ class UserInfo extends GetWidget<UserController> {
             );
           },
         ),
+        ),
 //         Text(
 //           '''Name : Document_1.pdf,
 // Size : 246kb ,
@@ -231,3 +392,13 @@ class UserInfo extends GetWidget<UserController> {
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
