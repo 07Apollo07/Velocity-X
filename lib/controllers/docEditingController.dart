@@ -203,8 +203,8 @@ class DocEditingController extends GetxController {
     Get.snackbar("Success", "File Removed");
   }
 
-  void deleteFile(String fileId) async {
-    if (await FilesDb().DeleteFile(fileId)) {
+  void deleteFile(FilesModel file) async {
+    if (await FilesDb().DeleteFile(file)) {
       Get.back(id: Constants.profileId);
       Get.snackbar("File Deleted", "Success");
     }
@@ -251,7 +251,6 @@ class DocEditingController extends GetxController {
       final_approver: finalApproverNameId.length > 0
           ? finalApproverNameId.last ?? "No Final Approver"
           : "No Final Approver",
-      storage_link: "",
     );
     print(fileId);
     print(_file.assigned_person_uid);
@@ -284,7 +283,7 @@ class DocEditingController extends GetxController {
     await FilesDb().UpdateOpenedStats(fileId, userId);
   }
 
-  Future<void> download({required String url,required String fileName}) async {
+  Future<void> download({required String url, required String fileName}) async {
     // requests permission for downloading the file
     bool hasPermission = await _requestWritePermission();
     if (!hasPermission) return;

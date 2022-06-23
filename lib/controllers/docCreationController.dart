@@ -198,6 +198,7 @@ class DocCreationController extends GetxController {
         organization_no: _user.organization_no,
         storage_link: StorageLink,
         fileModifiedDateTime: Timestamp.fromDate(DateTime.now()),
+        storageName: isFilePicked ? pickedFile?.name : "Not Set",
       );
       if (await FilesDb().createNewFile(_file)) {
         finApproverList.clear();

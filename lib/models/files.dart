@@ -14,6 +14,7 @@ class FilesModel {
   late bool download;
   late bool final_approver_set;
   late Timestamp? fileModifiedDateTime;
+  late String? storageName;
 
   FilesModel(
       {this.creator_uid = "Not Set",
@@ -28,7 +29,8 @@ class FilesModel {
       this.creator_name = "Not Set",
       this.download = false,
       this.final_approver_set = false,
-      this.fileModifiedDateTime});
+      this.fileModifiedDateTime,
+      this.storageName = "Not Set"});
 
   FilesModel.fromDocumentSnapshot({DocumentSnapshot? documentSnapshot}) {
     creator_uid = documentSnapshot!.data().toString().contains("creator_uid")
@@ -77,5 +79,8 @@ class FilesModel {
         documentSnapshot.data().toString().contains("fileModifiedDateTime")
             ? documentSnapshot["creation_datetime"] as Timestamp
             : Timestamp(0, 0);
+    storageName = documentSnapshot.data().toString().contains("storageName")
+        ? documentSnapshot["storageName"]
+        : "Not Set";
   }
 }

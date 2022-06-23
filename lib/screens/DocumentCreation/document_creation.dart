@@ -416,7 +416,7 @@ class _DocumentCreationState extends State<DocumentCreation> {
                                   primary: Color(0xFF4784F1),
                                   padding: EdgeInsets.fromLTRB(40, 20, 40, 20)),
                               child: Text(
-                                controller.loading ? "Uploaing" : "Upload",
+                                controller.loading ? "Uploading" : "Upload",
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold),

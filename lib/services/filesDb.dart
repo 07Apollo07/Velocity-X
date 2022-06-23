@@ -86,7 +86,7 @@ class FilesDb {
       String path, File file, Uint8List fileBytes, String extension) async {
     String storageLink = "";
     final ref = FirebaseStorage.instance.ref().child(path);
-    if (await CheckIfFileExists(ref, path)) {
+    if (await CheckIfFileExistsInStorage(ref, path)) {
       Get.snackbar("Duplicate", "This File Already Exists");
       return storageLink;
     } else {
@@ -107,7 +107,7 @@ class FilesDb {
     }
   }
 
-  Future<bool> CheckIfFileExists(Reference ref, String path) async {
+  Future<bool> CheckIfFileExistsInStorage(Reference ref, String path) async {
     bool storageLinkExists = false;
     final ref = FirebaseStorage.instance.ref().child(path);
     print(ref.toString());
@@ -133,7 +133,8 @@ class FilesDb {
         "creator_name": file.creator_name,
         "download": file.download,
         "final_approver_set": file.final_approver_set,
-        "fileModifiedDateTime": file.fileModifiedDateTime
+        "fileModifiedDateTime": file.fileModifiedDateTime,
+        "storageName": file.storageName,
       }).then((value) async {
         await CreateStarterStats(FileRef.id, file);
       });
@@ -458,22 +459,38 @@ class FilesDb {
     }
   }
 
-  Future<bool> DeleteFile(String fileId) async {
-    try {
-      await _firestore
-          .collection("Files")
-          .doc(fileId)
-          .collection("File_Stats")
-          .doc("Stats")
-          .delete()
-          .then((value) async => await _firestore
-              .collection("Files")
-              .doc(fileId)
-              .delete()
-              .then((value) =>
-                  print("Delete File information in File Collection")));
-      print("Delete File information in File Collection");
+  Future<bool> DeleteFile(FilesModel file) async {
+    String storagePath =
+        "${Get.find<UserController>().user.organization_no}/${file.storageName}";
+    if (await DeleteFileFromStorage(storagePath)) {
+      try {
+        await _firestore
+            .collection("Files")
+            .doc(file.files_uniqueId)
+            .collection("File_Stats")
+            .doc("Stats")
+            .delete()
+            .then((value) async => await _firestore
+                .collection("Files")
+                .doc(file.files_uniqueId)
+                .delete()
+                .then((value) =>
+                    print("Delete File information in File Collection")));
+        print("Delete File information in File Collection");
+        return true;
+      } catch (e) {
+        print(e.toString());
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
 
+  Future<bool> DeleteFileFromStorage(String path) async {
+    try {
+      final ref = FirebaseStorage.instance.ref().child(path);
+      await ref.delete();
       return true;
     } catch (e) {
       print(e.toString());

@@ -168,55 +168,220 @@ class UserInfo extends GetWidget<UserController> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Container(
+      child: Scaffold(
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Icon(
+                    Icons.supervised_user_circle,
+                    size: 100,
+                  ),
+                ],
+              ),
+              Column(
+                children: [
+                  GetX<UserController>(
+                    init: Get.put<UserController>(UserController()),
+                    builder: (_) {
+                      return Column(
+                        children: [
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'NAME',
+                                      textAlign: TextAlign.start,
+                                    ),
+                                    Container(
+                                      width: 500,
+                                      child: TextFormField(
+                                        enabled: false,
+                                        decoration: InputDecoration(
+                                          hintText:
+                                              "${_.user.f_name} ${_.user.l_name}",
+                                          enabledBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Color(
+                                                    int.parse(("0xff3D3A3A"))),
+                                                width: 2.0),
+                                          ),
+                                          fillColor:
+                                              Color(int.parse(("0xff3D3A3A"))),
+                                          filled: true,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              ]),
+
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 20, 560, 5),
+                            child: Text(
+                              'EMAIL',
+                              textAlign: TextAlign.start,
+                            ),
+                          ),
+                          Container(
+                            width: 600,
+                            child: TextField(
+                              enabled: false,
+                              decoration: InputDecoration(
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Color(int.parse(("0xff3D3A3A"))),
+                                      width: 2.0),
+                                ),
+                                // hintText: '${snapshot.data?.phoneNumber}',
+                                hintText: "${_.user.email}",
+                                fillColor: Color(int.parse(("0xff3D3A3A"))),
+                                filled: true,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 20, 495, 5),
+                            child: Text(
+                              'PHONE NUMBER',
+                              textAlign: TextAlign.start,
+                            ),
+                          ),
+                          Container(
+                            width: 600,
+                            child: TextField(
+                              enabled: false,
+                              decoration: InputDecoration(
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Color(int.parse(("0xff3D3A3A"))),
+                                      width: 2.0),
+                                ),
+                                // hintText: '${snapshot.data?.phoneNumber}',
+                                hintText: "${_.user.phone}",
+                                fillColor: Color(int.parse(("0xff3D3A3A"))),
+                                filled: true,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 20, 510, 5),
+                            child: Text(
+                              'DESIGNATION',
+                              textAlign: TextAlign.start,
+                            ),
+                          ),
+                          Container(
+                            width: 600,
+                            child: TextFormField(
+                              enabled: false,
+                              decoration: InputDecoration(
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Color(int.parse(("0xff3D3A3A"))),
+                                      width: 2.0),
+                                ),
+                                // hintText: '${snapshot.data?.address}',
+                                hintText: "${_.user.designation}",
+                                fillColor: Color(int.parse(("0xff3D3A3A"))),
+                                filled: true,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 20, 510, 5),
+                            child: Text(
+                              'JOINING DATE',
+                              textAlign: TextAlign.start,
+                            ),
+                          ),
+                          Container(
+                            width: 600,
+                            child: TextFormField(
+                              enabled: false,
+                              decoration: InputDecoration(
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Color(int.parse(("0xff3D3A3A"))),
+                                      width: 2.0),
+                                ),
+                                // hintText: '${snapshot.data?.address}',
+                                hintText: _.user.joining_date != null
+                                    ? "${_.getDateFromTimeStamp(_.user.joining_date!.seconds.toString())}"
+                                    : "Date Not set",
+                                fillColor: Color(int.parse(("0xff3D3A3A"))),
+                                filled: true,
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 40,
+                          ),
+                          // Text(
+                          //   error,
+                          //   style: TextStyle(color: Colors.red, fontSize: 14.0),
+                          // ),
+                        ],
+                      );
+                    },
+                  ),
+                ],
+              ),
+              // key: _formkey,
+            ],
+          ),
+        ),
+      ),
+    );
+
+    Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(
-          height: 15,
-        ),
-        Text(
-          'Information',
-          style: TextStyle(color: Colors.white, fontSize: 20),
-        ),
-        SizedBox(
-          height: 10,
-        ),
-        GetX<UserController>(
-          init: Get.put<UserController>(UserController()),
-          builder: (_) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Name : ${_.user.f_name} ${_.user.l_name}",
-                  textAlign: TextAlign.left,
-                  style: Theme.of(context).textTheme.headline5,
-                ),
-                Text(
-                  "Email: ${_.user.email}",
-                  textAlign: TextAlign.left,
-                  style: Theme.of(context).textTheme.headline5,
-                ),
-                Text(
-                  "Phone: ${_.user.phone}",
-                  textAlign: TextAlign.left,
-                  style: Theme.of(context).textTheme.headline5,
-                ),
-                Text(
-                  "Designation: ${_.user.designation}",
-                  textAlign: TextAlign.left,
-                  style: Theme.of(context).textTheme.headline5,
-                ),
-                _.user.joining_date != null
-                    ? Text(
-                        "Joining Date: ${_.getDateFromTimeStamp(_.user.joining_date!.seconds.toString())}",
-                        textAlign: TextAlign.left,
-                        style: Theme.of(context).textTheme.headline5,
-                      )
-                    : Text("Joining Date : ")
-              ],
-            );
-          },
+        Expanded(
+          child: GetX<UserController>(
+            init: Get.put<UserController>(UserController()),
+            builder: (_) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Name : ${_.user.f_name} ${_.user.l_name}",
+                    textAlign: TextAlign.left,
+                    style: Theme.of(context).textTheme.headline5,
+                  ),
+                  Text(
+                    "Email: ${_.user.email}",
+                    textAlign: TextAlign.left,
+                    style: Theme.of(context).textTheme.headline5,
+                  ),
+                  Text(
+                    "Phone: ${_.user.phone}",
+                    textAlign: TextAlign.left,
+                    style: Theme.of(context).textTheme.headline5,
+                  ),
+                  Text(
+                    "Designation: ${_.user.designation}",
+                    textAlign: TextAlign.left,
+                    style: Theme.of(context).textTheme.headline5,
+                  ),
+                  _.user.joining_date != null
+                      ? Text(
+                          "Joining Date: ${_.getDateFromTimeStamp(_.user.joining_date!.seconds.toString())}",
+                          textAlign: TextAlign.left,
+                          style: Theme.of(context).textTheme.headline5,
+                        )
+                      : Text("Joining Date : ")
+                ],
+              );
+            },
+          ),
         ),
 //         Text(
 //           '''Name : Document_1.pdf,

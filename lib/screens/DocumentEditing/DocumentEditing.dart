@@ -78,7 +78,7 @@ class _DocumentEditingState extends State<DocumentEditing> {
                       ]),
                   child: IconButton(
                       onPressed: () {
-                        controller.deleteFile(widget.File.files_uniqueId);
+                        controller.deleteFile(widget.File);
                       },
                       icon: Icon(Icons.delete_forever),
                       color: Colors.red),
@@ -416,16 +416,18 @@ class _DocumentEditingState extends State<DocumentEditing> {
                           error,
                           style: TextStyle(color: Colors.red, fontSize: 14.0),
                         ),
-                        SizedBox(height: 20,),
+                        SizedBox(
+                          height: 20,
+                        ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-
                             IconButton(
                               color: Theme.of(context).primaryColor,
                               icon: Icon(Icons.open_in_new),
                               onPressed: () {
-                                controller.OpenedDocument(widget.File.files_uniqueId,
+                                controller.OpenedDocument(
+                                    widget.File.files_uniqueId,
                                     Get.find<UserController>().user.id ?? "");
                                 Get.toNamed(
                                   Routes.PDFVIEWER,
@@ -439,10 +441,13 @@ class _DocumentEditingState extends State<DocumentEditing> {
                               icon: Icon(Icons.download),
                               onPressed: () {
                                 print(widget.File.storage_link);
-                                if(kIsWeb){
-                                  html.window.open(widget.File.storage_link, "_blank");
-                                }else{
-                                  controller.download(url: widget.File.storage_link,fileName: widget.File.name);
+                                if (kIsWeb) {
+                                  html.window
+                                      .open(widget.File.storage_link, "_blank");
+                                } else {
+                                  controller.download(
+                                      url: widget.File.storage_link,
+                                      fileName: widget.File.name);
                                 }
 
                                 print(widget.File.storage_link);
@@ -450,7 +455,6 @@ class _DocumentEditingState extends State<DocumentEditing> {
                             ),
                           ],
                         ),
-
                       ],
                     ),
                   ),
