@@ -12,7 +12,6 @@ import 'package:velocityx/controllers/authController.dart';
 import 'firebase_options.dart';
 import 'custom_theme.dart';
 
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -41,7 +40,7 @@ class MyApp extends StatelessWidget {
       home: SplashScreen(),
       // initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,
-      theme: Themes.dark,
+      theme: Themes.light,
       darkTheme: Themes.dark,
       // themeMode: ThemeMode.system,
     );

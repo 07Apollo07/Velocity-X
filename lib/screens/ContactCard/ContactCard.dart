@@ -63,16 +63,15 @@ class ContactPage extends GetWidget<UserController> {
             ),
           ],
         ),
-        body: Container(
-          child: Stack(
-            children: <Widget>[
-              Column(
+        body: ListView(
+
+              children: [ Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   Container(
                     width: MediaQuery.of(context).size.width,
-                    height: 250,
+                    height: 100,
                     margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
                     child: Column(
                       children: [
@@ -219,10 +218,10 @@ class ContactPage extends GetWidget<UserController> {
                   // key: _formkey,
                 ),
               ),
-            ],
-          ),
+        ],
         ),
       ),
-    );
-  }
+        );
+
+     }
 }
