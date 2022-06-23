@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:velocityx/assets/custom_icons_icons.dart';
@@ -211,6 +212,7 @@ class UserInfo extends GetWidget<UserController> {
                                       style:
                                           Theme.of(context).textTheme.headline5,
                                     ),
+                                    SizedBox(height: 5.0),
                                     Container(
                                       width: 400,
                                       child: TextFormField(
