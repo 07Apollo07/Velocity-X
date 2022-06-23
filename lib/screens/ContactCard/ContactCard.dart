@@ -11,13 +11,10 @@ import 'package:velocityx/shared/icon_logo.dart';
 
 class ContactPage extends GetWidget<UserController> {
   String index;
-  ContactPage({Key? key, required this.index}) : super(key: key) ;
-
-
+  ContactPage({Key? key, required this.index}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-
     return Container(
       child: Scaffold(
         // backgroundColor: Color.fromRGBO(36, 36, 36, 1.0),
@@ -25,10 +22,8 @@ class ContactPage extends GetWidget<UserController> {
           leading: BackButton(
             color: Theme.of(context).primaryColor,
           ),
-          title: Text(
-            "Profile Page",
-            style: TextStyle(color: Theme.of(context).primaryColor),
-          ),
+          title: Text("Profile Page",
+              style: Theme.of(context).textTheme.headline3),
           elevation: 0.0,
           actions: <Widget>[
             Container(
@@ -45,7 +40,6 @@ class ContactPage extends GetWidget<UserController> {
                 child: IconButton(
                     onPressed: () {
                       // Navigator.pushNamed(context, '/MetaData');
-
                     },
                     icon: Icon(CustomIcons.search_1),
                     color: Theme.of(context).primaryColor)),
@@ -115,20 +109,22 @@ class ContactPage extends GetWidget<UserController> {
                     init: Get.put<UserController>(UserController()),
                     builder: (_) {
                       return Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 30, 560, 5),
-                            child: Text(
-                              'NAME',
-                              textAlign: TextAlign.start,
-                            ),
+                          SizedBox(
+                            height: 10,
                           ),
+                          Text('NAME',
+                              textAlign: TextAlign.start,
+                              style: Theme.of(context).textTheme.headline5),
                           Container(
                             width: 600,
                             child: TextFormField(
                               enabled: false,
                               decoration: InputDecoration(
-                                hintText: "${_.users[int.parse(index)].f_name} ${_.users[int.parse(index)].l_name}",
+                                hintText:
+                                    "${_.users[int.parse(index)].f_name} ${_.users[int.parse(index)].l_name}",
                                 enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
                                       color: Color(int.parse(("0xff3D3A3A"))),
@@ -139,13 +135,12 @@ class ContactPage extends GetWidget<UserController> {
                               ),
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 20, 560, 5),
-                            child: Text(
-                              'EMAIL',
-                              textAlign: TextAlign.start,
-                            ),
+                          SizedBox(
+                            height: 10,
                           ),
+                          Text('EMAIL',
+                              textAlign: TextAlign.start,
+                              style: Theme.of(context).textTheme.headline5),
                           Container(
                             width: 600,
                             child: TextField(
@@ -163,13 +158,12 @@ class ContactPage extends GetWidget<UserController> {
                               ),
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 20, 495, 5),
-                            child: Text(
-                              'PHONE NUMBER',
-                              textAlign: TextAlign.start,
-                            ),
+                          SizedBox(
+                            height: 10,
                           ),
+                          Text('PHONE NUMBER',
+                              textAlign: TextAlign.start,
+                              style: Theme.of(context).textTheme.headline5),
                           Container(
                             width: 600,
                             child: TextField(
@@ -187,13 +181,12 @@ class ContactPage extends GetWidget<UserController> {
                               ),
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 20, 510, 5),
-                            child: Text(
-                              'DESIGNATION',
-                              textAlign: TextAlign.start,
-                            ),
+                          SizedBox(
+                            height: 10,
                           ),
+                          Text('DESIGNATION',
+                              textAlign: TextAlign.start,
+                              style: Theme.of(context).textTheme.headline5),
                           Container(
                             width: 600,
                             child: TextFormField(
@@ -205,7 +198,8 @@ class ContactPage extends GetWidget<UserController> {
                                       width: 2.0),
                                 ),
                                 // hintText: '${snapshot.data?.address}',
-                                hintText: "${_.users[int.parse(index)].designation}",
+                                hintText:
+                                    "${_.users[int.parse(index)].designation}",
                                 fillColor: Color(int.parse(("0xff3D3A3A"))),
                                 filled: true,
                               ),
@@ -223,7 +217,6 @@ class ContactPage extends GetWidget<UserController> {
                     },
                   ),
                   // key: _formkey,
-
                 ),
               ),
             ],
