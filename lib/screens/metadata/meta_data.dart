@@ -1,3 +1,4 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -22,18 +23,14 @@ import 'dart:async';
 import 'dart:io';
 import 'package:universal_html/html.dart' as html;
 
-
-
 class MetaDataPage extends StatelessWidget {
   final FilesModel File;
   MetaDataPage({Key? key, required this.File}) : super(key: key);
   final TextEditingController assignedPersonNameController =
       TextEditingController();
 
-
   @override
   Widget build(BuildContext context) {
-
     if (File.organization_no !=
         Get.find<UserController>().user.organization_no) {
       return Scaffold(
@@ -60,6 +57,8 @@ class MetaDataPage extends StatelessWidget {
               for (String id in File.assigned_person_uid) {
                 controller.initializeAssignedList(id);
               }
+              controller.initializeUploadedFile(
+                  File.storageName, File.storage_link);
               controller.initialized = true;
             }
             return Container(
@@ -123,6 +122,7 @@ class MetaDataPage extends StatelessWidget {
                           height: 15,
                         ),
                         TextFormField(
+                          style: Theme.of(context).textTheme.headline5,
                           enabled: false,
                           initialValue: File.name,
                           decoration: InputDecoration(
@@ -133,7 +133,9 @@ class MetaDataPage extends StatelessWidget {
                             ),
                             fillColor: Colors.black54,
                             filled: true,
-                            label: Text("Name"),
+                            label: Text(
+                              "Name",
+                            ),
                             hintText: File.name,
                             focusColor: Colors.blue,
                           ),
@@ -142,6 +144,7 @@ class MetaDataPage extends StatelessWidget {
                           height: 10,
                         ),
                         TextFormField(
+                          style: Theme.of(context).textTheme.headline5,
                           enabled: false,
                           initialValue: "No Size Available",
                           decoration: InputDecoration(
@@ -161,6 +164,7 @@ class MetaDataPage extends StatelessWidget {
                           height: 10,
                         ),
                         TextFormField(
+                          style: Theme.of(context).textTheme.headline5,
                           enabled: false,
                           initialValue: File.creator_name,
                           decoration: InputDecoration(
@@ -180,6 +184,7 @@ class MetaDataPage extends StatelessWidget {
                           height: 10,
                         ),
                         TextFormField(
+                          style: Theme.of(context).textTheme.headline5,
                           enabled: false,
                           initialValue: controller.getDateFromTimeStamp(
                               File.creation_datetime!.seconds.toString()),
@@ -200,6 +205,7 @@ class MetaDataPage extends StatelessWidget {
                           height: 10,
                         ),
                         TextFormField(
+                          style: Theme.of(context).textTheme.headline5,
                           enabled: false,
                           initialValue: controller
                               .getFinalApproverName(File.final_approver),
@@ -220,6 +226,7 @@ class MetaDataPage extends StatelessWidget {
                           height: 10,
                         ),
                         TextFormField(
+                          style: Theme.of(context).textTheme.headline5,
                           enabled: false,
                           initialValue:
                               getEmailFromUidList(File.assigned_person_uid)
@@ -285,19 +292,28 @@ class MetaDataPage extends StatelessWidget {
                                 icon: Icon(Icons.download),
                                 onPressed: () {
                                   print(File.storage_link);
-                                  if(kIsWeb){
-                                    html.window.open(File.storage_link, "_blank");
-                                  }else{
-                                    controller.download(url: File.storage_link,fileName: File.name);
+                                  if (kIsWeb) {
+                                    html.window
+                                        .open(File.storage_link, "_blank");
+                                  } else {
+                                    controller.download(
+                                        url: File.storage_link,
+                                        fileName: File.name);
                                   }
 
                                   print(File.storage_link);
                                 },
                               ),
+                              IconButton(
+                                color: Theme.of(context).primaryColor,
+                                icon: Icon(Icons.upload_file),
+                                onPressed: () {
+                                  controller.changeIsUploadVisible();
+                                },
+                              ),
                             ],
                           ),
                         ),
-
                         SizedBox(
                           height: 10,
                         ),
@@ -310,6 +326,8 @@ class MetaDataPage extends StatelessWidget {
                                 child: Column(
                                   children: [
                                     TextFormField(
+                                      style:
+                                          Theme.of(context).textTheme.headline5,
                                       decoration: InputDecoration(
                                         suffixIcon: IconButton(
                                           onPressed: () {
@@ -406,7 +424,9 @@ class MetaDataPage extends StatelessWidget {
                               SizedBox(height: 20),
                               CheckboxListTile(
                                 title: Text(
-                                    "Do you want to remove yourself from assigned people?"),
+                                    "Do you want to remove yourself from assigned people?",
+                                    style:
+                                        Theme.of(context).textTheme.headline5),
                                 value: controller.removeYourself,
                                 onChanged: (newValue) {
                                   // controller.changeDownloadDocumentCheck(newValue!);
@@ -418,30 +438,193 @@ class MetaDataPage extends StatelessWidget {
                                     .trailing, //  <-- leading Checkbox
                               ),
                               SizedBox(height: 20),
-                              Center(
-                                child: TextButton(
-                                  style: ElevatedButton.styleFrom(
-                                      primary: Color(0xFF4784F1),
-                                      padding:
-                                          EdgeInsets.fromLTRB(40, 20, 40, 20)),
-                                  child: Text(
-                                    "Save",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold),
+                            ],
+                          ),
+                        ),
+                        Visibility(
+                          visible: controller.isUploadVisible,
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'Uploaded Document',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline4,
+                                      ),
+                                    ],
                                   ),
-                                  onPressed: () async {
-                                    controller.updateDocument(
-                                        File.files_uniqueId,
-                                        Get.find<UserController>().user.id ??
-                                            "",
-                                        File);
-                                  },
-                                ),
+                                ],
+                              ),
+                              SizedBox(height: 20),
+                              SingleChildScrollView(
+                                  child: controller.uploadedFileName != ""
+                                      ? GridView.builder(
+                                          shrinkWrap: true,
+                                          itemCount: 1,
+                                          gridDelegate:
+                                              const SliverGridDelegateWithMaxCrossAxisExtent(
+                                            maxCrossAxisExtent: 180,
+                                            childAspectRatio: 3 / 2,
+                                            crossAxisSpacing: 20,
+                                            mainAxisSpacing: 20,
+                                          ),
+                                          itemBuilder: (_, index) {
+                                            return Container(
+                                              alignment: Alignment.center,
+                                              child: Text(
+                                                  "${controller.uploadedFileName}"),
+                                              decoration: BoxDecoration(
+                                                  color: Colors.blue,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          15)),
+                                            );
+                                          },
+                                        )
+                                      : Container()),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'Uploaded Modified Document',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline4,
+                                      ),
+                                      // Text(
+                                      //     '(Proof of Address)'
+                                      // )
+                                    ],
+                                  ),
+                                  IconButton(
+                                    onPressed: () async {
+                                      final result =
+                                          await FilePicker.platform.pickFiles(
+                                        type: FileType.custom,
+                                        allowedExtensions: [
+                                          'pdf',
+                                          'doc',
+                                          'docx',
+                                          'xls',
+                                          'csv',
+                                          'ppt',
+                                          'pptx',
+                                          'zip',
+                                        ],
+                                      );
+                                      print(result);
+                                      if (result == null) {
+                                        return null;
+                                      } else {
+                                        controller.updatePickedFile(result);
+                                        print(controller.pickedFile?.name);
+                                        print(controller.pickedFile?.extension);
+                                      }
+                                    },
+                                    iconSize: 40,
+                                    icon: Icon(
+                                      Icons.upload_file,
+                                      color: Color(0xFF4784F1),
+                                    ),
+                                  )
+                                ],
+                              ),
+                              Visibility(
+                                visible: controller.isFilePicked,
+                                // child: Text("${controller.pickedFile?.name}")
+                                child: SingleChildScrollView(
+                                    child: controller.isFilePicked
+                                        ? GridView.builder(
+                                            shrinkWrap: true,
+                                            itemCount: 1,
+                                            gridDelegate:
+                                                const SliverGridDelegateWithMaxCrossAxisExtent(
+                                              maxCrossAxisExtent: 180,
+                                              childAspectRatio: 3 / 2,
+                                              crossAxisSpacing: 20,
+                                              mainAxisSpacing: 20,
+                                            ),
+                                            itemBuilder: (_, index) {
+                                              return Container(
+                                                alignment: Alignment.center,
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Text(
+                                                        "${controller.pickedFile?.name}"),
+                                                    // Text(controller
+                                                    //     .finApproverList[index]
+                                                    //     .email ??
+                                                    //     "Email Not Set"),
+                                                    IconButton(
+                                                      onPressed: () {
+                                                        controller
+                                                            .removePickedFile();
+                                                      },
+                                                      icon: Icon(
+                                                          Icons.person_remove),
+                                                      color: Colors.red,
+                                                    )
+                                                  ],
+                                                ),
+                                                decoration: BoxDecoration(
+                                                    color: Colors.blue,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            15)),
+                                              );
+                                            },
+                                          )
+                                        : Container()),
                               ),
                             ],
                           ),
+                        ),
+                        Visibility(
+                          visible: (controller.isAssignedPressed.value ||
+                              controller.isUploadVisible),
+                          child: Center(
+                            child: TextButton(
+                              style: ElevatedButton.styleFrom(
+                                  primary: Color(0xFF4784F1),
+                                  padding: EdgeInsets.fromLTRB(40, 20, 40, 20)),
+                              child: Text(
+                                "Save",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              onPressed: () async {
+                                controller.storageLink = await controller
+                                    .updateStorageLink()
+                                    .whenComplete(() =>
+                                        controller.updateDocument(
+                                            File.files_uniqueId,
+                                            Get.find<UserController>()
+                                                    .user
+                                                    .id ??
+                                                "",
+                                            File,
+                                            controller.storageLink));
+                              },
+                            ),
+                          ),
                         )
+
                         //   },
                         // ),
                       ],

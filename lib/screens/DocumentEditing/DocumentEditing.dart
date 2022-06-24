@@ -36,9 +36,9 @@ class _DocumentEditingState extends State<DocumentEditing> {
             controller.setFinalApproverFromId(widget.File.final_approver);
             controller.downloadDocument = widget.File.download;
             controller.finalApprover = widget.File.final_approver_set;
-            controller.initialized = true;
             controller.initializeUploadedFile(
                 widget.File.storageName, widget.File.storage_link);
+            controller.initialized = true;
           }
           print(controller.assignedList.length);
 

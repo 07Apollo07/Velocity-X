@@ -1,5 +1,6 @@
 import 'package:ai_barcode/ai_barcode.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:velocityx/controllers/userController.dart';
@@ -21,7 +22,14 @@ import 'package:permission_handler/permission_handler.dart';
 class MetaDataController extends GetxController {
   bool initialized = false;
   bool removeYourself = false;
+  var isAssignedPressed = false.obs;
+  PlatformFile? pickedFile;
+  bool isFilePicked = false;
+  String uploadedFileName = "";
+  bool loading = false;
+  String storageLink = "";
   CreatorController? creatorController;
+  bool isUploadVisible = false;
 
   List<UserModel> userList = Get.find<UserController>().users;
 
@@ -42,7 +50,41 @@ class MetaDataController extends GetxController {
   List<UserModel> get newList => newUserList.value;
   List<String?> get newIdList => newUserIdList.value;
 
-  var isAssignedPressed = false.obs;
+  void changeLoading(bool load) {
+    loading = load;
+    update();
+  }
+
+  void initializeUploadedFile(String fileName, String oldstorageLink) {
+    uploadedFileName = fileName;
+    storageLink = oldstorageLink;
+  }
+
+  void updatePickedFile(var result) {
+    if (pickedFile == null) {
+      pickedFile = result.files.first;
+      if (pickedFile!.name == uploadedFileName) {
+        isFilePicked = true;
+        update();
+        Get.snackbar("Success", "File Picked");
+      } else {
+        pickedFile = null;
+        isFilePicked = false;
+        update();
+        Get.snackbar("Error",
+            "Please upload only the modified version of the initially uploaded file");
+      }
+    } else {
+      Get.snackbar("Error", "File Already Picked, Remove the Selected File");
+    }
+  }
+
+  void removePickedFile() {
+    pickedFile = null;
+    isFilePicked = false;
+    update();
+    Get.snackbar("Success", "File Removed");
+  }
 
   bool optionsVisible() {
     bool assigned = assignedIdList.contains(Get.find<UserController>().user.id);
@@ -51,6 +93,11 @@ class MetaDataController extends GetxController {
 
   void changeIsAssignedPressed() {
     isAssignedPressed.value = !isAssignedPressed.value;
+    update();
+  }
+
+  void changeIsUploadVisible() {
+    isUploadVisible = !isUploadVisible;
     update();
   }
 
@@ -156,7 +203,8 @@ class MetaDataController extends GetxController {
     return name;
   }
 
-  void updateDocument(String fileId, String userId, FilesModel file) async {
+  void updateDocument(
+      String fileId, String userId, FilesModel file, String StorageLink) async {
     List<String> _assignedIdList = List.from(assignedIdList);
     List<String> _newIdList = List.from(newIdList);
     _assignedIdList.addAll(_newIdList);
@@ -165,6 +213,7 @@ class MetaDataController extends GetxController {
     }
     FilesModel _file = FilesModel(
       assigned_person_uid: _assignedIdList.length > 0 ? _assignedIdList : [""],
+      storage_link: StorageLink,
     );
     print(fileId);
     print(_file.assigned_person_uid);
@@ -237,5 +286,81 @@ class MetaDataController extends GetxController {
   Future<bool> _requestWritePermission() async {
     await Permission.storage.request();
     return await Permission.storage.request().isGranted;
+  }
+
+  Future<String> updateStorageLink() async {
+    print("inside storage function in controller");
+    UserModel _user = Get.find<UserController>().user;
+    if (isFilePicked) {
+      final storagePath = "${_user.organization_no}/${pickedFile!.name}";
+      if (await FilesDb().CheckIfFileExistsInStorage(storagePath)) {
+        String extension = GetExtension(pickedFile!);
+
+        File file = File("");
+
+        if (kIsWeb) {
+          file = File("");
+        } else {
+          file = File(pickedFile!.path!);
+        }
+        final fileBytes = pickedFile?.bytes;
+
+        String StorageLink = await FilesDb()
+            .UploadFileInStorage(storagePath, file, fileBytes, extension);
+        print("recieved storage link");
+        storageLink = StorageLink;
+        print(StorageLink);
+        return StorageLink;
+      } else {
+        Get.snackbar("Error", "File Does Not Exist in Remote Storage");
+        return storagePath;
+        // await FilesDb().UpdateStorageLinkInFile()
+      }
+    } else {
+      return storageLink;
+    }
+  }
+
+  String GetExtension(PlatformFile pickedFile) {
+    String extension = "";
+    switch (pickedFile.extension) {
+      case "pdf":
+        extension = "pdf";
+        break;
+      case "doc":
+        extension =
+            "vnd.openxmlformats-officedocument.wordprocessingml.document";
+        break;
+      case "docx":
+        extension =
+            "vnd.openxmlformats-officedocument.wordprocessingml.document";
+        break;
+      case "xls":
+        extension = "vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+        break;
+      case "xlsx":
+        extension = "vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+        break;
+      case "csv":
+        extension = "vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+        break;
+      case "ppt":
+        extension =
+            "vnd.openxmlformats-officedocument.presentationml.presentation";
+        break;
+      case "pptx":
+        extension =
+            "vnd.openxmlformats-officedocument.presentationml.presentation";
+        break;
+      case "zip":
+        extension = "x-zip-compressed";
+        break;
+      default:
+        {
+          print("Invalid");
+        }
+        break;
+    }
+    return extension;
   }
 }
