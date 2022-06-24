@@ -86,28 +86,23 @@ class FilesDb {
       String path, File file, Uint8List? fileBytes, String extension) async {
     String storageLink = "";
     final ref = FirebaseStorage.instance.ref().child(path);
-    if (await CheckIfFileExistsInStorage(ref, path)) {
-      Get.snackbar("Duplicate", "This File Already Exists");
+    if (kIsWeb) {
+      UploadTask uploadTask = ref.putData(
+          fileBytes!,
+          SettableMetadata(
+              contentType: "application/${extension}",
+              customMetadata: {"code": "special code"}));
+      storageLink = await (await uploadTask).ref.getDownloadURL();
       return storageLink;
     } else {
-      if (kIsWeb) {
-        UploadTask uploadTask = ref.putData(
-            fileBytes!,
-            SettableMetadata(
-                contentType: "application/${extension}",
-                customMetadata: {"code": "special code"}));
-        storageLink = await (await uploadTask).ref.getDownloadURL();
-        return storageLink;
-      } else {
-        UploadTask uploadTask = ref.putFile(
-            file, SettableMetadata(contentType: "application/${extension}"));
-        storageLink = await (await uploadTask).ref.getDownloadURL();
-        return storageLink;
-      }
+      UploadTask uploadTask = ref.putFile(
+          file, SettableMetadata(contentType: "application/${extension}"));
+      storageLink = await (await uploadTask).ref.getDownloadURL();
+      return storageLink;
     }
   }
 
-  Future<bool> CheckIfFileExistsInStorage(Reference ref, String path) async {
+  Future<bool> CheckIfFileExistsInStorage(String path) async {
     bool storageLinkExists = false;
     final ref = FirebaseStorage.instance.ref().child(path);
     print(ref.toString());
@@ -271,7 +266,8 @@ class FilesDb {
         // "storage_link": file.storage_link,
         "assigned_person_uid": file.assigned_person_uid,
         "download": file.download,
-        "final_approver_set": file.final_approver_set
+        "final_approver_set": file.final_approver_set,
+        "storage_link": file.storage_link,
       }).then((value) => UpdateEditStats(fileId, newUserId, deletedUserId));
       print("Updating File information in File Collection");
       return true;

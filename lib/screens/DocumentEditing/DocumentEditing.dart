@@ -1,4 +1,5 @@
 import 'package:ai_barcode/ai_barcode.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -36,6 +37,8 @@ class _DocumentEditingState extends State<DocumentEditing> {
             controller.downloadDocument = widget.File.download;
             controller.finalApprover = widget.File.final_approver_set;
             controller.initialized = true;
+            controller.initializeUploadedFile(
+                widget.File.storageName, widget.File.storage_link);
           }
           print(controller.assignedList.length);
 
@@ -375,13 +378,150 @@ class _DocumentEditingState extends State<DocumentEditing> {
                                   : Container()),
                         ),
                         SizedBox(height: 20),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Uploaded Document',
+                                  style: Theme.of(context).textTheme.headline4,
+                                ),
+                                // Text(
+                                //     '(Proof of Address)'
+                                // )
+                              ],
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 20),
+                        SingleChildScrollView(
+                            child: controller.uploadedFileName != ""
+                                ? GridView.builder(
+                                    shrinkWrap: true,
+                                    itemCount: 1,
+                                    gridDelegate:
+                                        const SliverGridDelegateWithMaxCrossAxisExtent(
+                                      maxCrossAxisExtent: 180,
+                                      childAspectRatio: 3 / 2,
+                                      crossAxisSpacing: 20,
+                                      mainAxisSpacing: 20,
+                                    ),
+                                    itemBuilder: (_, index) {
+                                      return Container(
+                                        alignment: Alignment.center,
+                                        child: Text(
+                                            "${controller.uploadedFileName}"),
+                                        decoration: BoxDecoration(
+                                            color: Colors.blue,
+                                            borderRadius:
+                                                BorderRadius.circular(15)),
+                                      );
+                                    },
+                                  )
+                                : Container()),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Upload Modified Document',
+                                  style: Theme.of(context).textTheme.headline4,
+                                ),
+                                // Text(
+                                //     '(Proof of Address)'
+                                // )
+                              ],
+                            ),
+                            IconButton(
+                              onPressed: () async {
+                                final result =
+                                    await FilePicker.platform.pickFiles(
+                                  type: FileType.custom,
+                                  allowedExtensions: [
+                                    'pdf',
+                                    'doc',
+                                    'docx',
+                                    'xls',
+                                    'csv',
+                                    'ppt',
+                                    'pptx',
+                                    'zip',
+                                  ],
+                                );
+                                print(result);
+                                if (result == null) {
+                                  return null;
+                                } else {
+                                  controller.updatePickedFile(result);
+                                  print(controller.pickedFile?.name);
+                                  print(controller.pickedFile?.extension);
+                                }
+                              },
+                              iconSize: 40,
+                              icon: Icon(
+                                Icons.upload_file,
+                                color: Color(0xFF4784F1),
+                              ),
+                            )
+                          ],
+                        ),
+                        Visibility(
+                          visible: controller.isFilePicked,
+                          // child: Text("${controller.pickedFile?.name}")
+                          child: SingleChildScrollView(
+                              child: controller.isFilePicked
+                                  ? GridView.builder(
+                                      shrinkWrap: true,
+                                      itemCount: 1,
+                                      gridDelegate:
+                                          const SliverGridDelegateWithMaxCrossAxisExtent(
+                                        maxCrossAxisExtent: 180,
+                                        childAspectRatio: 3 / 2,
+                                        crossAxisSpacing: 20,
+                                        mainAxisSpacing: 20,
+                                      ),
+                                      itemBuilder: (_, index) {
+                                        return Container(
+                                          alignment: Alignment.center,
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                  "${controller.pickedFile?.name}"),
+                                              // Text(controller
+                                              //     .finApproverList[index]
+                                              //     .email ??
+                                              //     "Email Not Set"),
+                                              IconButton(
+                                                onPressed: () {
+                                                  controller.removePickedFile();
+                                                },
+                                                icon: Icon(Icons.person_remove),
+                                                color: Colors.red,
+                                              )
+                                            ],
+                                          ),
+                                          decoration: BoxDecoration(
+                                              color: Colors.blue,
+                                              borderRadius:
+                                                  BorderRadius.circular(15)),
+                                        );
+                                      },
+                                    )
+                                  : Container()),
+                        ),
                         Center(
                           child: TextButton(
                             style: ElevatedButton.styleFrom(
                                 primary: Color(0xFF4784F1),
                                 padding: EdgeInsets.fromLTRB(40, 20, 40, 20)),
                             child: Text(
-                              "Update",
+                              controller.loading ? "Uploading" : "Upload",
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold),
@@ -389,18 +529,34 @@ class _DocumentEditingState extends State<DocumentEditing> {
                             onPressed: () async {
                               if (DocumentEditing._formkey.currentState!
                                   .validate()) {
-                                controller.updateDocument(
-                                    widget.File.files_uniqueId,
-                                    controller.documentNameController.text
-                                        .trim(),
-                                    controller.assignedIdList,
-                                    controller.downloadDocument,
-                                    controller.finalApproverIdList.value
-                                                .length >
-                                            0
-                                        ? true
-                                        : false,
-                                    controller.finApproverIdList);
+                                controller.loading
+                                    ? null
+                                    : {
+                                        controller.changeLoading(true),
+                                        controller.storageLink =
+                                            await controller
+                                                .updateStorageLink()
+                                                .whenComplete(
+                                                  () => controller.updateDocument(
+                                                      widget
+                                                          .File.files_uniqueId,
+                                                      controller
+                                                          .documentNameController
+                                                          .text
+                                                          .trim(),
+                                                      controller.assignedIdList,
+                                                      controller
+                                                          .downloadDocument,
+                                                      controller.finalApproverIdList
+                                                                  .value.length >
+                                                              0
+                                                          ? true
+                                                          : false,
+                                                      controller
+                                                          .finApproverIdList,
+                                                      controller.storageLink),
+                                                ),
+                                      };
                               }
                             },
                           ),

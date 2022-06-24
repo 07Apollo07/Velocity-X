@@ -198,7 +198,7 @@ class DocCreationController extends GetxController {
         organization_no: _user.organization_no,
         storage_link: StorageLink,
         fileModifiedDateTime: Timestamp.fromDate(DateTime.now()),
-        storageName: isFilePicked ? pickedFile?.name : "Not Set",
+        storageName: isFilePicked ? pickedFile!.name : "Not Set",
       );
       if (await FilesDb().createNewFile(_file)) {
         finApproverList.clear();
@@ -227,8 +227,34 @@ class DocCreationController extends GetxController {
     UserModel _user = Get.find<UserController>().user;
 
     final storagePath = "${_user.organization_no}/${pickedFile!.name}";
+    if (await FilesDb().CheckIfFileExistsInStorage(storagePath)) {
+      Get.snackbar("Duplicate", "This File Already Exists");
+      return "";
+    } else {
+      String extension = GetExtension(pickedFile!);
+
+      File file = File("");
+
+      if (kIsWeb) {
+        file = File("");
+      } else {
+        file = File(pickedFile!.path!);
+      }
+      final fileBytes = pickedFile?.bytes;
+
+      String StorageLink = await FilesDb()
+          .UploadFileInStorage(storagePath, file, fileBytes, extension);
+      print("recieved storage link");
+      storageLink = StorageLink;
+      print(StorageLink);
+      return StorageLink;
+      // await FilesDb().UpdateStorageLinkInFile()
+    }
+  }
+
+  String GetExtension(PlatformFile pickedFile) {
     String extension = "";
-    switch (pickedFile?.extension) {
+    switch (pickedFile.extension) {
       case "pdf":
         extension = "pdf";
         break;
@@ -266,21 +292,6 @@ class DocCreationController extends GetxController {
         }
         break;
     }
-    File file = File("");
-
-    if (kIsWeb) {
-      file = File("");
-    } else {
-      file = File(pickedFile!.path!);
-    }
-    final fileBytes = pickedFile?.bytes;
-    String StorageLink = await FilesDb()
-        .UploadFileInStorage(storagePath, file, fileBytes, extension);
-    print("recieved storage link");
-    storageLink = StorageLink;
-    print(StorageLink);
-    return StorageLink;
-
-    // await FilesDb().UpdateStorageLinkInFile()
+    return extension;
   }
 }

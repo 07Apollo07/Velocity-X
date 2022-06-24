@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:ai_barcode/ai_barcode.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:velocityx/controllers/userController.dart';
@@ -18,6 +21,9 @@ class DocEditingController extends GetxController {
   bool initialized = false;
   PlatformFile? pickedFile;
   bool isFilePicked = false;
+  String uploadedFileName = "";
+  bool loading = false;
+  String storageLink = "";
 
   CreatorController? creatorController;
   TextEditingController documentNameController = TextEditingController();
@@ -66,6 +72,16 @@ class DocEditingController extends GetxController {
   List<String?> get finApproverIdList => finalApproverIdList.value;
   List<UserModel> get oldfinApproverList => oldfinalApproverList.value;
   List<String?> get oldfinApproverIdList => oldfinalApproverIdList.value;
+
+  void changeLoading(bool load) {
+    loading = load;
+    update();
+  }
+
+  void initializeUploadedFile(String fileName, String oldstorageLink) {
+    uploadedFileName = fileName;
+    storageLink = oldstorageLink;
+  }
 
   void initializeAssignedList(String uid) {
     if (userList.length > 0) {
@@ -188,9 +204,17 @@ class DocEditingController extends GetxController {
   void updatePickedFile(var result) {
     if (pickedFile == null) {
       pickedFile = result.files.first;
-      isFilePicked = true;
-      update();
-      Get.snackbar("Success", "File Picked");
+      if (pickedFile!.name == uploadedFileName) {
+        isFilePicked = true;
+        update();
+        Get.snackbar("Success", "File Picked");
+      } else {
+        pickedFile = null;
+        isFilePicked = false;
+        update();
+        Get.snackbar("Error",
+            "Please upload only the modified version of the initially uploaded file");
+      }
     } else {
       Get.snackbar("Error", "File Already Picked, Remove the Selected File");
     }
@@ -242,7 +266,8 @@ class DocEditingController extends GetxController {
       List<String?> assignedPerson,
       bool download,
       bool finalApprover,
-      List<String?> finalApproverNameId) async {
+      List<String?> finalApproverNameId,
+      String storageLink) async {
     FilesModel _file = FilesModel(
       name: docName,
       assigned_person_uid: assignedPerson.length > 0 ? assignedPerson : [""],
@@ -251,6 +276,7 @@ class DocEditingController extends GetxController {
       final_approver: finalApproverNameId.length > 0
           ? finalApproverNameId.last ?? "No Final Approver"
           : "No Final Approver",
+      storage_link: storageLink,
     );
     print(fileId);
     print(_file.assigned_person_uid);
@@ -307,5 +333,81 @@ class DocEditingController extends GetxController {
   Future<bool> _requestWritePermission() async {
     await Permission.storage.request();
     return await Permission.storage.request().isGranted;
+  }
+
+  Future<String> updateStorageLink() async {
+    print("inside storage function in controller");
+    UserModel _user = Get.find<UserController>().user;
+    if (isFilePicked) {
+      final storagePath = "${_user.organization_no}/${pickedFile!.name}";
+      if (await FilesDb().CheckIfFileExistsInStorage(storagePath)) {
+        String extension = GetExtension(pickedFile!);
+
+        File file = File("");
+
+        if (kIsWeb) {
+          file = File("");
+        } else {
+          file = File(pickedFile!.path!);
+        }
+        final fileBytes = pickedFile?.bytes;
+
+        String StorageLink = await FilesDb()
+            .UploadFileInStorage(storagePath, file, fileBytes, extension);
+        print("recieved storage link");
+        storageLink = StorageLink;
+        print(StorageLink);
+        return StorageLink;
+      } else {
+        Get.snackbar("Error", "File Does Not Exist in Remote Storage");
+        return storagePath;
+        // await FilesDb().UpdateStorageLinkInFile()
+      }
+    } else {
+      return storageLink;
+    }
+  }
+
+  String GetExtension(PlatformFile pickedFile) {
+    String extension = "";
+    switch (pickedFile.extension) {
+      case "pdf":
+        extension = "pdf";
+        break;
+      case "doc":
+        extension =
+            "vnd.openxmlformats-officedocument.wordprocessingml.document";
+        break;
+      case "docx":
+        extension =
+            "vnd.openxmlformats-officedocument.wordprocessingml.document";
+        break;
+      case "xls":
+        extension = "vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+        break;
+      case "xlsx":
+        extension = "vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+        break;
+      case "csv":
+        extension = "vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+        break;
+      case "ppt":
+        extension =
+            "vnd.openxmlformats-officedocument.presentationml.presentation";
+        break;
+      case "pptx":
+        extension =
+            "vnd.openxmlformats-officedocument.presentationml.presentation";
+        break;
+      case "zip":
+        extension = "x-zip-compressed";
+        break;
+      default:
+        {
+          print("Invalid");
+        }
+        break;
+    }
+    return extension;
   }
 }

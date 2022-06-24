@@ -14,7 +14,7 @@ class FilesModel {
   late bool download;
   late bool final_approver_set;
   late Timestamp? fileModifiedDateTime;
-  late String? storageName;
+  late String storageName;
 
   FilesModel(
       {this.creator_uid = "Not Set",
