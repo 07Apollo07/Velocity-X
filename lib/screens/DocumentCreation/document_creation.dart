@@ -14,11 +14,6 @@ class DocumentCreation extends StatefulWidget {
 }
 
 class _DocumentCreationState extends State<DocumentCreation> {
-  final TextEditingController documentNameController = TextEditingController();
-  final TextEditingController assignedPersonNameController =
-      TextEditingController();
-  final TextEditingController finalApproverController = TextEditingController();
-
   bool loading = false;
   String name = '';
   String assignedDocument = '';
@@ -96,7 +91,7 @@ class _DocumentCreationState extends State<DocumentCreation> {
                                     hintText: "Name",
                                     focusColor: Colors.blue,
                                   ),
-                                  controller: documentNameController,
+                                  controller: controller.documentNameController,
                                   validator: (val) {
                                     if (val != null && val.isEmpty)
                                       return "Document name can't be Empty";
@@ -109,22 +104,29 @@ class _DocumentCreationState extends State<DocumentCreation> {
                                   decoration: InputDecoration(
                                     suffixIcon: IconButton(
                                       onPressed: () {
-                                        if (assignedPersonNameController.text !=
+                                        if (controller
+                                                    .assignedPersonNameController
+                                                    .text !=
                                                 null &&
-                                            assignedPersonNameController
-                                                .text.isNotEmpty) {
+                                            controller
+                                                .assignedPersonNameController
+                                                .text
+                                                .isNotEmpty) {
                                           print("sending request");
                                           controller.addToAssignedList(
                                               Get.find<UserController>()
                                                       .user
                                                       .id ??
                                                   "Email Not Set",
-                                              assignedPersonNameController.text
+                                              controller
+                                                  .assignedPersonNameController
+                                                  .text
                                                   .trim()
                                                   .toLowerCase());
                                         }
                                         ;
-                                        assignedPersonNameController.text = "";
+                                        controller.assignedPersonNameController
+                                            .text = "";
                                       },
                                       icon: Icon(Icons.add),
                                     ),
@@ -139,7 +141,8 @@ class _DocumentCreationState extends State<DocumentCreation> {
                                     hintText: "Enter Names",
                                     focusColor: Colors.blue,
                                   ),
-                                  controller: assignedPersonNameController,
+                                  controller:
+                                      controller.assignedPersonNameController,
                                 ),
                               ],
                             ),
@@ -239,17 +242,20 @@ class _DocumentCreationState extends State<DocumentCreation> {
                               decoration: InputDecoration(
                                 suffixIcon: IconButton(
                                   onPressed: () {
-                                    if (finalApproverController.text != null &&
-                                        finalApproverController
-                                            .text.isNotEmpty) {
+                                    if (controller
+                                                .finalApproverController.text !=
+                                            null &&
+                                        controller.finalApproverController.text
+                                            .isNotEmpty) {
                                       print("sending request");
-                                      controller.setFinalApprover(
-                                          finalApproverController.text
-                                              .trim()
-                                              .toLowerCase());
+                                      controller.setFinalApprover(controller
+                                          .finalApproverController.text
+                                          .trim()
+                                          .toLowerCase());
                                     }
                                     ;
-                                    finalApproverController.text = "";
+                                    controller.finalApproverController.text =
+                                        "";
                                   },
                                   icon: Icon(Icons.add),
                                 ),
@@ -263,7 +269,7 @@ class _DocumentCreationState extends State<DocumentCreation> {
                                 hintText: "Enter Names",
                                 focusColor: Colors.blue,
                               ),
-                              controller: finalApproverController,
+                              controller: controller.finalApproverController,
                             ),
                           ),
                           SizedBox(height: 20),
@@ -453,7 +459,9 @@ class _DocumentCreationState extends State<DocumentCreation> {
                                               if (controller.storageLink !=
                                                   "") {
                                                 await controller.createDocument(
-                                                    documentNameController.text
+                                                    controller
+                                                        .documentNameController
+                                                        .text
                                                         .trim(),
                                                     controller.assignedIdList,
                                                     controller.downloadDocument,
@@ -471,10 +479,13 @@ class _DocumentCreationState extends State<DocumentCreation> {
                                                 //     "This File Already Exists");
                                               }
                                             }),
-                                            documentNameController.text = "",
-                                            assignedPersonNameController.text =
-                                                "",
-                                            finalApproverController.text = "",
+                                            controller.documentNameController
+                                                .text = "",
+                                            controller
+                                                .assignedPersonNameController
+                                                .text = "",
+                                            controller.finalApproverController
+                                                .text = "",
                                           }
                                         else
                                           {

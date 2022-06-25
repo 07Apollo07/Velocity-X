@@ -19,6 +19,10 @@ class DocCreationController extends GetxController {
   // TextEditingController();
   // final TextEditingController finalApproverController = TextEditingController();
 
+  TextEditingController documentNameController = TextEditingController();
+  TextEditingController assignedPersonNameController = TextEditingController();
+  TextEditingController finalApproverController = TextEditingController();
+
   var downloadDocument = false;
   var finalApprover = false;
   PlatformFile? pickedFile;
