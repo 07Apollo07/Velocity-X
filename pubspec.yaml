@@ -58,7 +58,8 @@ dependencies:
   universal_html: ^2.0.8
   dio: ^4.0.4
   open_file: ^3.2.1
-
+  pointycastle: ^3.6.0
+  archive: ^3.3.0
 
 dev_dependencies:
   flutter_test:
