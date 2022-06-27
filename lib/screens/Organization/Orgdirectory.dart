@@ -100,9 +100,11 @@ class OrganizationDoc extends StatelessWidget {
                   return const Center(child: const CircularProgressIndicator());
                 }
               } else {
-                return const Center(
+                return Center(
                     child: Text(
-                        "Please ask your Employer to add you to their organization"));
+                  "Please ask your Employer to add you to their organization",
+                  style: Theme.of(context).textTheme.headline5,
+                ));
               }
             },
           ),
