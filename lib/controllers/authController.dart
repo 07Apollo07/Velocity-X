@@ -10,6 +10,7 @@ import 'dart:io' show Platform;
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:velocityx/screens/authenticate/sign_in.dart';
 import 'package:velocityx/screens/wrapper.dart';
+import 'package:velocityx/services/filesDb.dart';
 import 'package:velocityx/services/usersDb.dart';
 
 class AuthController extends GetxController {
@@ -157,11 +158,18 @@ class AuthController extends GetxController {
       Get.find<UserController>().user =
           await UserDb().getUser(_authResult.user!.uid);
     } catch (e) {
-      Get.snackbar(
-        "Error signing in",
-        e.toString(),
-        snackPosition: SnackPosition.TOP,
-      );
+      print(e.toString());
+      if (e.toString() ==
+          '"UserController" not found. You need to call "Get.put(UserController())" or "Get.lazyPut(()=>UserController())"') {
+        print(e.toString());
+      } else {
+        Get.snackbar(
+          "Error signing in",
+          e.toString(),
+          snackPosition: SnackPosition.TOP,
+        );
+      }
+      ;
     }
   }
 
