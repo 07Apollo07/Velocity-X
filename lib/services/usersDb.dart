@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:velocityx/models/user.dart';
+import 'package:velocityx/models/user_categories.dart';
 
 class UserDb {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -74,6 +75,26 @@ class UserDb {
         .snapshots()
         .map((DocumentSnapshot query) {
       return UserModel.fromDocumentSnapshot(documentSnapshot: query);
+    });
+  }
+
+  Stream<List<CategoryModel>> userCategoryStream(String uid) {
+    print("Accessing Current Signed in user category Stream");
+    return _firestore
+        .collection("Users")
+        .doc(uid)
+        .collection("Categories")
+        .doc("Categories")
+        .snapshots()
+        .map((DocumentSnapshot query) {
+      List<CategoryModel> retVal = List.empty(growable: true);
+      UserCategoryModel userCategoryModel =
+          UserCategoryModel.fromDocumentSnapshot(documentSnapshot: query);
+      userCategoryModel.category?.forEach((element) {
+        print(element.toString());
+        retVal.add(CategoryModel(name: element["name"], ids: element["ids"]));
+      });
+      return retVal;
     });
   }
 

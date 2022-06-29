@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:velocityx/assets/custom_icons_icons.dart';
 import 'package:velocityx/controllers/authController.dart';
 import 'package:velocityx/controllers/filesController.dart';
+import 'package:velocityx/controllers/userController.dart';
 import 'package:velocityx/routes/app_pages.dart';
 import 'package:velocityx/screens/FileInformation/file_information.dart';
 import 'package:velocityx/shared/animatednavbar.dart';
@@ -16,6 +17,38 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  List categories = [
+    Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: CategoryTile(
+        title: 'Leave Application',
+      ),
+    ),
+    Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: CategoryTile(
+        title: 'Notices',
+      ),
+    ),
+    Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: CategoryTile(
+        title: 'Reports',
+      ),
+    ),
+    Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: CategoryTile(
+        title: 'Urgent',
+      ),
+    ),
+    Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: CategoryTile(
+        title: 'New Tile',
+      ),
+    ),
+  ];
   @override
   Widget build(BuildContext context) {
     TextEditingController textController = TextEditingController();
@@ -79,40 +112,59 @@ class _HomeState extends State<Home> {
         children: [
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
-            child: Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: CategoryTile(
-                    title: 'Urgent Submission',
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: CategoryTile(
-                    title: 'Urgent Submission',
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: CategoryTile(
-                    title: 'Urgent Submission',
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: CategoryTile(
-                    title: 'Urgent Submission',
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: CategoryTile(
-                    title: 'Urgent Submission',
-                  ),
-                ),
-              ],
-            ),
+            child: GetBuilder<UserController>(
+                builder: (UserController userController) {
+              if (userController != null &&
+                  userController.categories.length > 0) {
+                return ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: userController.categories.length,
+                  itemBuilder: (_, index) {
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: CategoryTile(
+                        title: 'Leave Application',
+                      ),
+                    );
+                  },
+                );
+              } else {
+                return Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: CategoryTile(
+                        title: 'Urgent Submission',
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: CategoryTile(
+                        title: 'Urgent Submission',
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: CategoryTile(
+                        title: 'Urgent Submission',
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: CategoryTile(
+                        title: 'Urgent Submission',
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: CategoryTile(
+                        title: 'Urgent Submission',
+                      ),
+                    ),
+                  ],
+                );
+              }
+            }),
           ),
           Padding(
             padding: const EdgeInsets.all(14.0),
