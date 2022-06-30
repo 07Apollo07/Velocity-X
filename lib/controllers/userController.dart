@@ -11,6 +11,7 @@ class UserController extends GetxController {
       Rx<List<UserModel>>(List.empty(growable: true));
   Rx<List<CategoryModel>> userCategories =
       Rx<List<CategoryModel>>(List.empty(growable: true));
+  // final userCategories = <CategoryModel>[].obs;
 
   UserModel get user => userModel.value;
   List<UserModel> get users => userList.value;
@@ -28,13 +29,15 @@ class UserController extends GetxController {
     String uid = Get.find<AuthController>().user!.uid;
     print("Accessing user stream");
     userModel.bindStream(UserDb().userStream(uid));
+    userCategories.bindStream(UserDb().userCategoryStream(uid));
     ever(userModel, _userStreams);
   }
 
   void _userStreams(UserModel userModel) {
+    print("binding next streams");
     userList.bindStream(UserDb().userListStream(user.organization_no));
-    userCategories.bindStream(
-        UserDb().userCategoryStream(Get.find<AuthController>().user!.uid));
+
+    // update();
   }
 
   String getDateFromTimeStamp(String timestamp) {

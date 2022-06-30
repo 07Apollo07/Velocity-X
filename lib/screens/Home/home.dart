@@ -110,61 +110,41 @@ class _HomeState extends State<Home> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: GetBuilder<UserController>(
+          Expanded(
+            child: GetX<UserController>(
+                init: Get.find<UserController>(),
                 builder: (UserController userController) {
-              if (userController != null &&
-                  userController.categories.length > 0) {
-                return ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: userController.categories.length,
-                  itemBuilder: (_, index) {
-                    return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: CategoryTile(
-                        title: 'Leave Application',
-                      ),
+                  print(userController.categories.length);
+                  if (userController != null &&
+                      userController.categories.length > 0) {
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      scrollDirection: Axis.horizontal,
+                      itemCount: userController.categories.length,
+                      itemBuilder: (_, index) {
+                        return GestureDetector(
+                          onTap: () {
+                            print(userController.categories[index].name);
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: CategoryTile(
+                              title: userController.categories[index].name ??
+                                  "name",
+                            ),
+                          ),
+                        );
+                      },
                     );
-                  },
-                );
-              } else {
-                return Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: CategoryTile(
-                        title: 'Urgent Submission',
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: CategoryTile(
-                        title: 'Urgent Submission',
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: CategoryTile(
-                        title: 'Urgent Submission',
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: CategoryTile(
-                        title: 'Urgent Submission',
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: CategoryTile(
-                        title: 'Urgent Submission',
-                      ),
-                    ),
-                  ],
-                );
-              }
-            }),
+                  } else if (userController.categories.isEmpty) {
+                    return Text(
+                      "Refresh pending",
+                      style: Theme.of(context).textTheme.headline5,
+                    );
+                  } else {
+                    return CircularProgressIndicator();
+                  }
+                }),
           ),
           Padding(
             padding: const EdgeInsets.all(14.0),
@@ -184,6 +164,7 @@ class _HomeState extends State<Home> {
                       ? ListView.builder(
                           itemCount: filesController.assignedFiles.length,
                           itemBuilder: (_, index) {
+                            print("rebuilding");
                             return GestureDetector(
                               onTap: () {
                                 Get.toNamed(Routes.METADATA,
