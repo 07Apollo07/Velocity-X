@@ -82,21 +82,25 @@ class FilesDb {
     });
   }
 
-  Future<String> UploadFileInStorage(
-      String path, File file, Uint8List? fileBytes, String extension) async {
+  Future<String> UploadFileInStorage(String path, File file,
+      Uint8List? fileBytes, String extension, Uint8List digest) async {
     String storageLink = "";
+    print('Keccack-512: $digest');
     final ref = FirebaseStorage.instance.ref().child(path);
     if (kIsWeb) {
       UploadTask uploadTask = ref.putData(
           fileBytes!,
           SettableMetadata(
               contentType: "application/${extension}",
-              customMetadata: {"code": "special code"}));
+              customMetadata: {"digest": digest.toString()}));
       storageLink = await (await uploadTask).ref.getDownloadURL();
       return storageLink;
     } else {
       UploadTask uploadTask = ref.putFile(
-          file, SettableMetadata(contentType: "application/${extension}"));
+          file,
+          SettableMetadata(
+              contentType: "application/${extension}",
+              customMetadata: {"digest": digest.toString()}));
       storageLink = await (await uploadTask).ref.getDownloadURL();
       return storageLink;
     }

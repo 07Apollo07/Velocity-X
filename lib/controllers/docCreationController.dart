@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:math';
+import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -12,6 +13,7 @@ import 'package:velocityx/models/files.dart';
 import 'package:velocityx/models/user.dart';
 import 'package:velocityx/services/filesDb.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:velocityx/services/crypto.dart';
 
 class DocCreationController extends GetxController {
   // final TextEditingController documentNameController = TextEditingController();
@@ -24,6 +26,7 @@ class DocCreationController extends GetxController {
   TextEditingController finalApproverController = TextEditingController();
 
   var downloadDocument = false;
+  bool onlineDocument = false;
   var finalApprover = false;
   PlatformFile? pickedFile;
   bool isFilePicked = false;
@@ -55,6 +58,14 @@ class DocCreationController extends GetxController {
 
   void changeLoading(bool load) {
     loading = load;
+    update();
+  }
+
+  void changeOnlineDocument(bool load) {
+    onlineDocument = load;
+    if (isFilePicked) {
+      removePickedFile();
+    }
     update();
   }
 
@@ -229,30 +240,40 @@ class DocCreationController extends GetxController {
   Future<String> updateStorageLink() async {
     print("inside storage function in controller");
     UserModel _user = Get.find<UserController>().user;
-
-    final storagePath = "${_user.organization_no}/${pickedFile!.name}";
-    if (await FilesDb().CheckIfFileExistsInStorage(storagePath)) {
-      Get.snackbar("Duplicate", "This File Already Exists");
-      return "";
-    } else {
-      String extension = GetExtension(pickedFile!);
-
-      File file = File("");
-
-      if (kIsWeb) {
-        file = File("");
+    String StorageLink = "";
+    if (isFilePicked) {
+      final storagePath = "${_user.organization_no}/${pickedFile!.name}";
+      if (await FilesDb().CheckIfFileExistsInStorage(storagePath)) {
+        Get.snackbar("Duplicate", "This File Already Exists");
+        return "";
       } else {
-        file = File(pickedFile!.path!);
-      }
-      final fileBytes = pickedFile?.bytes;
+        // Uint8List hash = await Crypto().Keccack512kDigest(pickedFile?.bytes);
+        // print('SHA-256: $hash');
+        String extension = GetExtension(pickedFile!);
 
-      String StorageLink = await FilesDb()
-          .UploadFileInStorage(storagePath, file, fileBytes, extension);
-      print("recieved storage link");
-      storageLink = StorageLink;
-      print(StorageLink);
-      return StorageLink;
-      // await FilesDb().UpdateStorageLinkInFile()
+        File file = File("");
+
+        if (kIsWeb) {
+          file = File("");
+        } else {
+          file = File(pickedFile!.path!);
+        }
+        final fileBytes = pickedFile?.bytes;
+
+        StorageLink = await FilesDb().UploadFileInStorage(
+            storagePath,
+            file,
+            fileBytes,
+            extension,
+            await compute(Crypto.Keccack512kDigest, pickedFile?.bytes));
+        print("recieved storage link");
+        storageLink = StorageLink;
+        print(StorageLink);
+        return StorageLink;
+        // await FilesDb().UpdateStorageLinkInFile()
+      }
+    } else {
+      return StorageLink = "";
     }
   }
 

@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -215,6 +214,24 @@ class _DocumentCreationState extends State<DocumentCreation> {
                             SizedBox(height: 20),
                             CheckboxListTile(
                               title: Text(
+                                "Online Document? ",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline5
+                                    ?.copyWith(fontSize: 18),
+                              ),
+                              value: controller.onlineDocument,
+                              onChanged: (newValue) {
+                                controller.changeOnlineDocument(newValue!);
+                              },
+                              // checkColor: Color(0xFF4784F1),
+                              activeColor: Color(0xFF4784F1),
+                              controlAffinity: ListTileControlAffinity
+                                  .trailing, //  <-- leading Checkbox
+                            ),
+                            SizedBox(height: 20),
+                            CheckboxListTile(
+                              title: Text(
                                 "Do you want the assigned person to download this document?",
                                 style: Theme.of(context)
                                     .textTheme
@@ -347,104 +364,120 @@ class _DocumentCreationState extends State<DocumentCreation> {
                                   : Container(),
                             ),
                             SizedBox(height: 20),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Upload Document',
-                                      style:
-                                          Theme.of(context).textTheme.headline4,
-                                    ),
-                                    // Text(
-                                    //     '(Proof of Address)'
-                                    // )
-                                  ],
-                                ),
-                                IconButton(
-                                  onPressed: () async {
-                                    final result =
-                                        await FilePicker.platform.pickFiles(
-                                      type: FileType.custom,
-                                      allowedExtensions: [
-                                        'pdf',
-                                        'doc',
-                                        'docx',
-                                        'xls',
-                                        'csv',
-                                        'ppt',
-                                        'pptx',
-                                        'zip',
-                                      ],
-                                    );
-                                    print(result);
-                                    if (result == null) {
-                                      return null;
-                                    } else {
-                                      controller.updatePickedFile(result);
-                                      print(controller.pickedFile?.name);
-                                      print(controller.pickedFile?.extension);
-                                    }
-                                  },
-                                  iconSize: 40,
-                                  icon: Icon(
-                                    Icons.upload_file,
-                                    color: Color(0xFF4784F1),
-                                  ),
-                                )
-                              ],
-                            ),
                             Visibility(
-                              visible: controller.isFilePicked,
-                              // child: Text("${controller.pickedFile?.name}")
-                              child: SingleChildScrollView(
-                                  child: controller.isFilePicked
-                                      ? GridView.builder(
-                                          shrinkWrap: true,
-                                          itemCount: 1,
-                                          gridDelegate:
-                                              const SliverGridDelegateWithMaxCrossAxisExtent(
-                                            maxCrossAxisExtent: 180,
-                                            childAspectRatio: 3 / 2,
-                                            crossAxisSpacing: 20,
-                                            mainAxisSpacing: 20,
-                                          ),
-                                          itemBuilder: (_, index) {
-                                            return Container(
-                                              alignment: Alignment.center,
-                                              child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Text(
-                                                      "${controller.pickedFile?.name}"),
-                                                  // Text(controller
-                                                  //     .finApproverList[index]
-                                                  //     .email ??
-                                                  //     "Email Not Set"),
-                                                  IconButton(
-                                                    onPressed: () {
-                                                      controller
-                                                          .removePickedFile();
-                                                    },
-                                                    icon: Icon(
-                                                        Icons.person_remove),
-                                                    color: Colors.red,
-                                                  )
-                                                ],
-                                              ),
-                                              decoration: BoxDecoration(
-                                                  color: Colors.blue,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          15)),
+                                visible: controller.onlineDocument,
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              'Upload Document',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .headline4,
+                                            ),
+                                            // Text(
+                                            //     '(Proof of Address)'
+                                            // )
+                                          ],
+                                        ),
+                                        IconButton(
+                                          onPressed: () async {
+                                            final result = await FilePicker
+                                                .platform
+                                                .pickFiles(
+                                              type: FileType.custom,
+                                              allowedExtensions: [
+                                                'pdf',
+                                                'doc',
+                                                'docx',
+                                                'xls',
+                                                'csv',
+                                                'ppt',
+                                                'pptx',
+                                                'zip',
+                                              ],
                                             );
+                                            print(result);
+                                            if (result == null) {
+                                              return null;
+                                            } else {
+                                              controller
+                                                  .updatePickedFile(result);
+                                              print(
+                                                  controller.pickedFile?.name);
+                                              print(controller
+                                                  .pickedFile?.extension);
+                                            }
                                           },
+                                          iconSize: 40,
+                                          icon: Icon(
+                                            Icons.upload_file,
+                                            color: Color(0xFF4784F1),
+                                          ),
                                         )
-                                      : Container()),
-                            ),
+                                      ],
+                                    ),
+                                    Visibility(
+                                      visible: controller.isFilePicked,
+                                      // child: Text("${controller.pickedFile?.name}")
+                                      child: SingleChildScrollView(
+                                          child: controller.isFilePicked
+                                              ? GridView.builder(
+                                                  shrinkWrap: true,
+                                                  itemCount: 1,
+                                                  gridDelegate:
+                                                      const SliverGridDelegateWithMaxCrossAxisExtent(
+                                                    maxCrossAxisExtent: 180,
+                                                    childAspectRatio: 3 / 2,
+                                                    crossAxisSpacing: 20,
+                                                    mainAxisSpacing: 20,
+                                                  ),
+                                                  itemBuilder: (_, index) {
+                                                    return Container(
+                                                      alignment:
+                                                          Alignment.center,
+                                                      child: Column(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Text(
+                                                              "${controller.pickedFile?.name}"),
+                                                          // Text(controller
+                                                          //     .finApproverList[index]
+                                                          //     .email ??
+                                                          //     "Email Not Set"),
+                                                          IconButton(
+                                                            onPressed: () {
+                                                              controller
+                                                                  .removePickedFile();
+                                                            },
+                                                            icon: Icon(Icons
+                                                                .person_remove),
+                                                            color: Colors.red,
+                                                          )
+                                                        ],
+                                                      ),
+                                                      decoration: BoxDecoration(
+                                                          color: Colors.blue,
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      15)),
+                                                    );
+                                                  },
+                                                )
+                                              : Container()),
+                                    ),
+                                  ],
+                                )),
                             SizedBox(height: 20),
                             Center(
                               child: TextButton(
@@ -466,37 +499,37 @@ class _DocumentCreationState extends State<DocumentCreation> {
                                           if (DocumentCreation
                                                   ._formkey.currentState!
                                                   .validate() &&
-                                              controller.isFilePicked)
+                                              (controller.isFilePicked ||
+                                                  !controller.onlineDocument))
                                             {
                                               print("sending for upload"),
                                               controller.storageLink =
                                                   await controller
                                                       .updateStorageLink()
                                                       .whenComplete(() async {
-                                                if (controller.storageLink !=
-                                                    "") {
-                                                  await controller.createDocument(
-                                                      controller
-                                                          .documentNameController
-                                                          .text
-                                                          .trim(),
-                                                      controller.assignedIdList,
-                                                      controller
-                                                          .downloadDocument,
-                                                      controller.finalApproverIdList
-                                                                  .value.length >
-                                                              0
-                                                          ? true
-                                                          : false,
-                                                      controller
-                                                          .finApproverIdList,
-                                                      controller.storageLink);
-                                                } else {
-                                                  controller
-                                                      .changeLoading(false);
-                                                  // Get.snackbar("Duplicate",
-                                                  //     "This File Already Exists");
-                                                }
+                                                // if (controller.storageLink !=
+                                                //     "") {
+                                                await controller.createDocument(
+                                                    controller
+                                                        .documentNameController
+                                                        .text
+                                                        .trim(),
+                                                    controller.assignedIdList,
+                                                    controller.downloadDocument,
+                                                    controller.finalApproverIdList
+                                                                .value.length >
+                                                            0
+                                                        ? true
+                                                        : false,
+                                                    controller
+                                                        .finApproverIdList,
+                                                    controller.storageLink);
+                                                // } else {
+                                                //   controller
+                                                //       .changeLoading(false);
+                                                //   // Get.snackbar("Duplicate",
+                                                //   //     "This File Already Exists");
+                                                // }
                                               }),
                                               controller.documentNameController
                                                   .text = "",

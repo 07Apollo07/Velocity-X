@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:velocityx/controllers/userController.dart';
 import 'package:velocityx/models/files.dart';
 import 'package:velocityx/models/user.dart';
+import 'package:velocityx/services/crypto.dart';
 import 'package:velocityx/services/filesDb.dart';
 import 'package:velocityx/shared/constants.dart';
 import 'package:file_picker/file_picker.dart';
@@ -305,8 +306,12 @@ class MetaDataController extends GetxController {
         }
         final fileBytes = pickedFile?.bytes;
 
-        String StorageLink = await FilesDb()
-            .UploadFileInStorage(storagePath, file, fileBytes, extension);
+        String StorageLink = await FilesDb().UploadFileInStorage(
+            storagePath,
+            file,
+            fileBytes,
+            extension,
+            Crypto.Keccack512kDigest(pickedFile?.bytes));
         print("recieved storage link");
         storageLink = StorageLink;
         print(StorageLink);
