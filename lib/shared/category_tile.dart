@@ -7,38 +7,41 @@ class CategoryTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 150.0,
-      width: 150.0,
-      decoration: BoxDecoration(
-        border: Border.all(
-          width: 3,
-          color: Theme.of(context).primaryColor,
+    return Align(
+      child: Container(
+        height: 150.0,
+        width: 150.0,
+        decoration: BoxDecoration(
+          border: Border.all(
+            width: 3,
+            color: Theme.of(context).primaryColor,
+          ),
+          borderRadius: BorderRadius.all(Radius.circular(30)),
         ),
-        borderRadius: BorderRadius.all(Radius.circular(30)),
-      ),
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(5, 15, 5, 0),
-            child: Center(
-              child: Text(
-                title,
-                style: Theme.of(context).textTheme.headline5,
-                textAlign: TextAlign.left,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Center(
+              child: Expanded(
+                child: Text(
+                  title,
+                  style: Theme.of(context).textTheme.headline5,
+                  textAlign: TextAlign.left,
+                   overflow: TextOverflow.ellipsis
+                ),
               ),
             ),
-          ),
-          SizedBox(
-            height: 70,
-          ),
-          Row(
-            children: [
-              SizedBox(width: 110),
-              Icon(Icons.arrow_forward, color: Theme.of(context).primaryColor),
-            ],
-          ),
-        ],
+            SizedBox(
+              height: 70,
+            ),
+            Row(
+              children: [
+                SizedBox(width: 110),
+                Icon(Icons.arrow_forward, color: Theme.of(context).primaryColor),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
