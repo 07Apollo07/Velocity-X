@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 import 'dart:typed_data';
@@ -240,6 +241,7 @@ class DocCreationController extends GetxController {
   Future<String> updateStorageLink() async {
     print("inside storage function in controller");
     UserModel _user = Get.find<UserController>().user;
+
     String StorageLink = "";
     if (isFilePicked) {
       final storagePath = "${_user.organization_no}/${pickedFile!.name}";
@@ -258,6 +260,9 @@ class DocCreationController extends GetxController {
         } else {
           file = File(pickedFile!.path!);
         }
+
+        Uint8List CipherBlock = Crypto().aesCbcEncrypt(getKey(_user.id),
+            getiv(_user.email), getPlainText(pickedFile?.bytes));
         final fileBytes = pickedFile?.bytes;
 
         StorageLink = await FilesDb().UploadFileInStorage(
@@ -275,6 +280,25 @@ class DocCreationController extends GetxController {
     } else {
       return StorageLink = "";
     }
+  }
+
+  Uint8List getKey(String? id) {
+    List<int> list = utf8.encode(id ?? "");
+    Uint8List bytes = Uint8List.fromList(list);
+    Uint8List key = Crypto().Keccack256kDigest(bytes);
+    return key;
+  }
+
+  Uint8List getiv(String? id) {
+    List<int> list = utf8.encode(id ?? "");
+    Uint8List bytes = Uint8List.fromList(list);
+    Uint8List key = Crypto().sha256Digest(bytes);
+    return key;
+  }
+
+  Uint8List getPlainText(Uint8List? bytes) {
+    Uint8List plainText = bytes ?? Uint8List(256);
+    return plainText;
   }
 
   String GetExtension(PlatformFile pickedFile) {
