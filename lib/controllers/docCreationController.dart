@@ -8,6 +8,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pointycastle/api.dart';
 import 'package:velocityx/controllers/authController.dart';
 import 'package:velocityx/controllers/userController.dart';
 import 'package:velocityx/models/files.dart';
@@ -252,23 +253,23 @@ class DocCreationController extends GetxController {
         // Uint8List hash = await Crypto().Keccack512kDigest(pickedFile?.bytes);
         // print('SHA-256: $hash');
         String extension = GetExtension(pickedFile!);
-
         File file = File("");
-
         if (kIsWeb) {
           file = File("");
         } else {
           file = File(pickedFile!.path!);
         }
-
-        Uint8List CipherBlock = Crypto().aesCbcEncrypt(getKey(_user.id),
-            getiv(_user.email), getPlainText(pickedFile?.bytes));
-        final fileBytes = pickedFile?.bytes;
+        Uint8List key = getKey(_user.id);
+        Uint8List iv = getiv(_user.email);
+        Uint8List plainText = getPlainText(pickedFile?.bytes ?? Uint8List(256));
+        // Encryption
+        Uint8List CipherBlock = Crypto().aesCbcEncrypt(key, iv, plainText);
+        // final fileBytes = pickedFile?.bytes;
 
         StorageLink = await FilesDb().UploadFileInStorage(
             storagePath,
             file,
-            fileBytes,
+            CipherBlock,
             extension,
             await compute(Crypto.Keccack512kDigest, pickedFile?.bytes));
         print("recieved storage link");
@@ -289,15 +290,17 @@ class DocCreationController extends GetxController {
     return key;
   }
 
-  Uint8List getiv(String? id) {
-    List<int> list = utf8.encode(id ?? "");
+  Uint8List getiv(String? email) {
+    List<int> list = utf8.encode(email ?? "");
     Uint8List bytes = Uint8List.fromList(list);
-    Uint8List key = Crypto().sha256Digest(bytes);
+    Uint8List key = Crypto().ripemd128Digest(bytes);
     return key;
   }
 
-  Uint8List getPlainText(Uint8List? bytes) {
-    Uint8List plainText = bytes ?? Uint8List(256);
+  Uint8List getPlainText(Uint8List bytes) {
+    print("Before padding = ${bytes.length}");
+    Uint8List plainText = Crypto().pad(bytes, 128);
+    print("padded plaintext = ${plainText.length}");
     return plainText;
   }
 

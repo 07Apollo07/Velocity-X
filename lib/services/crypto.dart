@@ -21,15 +21,20 @@ class Crypto {
 
   Uint8List sha256Digest(Uint8List dataToDigest) {
     final d = SHA256Digest();
+    return d.process(dataToDigest);
+  }
 
+  Uint8List ripemd128Digest(Uint8List dataToDigest) {
+    final d = RIPEMD128Digest();
     return d.process(dataToDigest);
   }
 
   Uint8List aesCbcEncrypt(
       Uint8List key, Uint8List iv, Uint8List paddedPlaintext) {
+    print(paddedPlaintext.lengthInBytes);
     assert([128, 192, 256].contains(key.length * 8));
     assert(128 == iv.length * 8);
-    assert(128 == paddedPlaintext.length * 8);
+    assert(0 == paddedPlaintext.length % 128);
 
     // Create a CBC block cipher with AES, and initialize with key and IV
 
@@ -70,5 +75,14 @@ class Crypto {
     assert(offset == cipherText.length);
 
     return paddedPlainText;
+  }
+
+  Uint8List pad(Uint8List bytes, int blockSizeBytes) {
+    final padLength = blockSizeBytes - (bytes.length % blockSizeBytes);
+
+    final padded = Uint8List(bytes.length + padLength)..setAll(0, bytes);
+    PKCS7Padding().addPadding(padded, bytes.length);
+
+    return padded;
   }
 }
