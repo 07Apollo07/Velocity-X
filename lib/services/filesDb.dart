@@ -460,9 +460,7 @@ class FilesDb {
   }
 
   Future<bool> DeleteFile(FilesModel file) async {
-    String storagePath =
-        "${Get.find<UserController>().user.organization_no}/${file.storageName}";
-    if (await DeleteFileFromStorage(storagePath)) {
+    if (await DeleteFileFromStorage(file)) {
       try {
         await _firestore
             .collection("Files")
@@ -487,14 +485,20 @@ class FilesDb {
     }
   }
 
-  Future<bool> DeleteFileFromStorage(String path) async {
-    try {
-      final ref = FirebaseStorage.instance.ref().child(path);
-      await ref.delete();
+  Future<bool> DeleteFileFromStorage(FilesModel file) async {
+    String storagePath =
+        "${Get.find<UserController>().user.organization_no}/${file.storageName}";
+    if (file.storage_link != "") {
+      try {
+        final ref = FirebaseStorage.instance.ref().child(storagePath);
+        await ref.delete();
+        return true;
+      } catch (e) {
+        print(e.toString());
+        return false;
+      }
+    } else {
       return true;
-    } catch (e) {
-      print(e.toString());
-      return false;
     }
   }
 }

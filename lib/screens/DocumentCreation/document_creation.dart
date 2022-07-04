@@ -502,42 +502,45 @@ class _DocumentCreationState extends State<DocumentCreation> {
                                               (controller.isFilePicked ||
                                                   !controller.onlineDocument))
                                             {
-                                              print("sending for upload"),
-                                              controller.storageLink =
+                                              controller.storageLink.value = "",
+                                              print(
+                                                  "sending for upload ; stprageLin is ${controller.storageLinkValue}"),
+                                              controller.storageLink.value =
                                                   await controller
                                                       .updateStorageLink()
                                                       .whenComplete(() async {
-                                                // if (controller.storageLink !=
-                                                //     "") {
-                                                await controller.createDocument(
-                                                    controller
-                                                        .documentNameController
-                                                        .text
-                                                        .trim(),
-                                                    controller.assignedIdList,
-                                                    controller.downloadDocument,
-                                                    controller.finalApproverIdList
-                                                                .value.length >
-                                                            0
-                                                        ? true
-                                                        : false,
-                                                    controller
-                                                        .finApproverIdList,
-                                                    controller.storageLink);
-                                                // } else {
-                                                //   controller
-                                                //       .changeLoading(false);
-                                                //   // Get.snackbar("Duplicate",
-                                                //   //     "This File Already Exists");
-                                                // }
+                                                print(
+                                                    "storage link is ${controller.storageLink} na dOnline file is ${!controller.onlineDocument}");
+                                                if (controller
+                                                            .storageLinkValue !=
+                                                        "" ||
+                                                    !controller
+                                                        .onlineDocument) {
+                                                  print("writing in db");
+                                                  await controller.createDocument(
+                                                      controller
+                                                          .documentNameController
+                                                          .text
+                                                          .trim(),
+                                                      controller.assignedIdList,
+                                                      controller
+                                                          .downloadDocument,
+                                                      controller.finalApproverIdList
+                                                                  .value.length >
+                                                              0
+                                                          ? true
+                                                          : false,
+                                                      controller
+                                                          .finApproverIdList,
+                                                      controller
+                                                          .storageLinkValue);
+                                                } else {
+                                                  controller
+                                                      .changeLoading(false);
+                                                  // Get.snackbar("Duplicate",
+                                                  //     "This File Already Exists");
+                                                }
                                               }),
-                                              controller.documentNameController
-                                                  .text = "",
-                                              controller
-                                                  .assignedPersonNameController
-                                                  .text = "",
-                                              controller.finalApproverController
-                                                  .text = "",
                                             }
                                           else
                                             {

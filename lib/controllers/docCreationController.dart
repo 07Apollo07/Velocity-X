@@ -32,8 +32,10 @@ class DocCreationController extends GetxController {
   var finalApprover = false;
   PlatformFile? pickedFile;
   bool isFilePicked = false;
-  String storageLink = "";
+  Rx<String> storageLink = Rx<String>("");
   bool loading = false;
+
+  String get storageLinkValue => storageLink.value;
 
   var name = ''.obs;
   var assignedDocument = ''.obs;
@@ -57,6 +59,24 @@ class DocCreationController extends GetxController {
   List<String?> get assignedIdList => assignedUserIdList.value;
   List<UserModel> get finApproverList => finalApproverList.value;
   List<String?> get finApproverIdList => finalApproverIdList.value;
+
+  void Reset() {
+    documentNameController.text = "";
+    assignedPersonNameController.text = "";
+    finalApproverController.text = "";
+    downloadDocument = false;
+    onlineDocument = false;
+    finalApprover = false;
+    pickedFile = null;
+    isFilePicked = false;
+    storageLink.value = "";
+    assignedList.clear();
+    assignedIdList.clear();
+    finApproverList.clear();
+    finApproverIdList.clear();
+    print("onReset storage link is ${storageLinkValue}");
+    update();
+  }
 
   void changeLoading(bool load) {
     loading = load;
@@ -218,15 +238,7 @@ class DocCreationController extends GetxController {
         storageName: isFilePicked ? pickedFile!.name : "Not Set",
       );
       if (await FilesDb().createNewFile(_file)) {
-        finApproverList.clear();
-        finApproverIdList.clear();
-        assignedList.clear();
-        assignedIdList.clear();
-        downloadDocument = false;
-        finalApprover = false;
-        pickedFile = null;
-        isFilePicked = false;
-        storageLink = "";
+        Reset();
         update();
         Get.snackbar("Success", "File Created");
       }
@@ -248,8 +260,10 @@ class DocCreationController extends GetxController {
       final storagePath = "${_user.organization_no}/${pickedFile!.name}";
       if (await FilesDb().CheckIfFileExistsInStorage(storagePath)) {
         Get.snackbar("Duplicate", "This File Already Exists");
-        return "";
+        print("detected file exists");
+        return StorageLink = "";
       } else {
+        print("duplicate doesnt exist");
         // Uint8List hash = await Crypto().Keccack512kDigest(pickedFile?.bytes);
         // print('SHA-256: $hash');
         String extension = GetExtension(pickedFile!);
@@ -273,7 +287,7 @@ class DocCreationController extends GetxController {
             extension,
             await compute(Crypto.Keccack512kDigest, pickedFile?.bytes));
         print("recieved storage link");
-        storageLink = StorageLink;
+        storageLink.value = StorageLink;
         print(StorageLink);
         return StorageLink;
         // await FilesDb().UpdateStorageLinkInFile()
