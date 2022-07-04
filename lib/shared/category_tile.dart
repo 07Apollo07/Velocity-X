@@ -22,13 +22,11 @@ class CategoryTile extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Center(
-              child: Expanded(
-                child: Text(
-                  title,
-                  style: Theme.of(context).textTheme.headline5,
-                  textAlign: TextAlign.left,
-                   overflow: TextOverflow.ellipsis
-                ),
+              child: Text(
+                title,
+                style: Theme.of(context).textTheme.headline5,
+                textAlign: TextAlign.left,
+                 overflow: TextOverflow.ellipsis
               ),
             ),
             SizedBox(
