@@ -20,11 +20,48 @@ class UserDb {
         "organization_no": user.organization_no,
         "designation": user.designation,
         "joining_date": user.joining_date as Timestamp,
+      }).then((value) {
+        CreateStarterCategories(user.id ?? "");
       });
       print("Adding User information in User Collection");
       return true;
     } catch (e) {
       print(e);
+      return false;
+    }
+  }
+
+  Future<bool> CreateStarterCategories(String id) async {
+    try {
+      List<dynamic> categories = [
+        {
+          "name": "Urgent",
+          "ids": [],
+        },
+        {
+          "name": "High",
+          "ids": [],
+        },
+        {
+          "name": "Medium",
+          "ids": [],
+        },
+        {
+          "name": "Low",
+          "ids": [],
+        },
+      ];
+      _firestore
+          .collection("Users")
+          .doc(id)
+          .collection("Categories")
+          .doc("Categories")
+          .set({
+        "Categories": categories,
+      });
+      return true;
+    } catch (e) {
+      print(e.toString());
       return false;
     }
   }
