@@ -7,6 +7,7 @@ import 'package:velocityx/screens/ContactCard/ContactCard.dart';
 import 'package:velocityx/screens/DocumentCreation/document_creation.dart';
 import 'package:velocityx/screens/DocumentEditing/DocumentEditing.dart';
 import 'package:velocityx/screens/FileInformation/file_information.dart';
+import 'package:velocityx/screens/Files/Files.dart';
 import 'package:velocityx/screens/Home/HomeWrapper.dart';
 import 'package:velocityx/screens/Home/home.dart';
 import 'package:velocityx/screens/Organization/Orgdirectory.dart';
@@ -116,6 +117,11 @@ class AppPages {
     GetPage(
       name: _Paths.DOC_EDITING,
       page: () => DocumentEditing(File: FilesModel()),
+      // binding: HomeBinding(),
+    ),
+    GetPage(
+      name: _Paths.FILES,
+      page: () => Files(category: []),
       // binding: HomeBinding(),
     ),
   ];

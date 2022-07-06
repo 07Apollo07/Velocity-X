@@ -17,45 +17,12 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  List categories = [
-    Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: CategoryTile(
-        title: 'Leave Application',
-      ),
-    ),
-    Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: CategoryTile(
-        title: 'Notices',
-      ),
-    ),
-    Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: CategoryTile(
-        title: 'Reports',
-      ),
-    ),
-    Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: CategoryTile(
-        title: 'Urgent',
-      ),
-    ),
-    Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: CategoryTile(
-        title: 'New Tile',
-      ),
-    ),
-  ];
   @override
   Widget build(BuildContext context) {
     TextEditingController textController = TextEditingController();
     return Container(
         child: Scaffold(
       // backgroundColor: Color.fromRGBO(36, 36, 36, 1.0),
-
       appBar: AppBar(
         backgroundColor: Colors.black38,
         elevation: 0.0,
@@ -124,13 +91,17 @@ class _HomeState extends State<Home> {
                       itemBuilder: (_, index) {
                         return GestureDetector(
                           onTap: () {
+                            Get.toNamed(Routes.FILES,
+                                id: Constants.homeId,
+                                arguments:
+                                    userController.categories[index].ids);
                             print(userController.categories[index].name);
                           },
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: CategoryTile(
                               title: userController.categories[index].name ??
-                                  "name",
+                                  "Category Name",
                             ),
                           ),
                         );
@@ -171,11 +142,8 @@ class _HomeState extends State<Home> {
                                     id: Constants.homeId,
                                     arguments:
                                         filesController.assignedFiles[index]);
-                                // print("sending data");
-                                // print(filesController.files[index].files_uniqueId);
                               },
                               child: TaskTile(
-                                  //TODO remove assigned_by and due_date after changes to TaskTile
                                   assigned_by: "Random Person",
                                   due_date: "Random date",
                                   filesModel:

@@ -173,33 +173,33 @@ class Register extends GetWidget<AuthController> {
                       child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                padding: EdgeInsets.fromLTRB(10, 0, 10, 5),
-                                shape: const StadiumBorder(
-                                  side: BorderSide(
-                                    width: 3,
-                                    color: Color(0xFF78D6FF),
-                                  ),
-                                ),
-                                primary: Color.fromARGB(0, 120, 215, 255),
-                              ),
-                              child: const Text(
-                                "Log In",
-                                style: TextStyle(
-                                  fontFamily: 'Segoe',
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w400,
-                                  color: Color(0xFF78D6FF),
-                                ),
-                              ),
-                              onPressed: () {
-                                Get.back();
-                              },
-                            ),
-                            SizedBox(
-                              width: 40,
-                            ),
+                            // ElevatedButton(
+                            //   style: ElevatedButton.styleFrom(
+                            //     padding: EdgeInsets.fromLTRB(10, 0, 10, 5),
+                            //     shape: const StadiumBorder(
+                            //       side: BorderSide(
+                            //         width: 3,
+                            //         color: Color(0xFF78D6FF),
+                            //       ),
+                            //     ),
+                            //     primary: Color.fromARGB(0, 120, 215, 255),
+                            //   ),
+                            //   child: const Text(
+                            //     "Log In",
+                            //     style: TextStyle(
+                            //       fontFamily: 'Segoe',
+                            //       fontSize: 20,
+                            //       fontWeight: FontWeight.w400,
+                            //       color: Color(0xFF78D6FF),
+                            //     ),
+                            //   ),
+                            //   onPressed: () {
+                            //     Get.back();
+                            //   },
+                            // ),
+                            // SizedBox(
+                            //   width: 40,
+                            // ),
                             ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                 padding: EdgeInsets.fromLTRB(10, 0, 10, 5),

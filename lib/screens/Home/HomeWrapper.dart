@@ -4,6 +4,7 @@ import 'package:velocityx/models/file_stats.dart';
 import 'package:velocityx/models/files.dart';
 import 'package:velocityx/routes/app_pages.dart';
 import 'package:velocityx/screens/FileInformation/file_information.dart';
+import 'package:velocityx/screens/Files/Files.dart';
 import 'package:velocityx/screens/PdfViewer/pdf_viewer.dart';
 import 'package:velocityx/screens/QRCodeGeneration/QrCreator.dart';
 import 'package:velocityx/shared/constants.dart';
@@ -36,6 +37,14 @@ class HomeWrapper extends StatelessWidget {
               routeName: Routes.METADATA,
               page: () => MetaDataPage(
                 File: routeSettings.arguments as FilesModel,
+              ),
+              maintainState: false,
+            );
+          } else if (routeSettings.name.toString() == Routes.FILES) {
+            return GetPageRoute(
+              routeName: Routes.FILES,
+              page: () => Files(
+                category: routeSettings.arguments as List,
               ),
               maintainState: false,
             );
