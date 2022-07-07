@@ -93,8 +93,7 @@ class _HomeState extends State<Home> {
                           onTap: () {
                             Get.toNamed(Routes.FILES,
                                 id: Constants.homeId,
-                                arguments:
-                                    userController.categories[index].ids);
+                                arguments: userController.categories[index]);
                             print(userController.categories[index].name);
                           },
                           child: Padding(

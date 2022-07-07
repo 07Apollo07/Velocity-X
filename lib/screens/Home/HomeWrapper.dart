@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:velocityx/models/file_stats.dart';
 import 'package:velocityx/models/files.dart';
+import 'package:velocityx/models/user_categories.dart';
 import 'package:velocityx/routes/app_pages.dart';
 import 'package:velocityx/screens/FileInformation/file_information.dart';
 import 'package:velocityx/screens/Files/Files.dart';
@@ -44,7 +45,7 @@ class HomeWrapper extends StatelessWidget {
             return GetPageRoute(
               routeName: Routes.FILES,
               page: () => Files(
-                category: routeSettings.arguments as List,
+                category: routeSettings.arguments as CategoryModel,
               ),
               maintainState: false,
             );

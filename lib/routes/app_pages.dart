@@ -3,6 +3,7 @@ import 'package:velocityx/binding/bindings.dart';
 import 'package:velocityx/controllers/metaDataController.dart';
 import 'package:velocityx/models/file_stats.dart';
 import 'package:velocityx/models/files.dart';
+import 'package:velocityx/models/user_categories.dart';
 import 'package:velocityx/screens/ContactCard/ContactCard.dart';
 import 'package:velocityx/screens/DocumentCreation/document_creation.dart';
 import 'package:velocityx/screens/DocumentEditing/DocumentEditing.dart';
@@ -121,7 +122,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.FILES,
-      page: () => Files(category: []),
+      page: () => Files(category: CategoryModel()),
       // binding: HomeBinding(),
     ),
   ];

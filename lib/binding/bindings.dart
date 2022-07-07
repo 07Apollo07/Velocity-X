@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:velocityx/controllers/authController.dart';
+import 'package:velocityx/controllers/categoryController.dart';
 import 'package:velocityx/controllers/docCreationController.dart';
 import 'package:velocityx/controllers/fileInformationController.dart';
 import 'package:velocityx/controllers/filesController.dart';
