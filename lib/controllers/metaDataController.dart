@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:velocityx/controllers/userController.dart';
 import 'package:velocityx/models/files.dart';
 import 'package:velocityx/models/user.dart';
+import 'package:velocityx/models/user_categories.dart';
 import 'package:velocityx/services/crypto.dart';
 import 'package:velocityx/services/filesDb.dart';
 import 'package:velocityx/shared/constants.dart';
@@ -31,7 +32,9 @@ class MetaDataController extends GetxController {
   String storageLink = "";
   CreatorController? creatorController;
   bool isUploadVisible = false;
+  String initialDropDownValue = "Not Set";
 
+  List<CategoryModel> categories = Get.find<UserController>().categories;
   List<UserModel> userList = Get.find<UserController>().users;
 
   Rx<List<UserModel>> assignedUserList =
@@ -50,6 +53,37 @@ class MetaDataController extends GetxController {
   List<String?> get assignedIdList => assignedUserIdList.value;
   List<UserModel> get newList => newUserList.value;
   List<String?> get newIdList => newUserIdList.value;
+
+  void changeCategory(String category) {
+    initialDropDownValue = category;
+    update();
+  }
+
+  void removeCategory() {
+    initialDropDownValue = "Not Set";
+    update();
+  }
+
+  void initializeDropDown(String id) {
+    bool found = false;
+    print(id);
+    for (var category in categories) {
+      print(category.ids.toString());
+      if (found == false) {
+        category.ids?.firstWhere((cateId) {
+          if (cateId == id) {
+            initialDropDownValue = category.name!;
+            found = true;
+            return true;
+          } else {
+            return false;
+          }
+        }, orElse: () => "Not Set");
+      }
+    }
+    print(initialDropDownValue);
+    update();
+  }
 
   void changeLoading(bool load) {
     loading = load;

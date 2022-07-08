@@ -10,6 +10,7 @@ import 'package:velocityx/controllers/metaDataController.dart';
 import 'package:velocityx/controllers/userController.dart';
 import 'package:velocityx/models/file_stats.dart';
 import 'package:velocityx/models/files.dart';
+import 'package:velocityx/models/user_categories.dart';
 import 'package:velocityx/routes/app_pages.dart';
 import 'package:velocityx/services/filesDb.dart';
 import 'package:velocityx/shared/constants.dart';
@@ -57,6 +58,7 @@ class MetaDataPage extends StatelessWidget {
               for (String id in File.assigned_person_uid) {
                 controller.initializeAssignedList(id);
               }
+              controller.initializeDropDown(File.files_uniqueId);
               controller.initializeUploadedFile(
                   File.storageName, File.storage_link);
               controller.initialized = true;
@@ -114,12 +116,64 @@ class MetaDataPage extends StatelessWidget {
                         SizedBox(
                           height: 15,
                         ),
+
                         Text(
                           'File Properties:',
-                          style: TextStyle(fontSize: 20),
+                          style: Theme.of(context).textTheme.headline4,
                         ),
                         SizedBox(
                           height: 15,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Select Category",
+                              style: Theme.of(context).textTheme.headline5,
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            DropdownButton(
+                              value:
+                                  controller.initialDropDownValue == "Not Set"
+                                      ? null
+                                      : controller.initialDropDownValue,
+                              hint: Text("Select a item"),
+                              icon: const Icon(Icons.keyboard_arrow_down),
+                              items: controller.categories
+                                  .map((CategoryModel category) {
+                                return DropdownMenuItem(
+                                  value: category.name,
+                                  child: Text(
+                                    category.name ?? "No Name",
+                                    style:
+                                        Theme.of(context).textTheme.headline5,
+                                  ),
+                                );
+                              }).toList(),
+                              onChanged: (newValue) {
+                                controller.changeCategory(newValue.toString());
+                                // print(newValue.toString());
+                              },
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Visibility(
+                                visible:
+                                    controller.initialDropDownValue == "Not Set"
+                                        ? false
+                                        : true,
+                                child: ElevatedButton(
+                                    onPressed: () {
+                                      controller.removeCategory();
+                                    },
+                                    child: Text("Remove"))),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10,
                         ),
                         TextFormField(
                           style: Theme.of(context).textTheme.headline5,
