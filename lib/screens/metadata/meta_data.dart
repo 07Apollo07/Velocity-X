@@ -153,7 +153,8 @@ class MetaDataPage extends StatelessWidget {
                                 );
                               }).toList(),
                               onChanged: (newValue) {
-                                controller.changeCategory(newValue.toString());
+                                controller.changeCategory(
+                                    newValue.toString(), File.files_uniqueId);
                                 // print(newValue.toString());
                               },
                             ),
@@ -167,7 +168,8 @@ class MetaDataPage extends StatelessWidget {
                                         : true,
                                 child: ElevatedButton(
                                     onPressed: () {
-                                      controller.removeCategory();
+                                      controller
+                                          .removeCategory(File.files_uniqueId);
                                     },
                                     child: Text("Remove"))),
                           ],

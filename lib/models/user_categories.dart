@@ -17,4 +17,11 @@ class CategoryModel {
   late List<dynamic>? ids = [];
 
   CategoryModel({this.name, this.ids});
+
+  Map<String, dynamic> toFirestore() {
+    return {
+      if (name != null) "name": name,
+      if (ids != null) "regions": ids,
+    };
+  }
 }

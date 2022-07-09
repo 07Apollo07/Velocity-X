@@ -3,12 +3,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:velocityx/controllers/categoryController.dart';
 import 'package:velocityx/controllers/userController.dart';
 import 'package:velocityx/models/files.dart';
 import 'package:velocityx/models/user.dart';
 import 'package:velocityx/models/user_categories.dart';
 import 'package:velocityx/services/crypto.dart';
 import 'package:velocityx/services/filesDb.dart';
+import 'package:velocityx/services/usersDb.dart';
 import 'package:velocityx/shared/constants.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -54,12 +56,49 @@ class MetaDataController extends GetxController {
   List<UserModel> get newList => newUserList.value;
   List<String?> get newIdList => newUserIdList.value;
 
-  void changeCategory(String category) {
-    initialDropDownValue = category;
+  void changeCategory(String categoryName, String fileId) async {
+    try {
+      int indexOldCategory = categories
+          .indexWhere((category) => category.name == initialDropDownValue);
+      if (indexOldCategory != -1) {
+        categories[indexOldCategory].ids?.removeWhere((id) => id == fileId);
+      }
+      int indexNewCategory =
+          categories.indexWhere((category) => category.name == categoryName);
+      if (indexNewCategory != -1) {
+        categories[indexNewCategory].ids?.add(fileId);
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+    List<dynamic> categoriesToUpload = categories
+        .map((category) => {"name": category.name, "ids": category.ids})
+        .toList();
+    if (await UserDb().UpdateCategoryItem(
+        categoriesToUpload, Get.find<UserController>().user.id ?? "Not Set")) {}
+    if (Get.isRegistered<CategoryController>()) {
+      // Get.find<CategoryController>().changeInitialized(false);
+      Get.delete<CategoryController>();
+    }
+    initialDropDownValue = categoryName;
     update();
   }
 
-  void removeCategory() {
+  void removeCategory(String fileId) async {
+    int indexOldCategory = categories
+        .indexWhere((category) => category.name == initialDropDownValue);
+    if (indexOldCategory != -1) {
+      categories[indexOldCategory].ids?.removeWhere((id) => id == fileId);
+    }
+    List<dynamic> categoriesToUpload = categories
+        .map((category) => {"name": category.name, "ids": category.ids})
+        .toList();
+    if (await UserDb().UpdateCategoryItem(
+        categoriesToUpload, Get.find<UserController>().user.id ?? "Not Set")) {}
+    if (Get.isRegistered<CategoryController>()) {
+      // Get.find<CategoryController>().changeInitialized(false);
+      Get.delete<CategoryController>();
+    }
     initialDropDownValue = "Not Set";
     update();
   }

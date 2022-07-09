@@ -66,6 +66,23 @@ class UserDb {
     }
   }
 
+  Future<bool> UpdateCategoryItem(
+      List<dynamic> categories, String userId) async {
+    try {
+      print(categories);
+      await _firestore
+          .collection("Users")
+          .doc(userId)
+          .collection("Categories")
+          .doc("Categories")
+          .update({"Categories": categories});
+      return true;
+    } catch (e) {
+      print(e.toString());
+      return false;
+    }
+  }
+
   Future<List> getAllUsers() async {
     QuerySnapshot querySnapshot =
         await userCollection.get() as QuerySnapshot<Object?>;
