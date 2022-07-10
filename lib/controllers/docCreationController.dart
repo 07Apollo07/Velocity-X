@@ -85,6 +85,7 @@ class DocCreationController extends GetxController {
 
   void changeOnlineDocument(bool load) {
     onlineDocument = load;
+    downloadDocument = false;
     if (isFilePicked) {
       removePickedFile();
     }
@@ -235,7 +236,7 @@ class DocCreationController extends GetxController {
         organization_no: _user.organization_no,
         storage_link: StorageLink,
         fileModifiedDateTime: Timestamp.fromDate(DateTime.now()),
-        storageName: isFilePicked ? pickedFile!.name : "Not Set",
+        storageName: isFilePicked ? pickedFile!.name : "",
       );
       if (await FilesDb().createNewFile(_file)) {
         Reset();

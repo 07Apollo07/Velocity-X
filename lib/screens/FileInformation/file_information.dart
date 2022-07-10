@@ -172,16 +172,6 @@ class _TimelineActivity extends StatelessWidget {
       ),
     );
   }
-
-  IconData getIcon(String action) {
-    if (action == "Creation") {
-      return Icons.add;
-    } else if (action == "FinalApproverAdded") {
-      return Icons.person_pin_rounded;
-    } else {
-      return Icons.add_card;
-    }
-  }
 }
 
 class _LeftChildTimeline extends StatelessWidget {
@@ -195,9 +185,74 @@ class _LeftChildTimeline extends StatelessWidget {
         constraints: BoxConstraints(minHeight: minHeight),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
-          children: <Widget>[Text(getLeftText(FileStats))],
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(right: 16.0),
+              child: Text(
+                getLeftText(FileStats),
+                style: Theme.of(context).textTheme.headline5,
+              ),
+            )
+          ],
         ));
   }
+}
+
+class _RightChildTimeline extends StatelessWidget {
+  const _RightChildTimeline({Key? key, required this.FileStats})
+      : super(key: key);
+
+  final Map<String, dynamic> FileStats;
+
+  @override
+  Widget build(BuildContext context) {
+    final double minHeight = 80;
+    return ConstrainedBox(
+        constraints: BoxConstraints(minHeight: minHeight),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(left: 16),
+              child: Text(
+                getRightText(FileStats),
+                style: Theme.of(context).textTheme.headline5,
+              ),
+            )
+          ],
+        ));
+  }
+}
+
+IconData getIcon(String action) {
+  if (action == "Creation") {
+    return Icons.add;
+  } else if (action == "FinalApproverAdded") {
+    return Icons.add_moderator;
+  } else if (action == "FinalApproverRemoved") {
+    return Icons.remove_moderator;
+  } else if (action == "FinalApproverChanged") {
+    return Icons.published_with_changes;
+  } else if (action == "Remove") {
+    return Icons.person_remove_alt_1;
+  } else if (action == "Transfer") {
+    return Icons.person_add_alt_1;
+  } else if (action == "RemoveSelf") {
+    return Icons.person_remove_alt_1;
+  } else if (action == "Opened") {
+    return Icons.remove_red_eye;
+  } else if (action == "Scanned") {
+    return Icons.document_scanner_outlined;
+  } else {
+    return Icons.add_card;
+  }
+}
+
+String getLeftText(Map<String, dynamic> FileStats) {
+  String message = getDateFromTimeStamp(FileStats["Time"].seconds.toString());
+  return message;
 }
 
 String getRightText(Map<String, dynamic> FileStats) {
@@ -246,39 +301,6 @@ String getRightText(Map<String, dynamic> FileStats) {
   }
 
   return "";
-}
-
-String getLeftText(Map<String, dynamic> FileStats) {
-  String message = getDateFromTimeStamp(FileStats["Time"].seconds.toString());
-  return message;
-}
-
-class _RightChildTimeline extends StatelessWidget {
-  const _RightChildTimeline({Key? key, required this.FileStats})
-      : super(key: key);
-
-  final Map<String, dynamic> FileStats;
-
-  @override
-  Widget build(BuildContext context) {
-    final double minHeight = 80;
-    return ConstrainedBox(
-        constraints: BoxConstraints(minHeight: minHeight),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.only(right: 29),
-              child: Text(getRightText(FileStats)
-                  // style: GoogleFonts.patrickHand(
-                  //   fontSize: 16,
-                  //   color: Colors.white.withOpacity(0.6),
-                  // ),
-                  ),
-            )
-          ],
-        ));
-  }
 }
 
 String getDateFromTimeStamp(String timestamp) {
