@@ -77,14 +77,15 @@ class _HomeState extends State<Home> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Expanded(
-            child: GetX<UserController>(
-                init: Get.find<UserController>(),
-                builder: (UserController userController) {
-                  print(userController.categories.length);
-                  if (userController != null &&
-                      userController.categories.length > 0) {
-                    return ListView.builder(
+          GetX<UserController>(
+              init: Get.find<UserController>(),
+              builder: (UserController userController) {
+                print(userController.categories.length);
+                if (userController != null &&
+                    userController.categories.length > 0) {
+                  return SizedBox(
+                    height: 150,
+                    child: ListView.builder(
                       shrinkWrap: true,
                       scrollDirection: Axis.horizontal,
                       itemCount: userController.categories.length,
@@ -105,17 +106,17 @@ class _HomeState extends State<Home> {
                           ),
                         );
                       },
-                    );
-                  } else if (userController.categories.isEmpty) {
-                    return Text(
-                      "Refresh pending",
-                      style: Theme.of(context).textTheme.headline5,
-                    );
-                  } else {
-                    return CircularProgressIndicator();
-                  }
-                }),
-          ),
+                    ),
+                  );
+                } else if (userController.categories.isEmpty) {
+                  return Text(
+                    "Refresh pending",
+                    style: Theme.of(context).textTheme.headline5,
+                  );
+                } else {
+                  return CircularProgressIndicator();
+                }
+              }),
           Padding(
             padding: const EdgeInsets.all(14.0),
             child: Text(

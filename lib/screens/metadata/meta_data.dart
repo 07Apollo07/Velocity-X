@@ -124,55 +124,58 @@ class MetaDataPage extends StatelessWidget {
                         SizedBox(
                           height: 15,
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              "Select Category",
-                              style: Theme.of(context).textTheme.headline5,
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            DropdownButton(
-                              value:
-                                  controller.initialDropDownValue == "Not Set"
-                                      ? null
-                                      : controller.initialDropDownValue,
-                              hint: Text("Select a item"),
-                              icon: const Icon(Icons.keyboard_arrow_down),
-                              items: controller.categories
-                                  .map((CategoryModel category) {
-                                return DropdownMenuItem(
-                                  value: category.name,
-                                  child: Text(
-                                    category.name ?? "No Name",
-                                    style:
-                                        Theme.of(context).textTheme.headline5,
-                                  ),
-                                );
-                              }).toList(),
-                              onChanged: (newValue) {
-                                controller.changeCategory(
-                                    newValue.toString(), File.files_uniqueId);
-                                // print(newValue.toString());
-                              },
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Visibility(
-                                visible:
+                        Visibility(
+                          visible: controller.optionsVisible(),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Select Category",
+                                style: Theme.of(context).textTheme.headline5,
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              DropdownButton(
+                                value:
                                     controller.initialDropDownValue == "Not Set"
-                                        ? false
-                                        : true,
-                                child: ElevatedButton(
-                                    onPressed: () {
-                                      controller
-                                          .removeCategory(File.files_uniqueId);
-                                    },
-                                    child: Text("Remove"))),
-                          ],
+                                        ? null
+                                        : controller.initialDropDownValue,
+                                hint: Text("Select a item"),
+                                icon: const Icon(Icons.keyboard_arrow_down),
+                                items: controller.categories
+                                    .map((CategoryModel category) {
+                                  return DropdownMenuItem(
+                                    value: category.name,
+                                    child: Text(
+                                      category.name ?? "No Name",
+                                      style:
+                                          Theme.of(context).textTheme.headline5,
+                                    ),
+                                  );
+                                }).toList(),
+                                onChanged: (newValue) {
+                                  controller.changeCategory(
+                                      newValue.toString(), File.files_uniqueId);
+                                  // print(newValue.toString());
+                                },
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Visibility(
+                                  visible: controller.initialDropDownValue ==
+                                          "Not Set"
+                                      ? false
+                                      : true,
+                                  child: ElevatedButton(
+                                      onPressed: () {
+                                        controller.removeCategory(
+                                            File.files_uniqueId);
+                                      },
+                                      child: Text("Remove"))),
+                            ],
+                          ),
                         ),
                         SizedBox(
                           height: 10,
