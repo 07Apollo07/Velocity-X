@@ -35,6 +35,7 @@ class MetaDataController extends GetxController {
   CreatorController? creatorController;
   bool isUploadVisible = false;
   String initialDropDownValue = "Not Set";
+  bool isFinalApprover = false;
 
   List<CategoryModel> categories = Get.find<UserController>().categories;
   List<UserModel> userList = Get.find<UserController>().users;
@@ -276,6 +277,19 @@ class MetaDataController extends GetxController {
     String name = user.f_name + " " + user.l_name;
     return name;
   }
+
+  void checkIfFinalApprover(String id) {
+    String? user = assignedIdList.firstWhere((userId) => userId == id,
+        orElse: () => "Not Found");
+    if (user != "Not Found") {
+      isFinalApprover = true;
+    } else {
+      isFinalApprover = false;
+    }
+    update();
+  }
+
+  void FinalApproverResponse(bool response) {}
 
   void updateDocument(
       String fileId, String userId, FilesModel file, String StorageLink) async {

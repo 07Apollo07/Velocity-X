@@ -58,6 +58,7 @@ class MetaDataPage extends StatelessWidget {
               for (String id in File.assigned_person_uid) {
                 controller.initializeAssignedList(id);
               }
+              controller.checkIfFinalApprover(File.final_approver);
               controller.initializeDropDown(File.files_uniqueId);
               controller.initializeUploadedFile(
                   File.storageName, File.storage_link);
@@ -306,7 +307,30 @@ class MetaDataPage extends StatelessWidget {
                           ),
                         ),
                         SizedBox(
-                          height: 100,
+                          height: 50,
+                        ),
+                        Visibility(
+                            visible: controller.isFinalApprover,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                ElevatedButton(
+                                  onPressed: () {
+                                    controller.FinalApproverResponse(false);
+                                  },
+                                  child: Text("Reject"),
+                                ),
+                                SizedBox(width: 20),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    controller.FinalApproverResponse(true);
+                                  },
+                                  child: Text("Accept"),
+                                ),
+                              ],
+                            )),
+                        SizedBox(
+                          height: 50,
                         ),
                         Visibility(
                           visible: controller.optionsVisible(),
