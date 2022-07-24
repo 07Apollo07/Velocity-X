@@ -85,4 +85,9 @@ class Crypto {
 
     return padded;
   }
+
+  Uint8List unpad(Uint8List padded) {
+    return padded.sublist(0, padded.length - PKCS7Padding().padCount(padded));
+  }
+
 }

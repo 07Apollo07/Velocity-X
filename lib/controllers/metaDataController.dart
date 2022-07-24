@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:ai_barcode/ai_barcode.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
@@ -277,7 +280,8 @@ class MetaDataController extends GetxController {
 
     // downloads the file
     Dio dio = Dio();
-    await dio.download(url, "${dir.path}/$fileName");
+    dynamic result = await dio.download(url, "${dir.path}/$fileName");
+    print(result.runtimeType);
 
     // opens the file
     OpenFile.open("${dir.path}/$fileName", type: 'application/pdf');
@@ -368,4 +372,31 @@ class MetaDataController extends GetxController {
     }
     return extension;
   }
+  Uint8List decryptionOfFile(Uint8List ciphertext){
+
+    UserModel _user = Get.find<UserController>().user;
+    Uint8List key = getKey(_user.id);
+    Uint8List iv = getiv(_user.email);
+
+    Uint8List paddedPlainText = Crypto().aesCbcEncrypt(key, iv, ciphertext);
+
+    Uint8List result = Crypto().unpad(paddedPlainText);
+
+    return result;
+  }
+
+  Uint8List getKey(String? id) {
+    List<int> list = utf8.encode(id ?? "");
+    Uint8List bytes = Uint8List.fromList(list);
+    Uint8List key = Crypto().Keccack256kDigest(bytes);
+    return key;
+  }
+
+  Uint8List getiv(String? email) {
+    List<int> list = utf8.encode(email ?? "");
+    Uint8List bytes = Uint8List.fromList(list);
+    Uint8List key = Crypto().ripemd128Digest(bytes);
+    return key;
+  }
+
 }
