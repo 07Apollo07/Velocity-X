@@ -6,11 +6,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:velocityx/controllers/categoryController.dart';
 import 'package:velocityx/controllers/userController.dart';
 import 'package:velocityx/models/files.dart';
 import 'package:velocityx/models/user.dart';
+import 'package:velocityx/models/user_categories.dart';
 import 'package:velocityx/services/crypto.dart';
 import 'package:velocityx/services/filesDb.dart';
+import 'package:velocityx/services/usersDb.dart';
 import 'package:velocityx/shared/constants.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -34,7 +37,10 @@ class MetaDataController extends GetxController {
   String storageLink = "";
   CreatorController? creatorController;
   bool isUploadVisible = false;
+  String initialDropDownValue = "Not Set";
+  bool isFinalApprover = false;
 
+  List<CategoryModel> categories = Get.find<UserController>().categories;
   List<UserModel> userList = Get.find<UserController>().users;
 
   Rx<List<UserModel>> assignedUserList =
@@ -53,6 +59,74 @@ class MetaDataController extends GetxController {
   List<String?> get assignedIdList => assignedUserIdList.value;
   List<UserModel> get newList => newUserList.value;
   List<String?> get newIdList => newUserIdList.value;
+
+  void changeCategory(String categoryName, String fileId) async {
+    try {
+      int indexOldCategory = categories
+          .indexWhere((category) => category.name == initialDropDownValue);
+      if (indexOldCategory != -1) {
+        categories[indexOldCategory].ids?.removeWhere((id) => id == fileId);
+      }
+      int indexNewCategory =
+          categories.indexWhere((category) => category.name == categoryName);
+      if (indexNewCategory != -1) {
+        categories[indexNewCategory].ids?.add(fileId);
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+    List<dynamic> categoriesToUpload = categories
+        .map((category) => {"name": category.name, "ids": category.ids})
+        .toList();
+    if (await UserDb().UpdateCategoryItem(
+        categoriesToUpload, Get.find<UserController>().user.id ?? "Not Set")) {}
+    if (Get.isRegistered<CategoryController>()) {
+      // Get.find<CategoryController>().changeInitialized(false);
+      Get.delete<CategoryController>();
+    }
+    initialDropDownValue = categoryName;
+    update();
+  }
+
+  void removeCategory(String fileId) async {
+    int indexOldCategory = categories
+        .indexWhere((category) => category.name == initialDropDownValue);
+    if (indexOldCategory != -1) {
+      categories[indexOldCategory].ids?.removeWhere((id) => id == fileId);
+    }
+    List<dynamic> categoriesToUpload = categories
+        .map((category) => {"name": category.name, "ids": category.ids})
+        .toList();
+    if (await UserDb().UpdateCategoryItem(
+        categoriesToUpload, Get.find<UserController>().user.id ?? "Not Set")) {}
+    if (Get.isRegistered<CategoryController>()) {
+      // Get.find<CategoryController>().changeInitialized(false);
+      Get.delete<CategoryController>();
+    }
+    initialDropDownValue = "Not Set";
+    update();
+  }
+
+  void initializeDropDown(String id) {
+    bool found = false;
+    print(id);
+    for (var category in categories) {
+      print(category.ids.toString());
+      if (found == false) {
+        category.ids?.firstWhere((cateId) {
+          if (cateId == id) {
+            initialDropDownValue = category.name!;
+            found = true;
+            return true;
+          } else {
+            return false;
+          }
+        }, orElse: () => "Not Set");
+      }
+    }
+    print(initialDropDownValue);
+    update();
+  }
 
   void changeLoading(bool load) {
     loading = load;
@@ -206,6 +280,19 @@ class MetaDataController extends GetxController {
     String name = user.f_name + " " + user.l_name;
     return name;
   }
+
+  void checkIfFinalApprover(String id) {
+    String? user = assignedIdList.firstWhere((userId) => userId == id,
+        orElse: () => "Not Found");
+    if (user != "Not Found") {
+      isFinalApprover = true;
+    } else {
+      isFinalApprover = false;
+    }
+    update();
+  }
+
+  void FinalApproverResponse(bool response) {}
 
   void updateDocument(
       String fileId, String userId, FilesModel file, String StorageLink) async {

@@ -17,6 +17,7 @@ class CategoryController extends GetxController {
   List<FilesModel> _files = Get.find<FilesController>().assignedFiles;
 
   void changeInitialized(bool value) {
+    print("initialization : ${value}");
     initialized = value;
     update();
   }

@@ -230,24 +230,28 @@ class _DocumentCreationState extends State<DocumentCreation> {
                                   .trailing, //  <-- leading Checkbox
                             ),
                             SizedBox(height: 20),
-                            CheckboxListTile(
-                              title: Text(
-                                "Do you want the assigned person to download this document?",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headline5
-                                    ?.copyWith(fontSize: 18),
+                            Visibility(
+                              visible: controller.onlineDocument,
+                              child: CheckboxListTile(
+                                title: Text(
+                                  "Do you want the assigned person to download this document?",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headline5
+                                      ?.copyWith(fontSize: 18),
+                                ),
+                                value: controller.downloadDocument,
+                                onChanged: (newValue) {
+                                  controller
+                                      .changeDownloadDocumentCheck(newValue!);
+                                },
+                                // checkColor: Color(0xFF4784F1),
+                                activeColor: Color(0xFF4784F1),
+                                controlAffinity: ListTileControlAffinity
+                                    .trailing, //  <-- leading Checkbox
                               ),
-                              value: controller.downloadDocument,
-                              onChanged: (newValue) {
-                                controller
-                                    .changeDownloadDocumentCheck(newValue!);
-                              },
-                              // checkColor: Color(0xFF4784F1),
-                              activeColor: Color(0xFF4784F1),
-                              controlAffinity: ListTileControlAffinity
-                                  .trailing, //  <-- leading Checkbox
                             ),
+
                             SizedBox(height: 20),
                             CheckboxListTile(
                               title: Text(

@@ -16,34 +16,17 @@ class ContactPage extends GetWidget<UserController> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Scaffold(
-        // backgroundColor: Color.fromRGBO(36, 36, 36, 1.0),
-        appBar: AppBar(
-          leading: BackButton(
-            color: Theme.of(context).primaryColor,
-          ),
-          title: Text("Profile Page",
-              style: Theme.of(context).textTheme.headline3),
-          elevation: 0.0,
-          actions: <Widget>[
-            Container(
-                margin: EdgeInsets.only(right: 15.0),
-                decoration: BoxDecoration(
-                    color: Theme.of(context).scaffoldBackgroundColor,
-                    shape: BoxShape.circle,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Theme.of(context).primaryColor,
-                        blurRadius: 5.0,
-                      ),
-                    ]),
-                child: IconButton(
-                    onPressed: () {
-                      // Navigator.pushNamed(context, '/MetaData');
-                    },
-                    icon: Icon(CustomIcons.search_1),
-                    color: Theme.of(context).primaryColor)),
-            Container(
+        child: Scaffold(
+      // backgroundColor: Color.fromRGBO(36, 36, 36, 1.0),
+      appBar: AppBar(
+        leading: BackButton(
+          color: Theme.of(context).primaryColor,
+        ),
+        title:
+            Text("Profile Page", style: Theme.of(context).textTheme.headline3),
+        elevation: 0.0,
+        actions: <Widget>[
+          Container(
               margin: EdgeInsets.only(right: 15.0),
               decoration: BoxDecoration(
                   color: Theme.of(context).scaffoldBackgroundColor,
@@ -56,17 +39,34 @@ class ContactPage extends GetWidget<UserController> {
                   ]),
               child: IconButton(
                   onPressed: () {
-                    AuthController.instance.signOut();
+                    // Navigator.pushNamed(context, '/MetaData');
                   },
-                  icon: Icon(CustomIcons.bell),
-                  color: Theme.of(context).primaryColor),
-            ),
-          ],
-        ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              Row(
+                  icon: Icon(CustomIcons.search_1),
+                  color: Theme.of(context).primaryColor)),
+          Container(
+            margin: EdgeInsets.only(right: 15.0),
+            decoration: BoxDecoration(
+                color: Theme.of(context).scaffoldBackgroundColor,
+                shape: BoxShape.circle,
+                boxShadow: [
+                  BoxShadow(
+                    color: Theme.of(context).primaryColor,
+                    blurRadius: 5.0,
+                  ),
+                ]),
+            child: IconButton(
+                onPressed: () {
+                  AuthController.instance.signOut();
+                },
+                icon: Icon(CustomIcons.bell),
+                color: Theme.of(context).primaryColor),
+          ),
+        ],
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
@@ -77,174 +77,182 @@ class ContactPage extends GetWidget<UserController> {
               ],
             ),
             Column(
-                  children: [
-                    GetX<UserController>(
-                    init: Get.put<UserController>(UserController()),
-                    builder: (_) {
-                      return Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text('NAME',
-                                      textAlign: TextAlign.start,
-                                      style: Theme.of(context).textTheme.headline5
-                                  ),
-                                  SizedBox(height: 5.0),
-                                  Container(
-                                    width: 500,
-                                    child: TextFormField(
-                                      enabled: false,
-                                      decoration: InputDecoration(
-                                        hintText:
-                                        "${_.users[int.parse(index)].f_name} ${_.users[int.parse(index)].l_name}",
-                                        enabledBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color: Color(int.parse(("0xff3D3A3A"))),
-                                              width: 2.0),
-                                        ),
-                                        fillColor: Color(int.parse(("0xff3D3A3A"))),
-                                        filled: true,
+              children: [
+                GetX<UserController>(
+                  init: Get.put<UserController>(UserController()),
+                  builder: (_) {
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text('NAME',
+                                    textAlign: TextAlign.start,
+                                    style:
+                                        Theme.of(context).textTheme.headline5),
+                                SizedBox(height: 5.0),
+                                Container(
+                                  width: 400,
+                                  child: TextFormField(
+                                    enabled: false,
+                                    decoration: InputDecoration(
+                                      hintText:
+                                          "${_.users[int.parse(index)].f_name} ${_.users[int.parse(index)].l_name}",
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: Color(
+                                                int.parse(("0xff3D3A3A"))),
+                                            width: 2.0),
                                       ),
+                                      fillColor:
+                                          Color(int.parse(("0xff3D3A3A"))),
+                                      filled: true,
                                     ),
                                   ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text('EMAIL',
-                                      textAlign: TextAlign.start,
-                                      style: Theme.of(context).textTheme.headline5
-                                  ),
-                                  SizedBox(height: 5.0),
-                                  Container(
-                                    width: 500,
-                                    child: TextFormField(
-                                      enabled: false,
-                                      decoration: InputDecoration(
-                                        enabledBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color: Color(int.parse(("0xff3D3A3A"))),
-                                              width: 2.0),
-                                        ),
-                                        // hintText: '${snapshot.data?.phoneNumber}',
-                                        hintText: "${_.users[int.parse(index)].email}",
-                                        fillColor: Color(int.parse(("0xff3D3A3A"))),
-                                        filled: true,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text('EMAIL',
+                                    textAlign: TextAlign.start,
+                                    style:
+                                        Theme.of(context).textTheme.headline5),
+                                SizedBox(height: 5.0),
+                                Container(
+                                  width: 400,
+                                  child: TextFormField(
+                                    enabled: false,
+                                    decoration: InputDecoration(
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: Color(
+                                                int.parse(("0xff3D3A3A"))),
+                                            width: 2.0),
                                       ),
+                                      // hintText: '${snapshot.data?.phoneNumber}',
+                                      hintText:
+                                          "${_.users[int.parse(index)].email}",
+                                      fillColor:
+                                          Color(int.parse(("0xff3D3A3A"))),
+                                      filled: true,
                                     ),
                                   ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text('PHONE NUMBER',
-                                      textAlign: TextAlign.start,
-                                      style: Theme.of(context).textTheme.headline5
-                                  ),
-                                  SizedBox(height: 5.0),
-                                  Container(
-                                    width: 500,
-                                    child: TextFormField(
-                                      enabled: false,
-                                      decoration: InputDecoration(
-                                        enabledBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color: Color(int.parse(("0xff3D3A3A"))),
-                                              width: 2.0),
-                                        ),
-                                        // hintText: '${snapshot.data?.phoneNumber}',
-                                        hintText: "${_.users[int.parse(index)].phone}",
-                                        fillColor: Color(int.parse(("0xff3D3A3A"))),
-                                        filled: true,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text('PHONE NUMBER',
+                                    textAlign: TextAlign.start,
+                                    style:
+                                        Theme.of(context).textTheme.headline5),
+                                SizedBox(height: 5.0),
+                                Container(
+                                  width: 400,
+                                  child: TextFormField(
+                                    enabled: false,
+                                    decoration: InputDecoration(
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: Color(
+                                                int.parse(("0xff3D3A3A"))),
+                                            width: 2.0),
                                       ),
+                                      // hintText: '${snapshot.data?.phoneNumber}',
+                                      hintText:
+                                          "${_.users[int.parse(index)].phone}",
+                                      fillColor:
+                                          Color(int.parse(("0xff3D3A3A"))),
+                                      filled: true,
                                     ),
                                   ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 20.0,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text('DESIGNATION',
-                                      textAlign: TextAlign.start,
-                                      style: Theme.of(context).textTheme.headline5),
-                                  SizedBox(height: 5.0),
-                                  Container(
-                                    width: 500,
-                                    child: TextFormField(
-                                      enabled: false,
-                                      decoration: InputDecoration(
-                                        enabledBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color: Color(int.parse(("0xff3D3A3A"))),
-                                              width: 2.0),
-                                        ),
-                                        // hintText: '${snapshot.data?.address}',
-                                        hintText:
-                                        "${_.users[int.parse(index)].designation}",
-                                        fillColor: Color(int.parse(("0xff3D3A3A"))),
-                                        filled: true,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 20.0,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text('DESIGNATION',
+                                    textAlign: TextAlign.start,
+                                    style:
+                                        Theme.of(context).textTheme.headline5),
+                                SizedBox(height: 5.0),
+                                Container(
+                                  width: 400,
+                                  child: TextFormField(
+                                    enabled: false,
+                                    decoration: InputDecoration(
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: Color(
+                                                int.parse(("0xff3D3A3A"))),
+                                            width: 2.0),
                                       ),
+                                      // hintText: '${snapshot.data?.address}',
+                                      hintText:
+                                          "${_.users[int.parse(index)].designation}",
+                                      fillColor:
+                                          Color(int.parse(("0xff3D3A3A"))),
+                                      filled: true,
                                     ),
                                   ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 40,
-                          ),
-                          // Text(
-                          //   error,
-                          //   style: TextStyle(color: Colors.red, fontSize: 14.0),
-                          // ),
-                        ],
-                      );
-                    },
-                  ),
-                ],
-                  // key: _formkey,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 40,
+                        ),
+                        // Text(
+                        //   error,
+                        //   style: TextStyle(color: Colors.red, fontSize: 14.0),
+                        // ),
+                      ],
+                    );
+                  },
                 ),
-
               ],
+              // key: _formkey,
             ),
-          ),
-        )
-    );
-
+          ],
+        ),
+      ),
+    ));
   }
 }

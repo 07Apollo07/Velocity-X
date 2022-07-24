@@ -195,7 +195,8 @@ class _DocumentEditingState extends State<DocumentEditing> {
                                   fillColor: Colors.black54,
                                   filled: true,
                                   label: Text(
-                                      "Who do u want to assign this Document? "),
+                                    "Who do u want to assign this Document? ",
+                                  ),
                                   hintText: "Enter Names",
                                   focusColor: Colors.blue,
                                 ),
@@ -257,22 +258,29 @@ class _DocumentEditingState extends State<DocumentEditing> {
                                     })
                                 : Container()),
                         SizedBox(height: 20),
-                        CheckboxListTile(
-                          title: Text(
-                              "Do you want the assigned person to download this document?"),
-                          value: controller.downloadDocument,
-                          onChanged: (newValue) {
-                            controller.changeDownloadDocumentCheck(newValue!);
-                          },
-                          // checkColor: Color(0xFF4784F1),
-                          activeColor: Color(0xFF4784F1),
-                          controlAffinity: ListTileControlAffinity
-                              .trailing, //  <-- leading Checkbox
+                        Visibility(
+                          visible: controller.storageLink != "" ? true : false,
+                          child: CheckboxListTile(
+                            title: Text(
+                              "Do you want the assigned person to download this document?",
+                              style: Theme.of(context).textTheme.headline5,
+                            ),
+                            value: controller.downloadDocument,
+                            onChanged: (newValue) {
+                              controller.changeDownloadDocumentCheck(newValue!);
+                            },
+                            // checkColor: Color(0xFF4784F1),
+                            activeColor: Color(0xFF4784F1),
+                            controlAffinity: ListTileControlAffinity
+                                .trailing, //  <-- leading Checkbox
+                          ),
                         ),
                         SizedBox(height: 20),
                         CheckboxListTile(
-                          title:
-                              Text("Do you want to appoint a final approver?"),
+                          title: Text(
+                            "Do you want to appoint a final approver?",
+                            style: Theme.of(context).textTheme.headline5,
+                          ),
                           value: controller.finalApprover,
                           onChanged: (newValue) {
                             controller.changeFinalApproverCheck(newValue!);
@@ -378,96 +386,105 @@ class _DocumentEditingState extends State<DocumentEditing> {
                                   : Container()),
                         ),
                         SizedBox(height: 20),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Uploaded Document',
-                                  style: Theme.of(context).textTheme.headline4,
-                                ),
-                                // Text(
-                                //     '(Proof of Address)'
-                                // )
-                              ],
-                            ),
-                          ],
+                        Visibility(
+                          visible: controller.storageLink != "" ? true : false,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Uploaded Document',
+                                    style:
+                                        Theme.of(context).textTheme.headline4,
+                                  ),
+                                  // Text(
+                                  //     '(Proof of Address)'
+                                  // )
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                         SizedBox(height: 20),
                         SingleChildScrollView(
-                            child: controller.uploadedFileName != ""
-                                ? GridView.builder(
-                                    shrinkWrap: true,
-                                    itemCount: 1,
-                                    gridDelegate:
-                                        const SliverGridDelegateWithMaxCrossAxisExtent(
-                                      maxCrossAxisExtent: 180,
-                                      childAspectRatio: 3 / 2,
-                                      crossAxisSpacing: 20,
-                                      mainAxisSpacing: 20,
-                                    ),
-                                    itemBuilder: (_, index) {
-                                      return Container(
-                                        alignment: Alignment.center,
-                                        child: Text(
-                                            "${controller.uploadedFileName}"),
-                                        decoration: BoxDecoration(
-                                            color: Colors.blue,
-                                            borderRadius:
-                                                BorderRadius.circular(15)),
-                                      );
-                                    },
-                                  )
-                                : Container()),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Upload Modified Document',
-                                  style: Theme.of(context).textTheme.headline4,
-                                ),
-                                // Text(
-                                //     '(Proof of Address)'
-                                // )
-                              ],
-                            ),
-                            IconButton(
-                              onPressed: () async {
-                                final result =
-                                    await FilePicker.platform.pickFiles(
-                                  type: FileType.custom,
-                                  allowedExtensions: [
-                                    'pdf',
-                                    'doc',
-                                    'docx',
-                                    'xls',
-                                    'csv',
-                                    'ppt',
-                                    'pptx',
-                                    'zip',
-                                  ],
-                                );
-                                print(result);
-                                if (result == null) {
-                                  return null;
-                                } else {
-                                  controller.updatePickedFile(result);
-                                  print(controller.pickedFile?.name);
-                                  print(controller.pickedFile?.extension);
-                                }
-                              },
-                              iconSize: 40,
-                              icon: Icon(
-                                Icons.upload_file,
-                                color: Color(0xFF4784F1),
+                          child: controller.storageLink != ""
+                              ? GridView.builder(
+                                  shrinkWrap: true,
+                                  itemCount: 1,
+                                  gridDelegate:
+                                      const SliverGridDelegateWithMaxCrossAxisExtent(
+                                    maxCrossAxisExtent: 180,
+                                    childAspectRatio: 3 / 2,
+                                    crossAxisSpacing: 20,
+                                    mainAxisSpacing: 20,
+                                  ),
+                                  itemBuilder: (_, index) {
+                                    return Container(
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                          "${controller.uploadedFileName}"),
+                                      decoration: BoxDecoration(
+                                          color: Colors.blue,
+                                          borderRadius:
+                                              BorderRadius.circular(15)),
+                                    );
+                                  },
+                                )
+                              : Container(),
+                        ),
+                        Visibility(
+                          visible: controller.storageLink != "" ? true : false,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Upload Modified Document',
+                                    style:
+                                        Theme.of(context).textTheme.headline4,
+                                  ),
+                                  // Text(
+                                  //     '(Proof of Address)'
+                                  // )
+                                ],
                               ),
-                            )
-                          ],
+                              IconButton(
+                                onPressed: () async {
+                                  final result =
+                                      await FilePicker.platform.pickFiles(
+                                    type: FileType.custom,
+                                    allowedExtensions: [
+                                      'pdf',
+                                      'doc',
+                                      'docx',
+                                      'xls',
+                                      'csv',
+                                      'ppt',
+                                      'pptx',
+                                      'zip',
+                                    ],
+                                  );
+                                  print(result);
+                                  if (result == null) {
+                                    return null;
+                                  } else {
+                                    controller.updatePickedFile(result);
+                                    print(controller.pickedFile?.name);
+                                    print(controller.pickedFile?.extension);
+                                  }
+                                },
+                                iconSize: 40,
+                                icon: Icon(
+                                  Icons.upload_file,
+                                  color: Color(0xFF4784F1),
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                         Visibility(
                           visible: controller.isFilePicked,
@@ -521,7 +538,7 @@ class _DocumentEditingState extends State<DocumentEditing> {
                                 primary: Color(0xFF4784F1),
                                 padding: EdgeInsets.fromLTRB(40, 20, 40, 20)),
                             child: Text(
-                              controller.loading ? "Uploading" : "Upload",
+                              controller.loading ? "Updating" : "Update",
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold),
@@ -571,41 +588,44 @@ class _DocumentEditingState extends State<DocumentEditing> {
                         SizedBox(
                           height: 20,
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            IconButton(
-                              color: Theme.of(context).primaryColor,
-                              icon: Icon(Icons.open_in_new),
-                              onPressed: () {
-                                controller.OpenedDocument(
-                                    widget.File.files_uniqueId,
-                                    Get.find<UserController>().user.id ?? "");
-                                Get.toNamed(
-                                  Routes.PDFVIEWER,
-                                  id: Constants.profileId,
-                                  arguments: widget.File.storage_link,
-                                );
-                              },
-                            ),
-                            IconButton(
-                              color: Theme.of(context).primaryColor,
-                              icon: Icon(Icons.download),
-                              onPressed: () {
-                                print(widget.File.storage_link);
-                                if (kIsWeb) {
-                                  html.window
-                                      .open(widget.File.storage_link, "_blank");
-                                } else {
-                                  controller.download(
-                                      url: widget.File.storage_link,
-                                      fileName: widget.File.name);
-                                }
+                        Visibility(
+                          visible: controller.storageLink != "" ? true : false,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              IconButton(
+                                color: Theme.of(context).primaryColor,
+                                icon: Icon(Icons.open_in_new),
+                                onPressed: () {
+                                  controller.OpenedDocument(
+                                      widget.File.files_uniqueId,
+                                      Get.find<UserController>().user.id ?? "");
+                                  Get.toNamed(
+                                    Routes.PDFVIEWER,
+                                    id: Constants.profileId,
+                                    arguments: widget.File.storage_link,
+                                  );
+                                },
+                              ),
+                              IconButton(
+                                color: Theme.of(context).primaryColor,
+                                icon: Icon(Icons.download),
+                                onPressed: () {
+                                  print(widget.File.storage_link);
+                                  if (kIsWeb) {
+                                    html.window.open(
+                                        widget.File.storage_link, "_blank");
+                                  } else {
+                                    controller.download(
+                                        url: widget.File.storage_link,
+                                        fileName: widget.File.name);
+                                  }
 
-                                print(widget.File.storage_link);
-                              },
-                            ),
-                          ],
+                                  print(widget.File.storage_link);
+                                },
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),
