@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
+import 'dart:html' as html;
+import 'dart:js' as js;
 
 import 'package:ai_barcode/ai_barcode.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -459,31 +461,26 @@ class MetaDataController extends GetxController {
     }
     return extension;
   }
-  Uint8List decryptionOfFile(Uint8List ciphertext){
 
-    UserModel _user = Get.find<UserController>().user;
-    Uint8List key = getKey(_user.id);
-    Uint8List iv = getiv(_user.email);
-
-    Uint8List paddedPlainText = Crypto().aesCbcEncrypt(key, iv, ciphertext);
-
-    Uint8List result = Crypto().unpad(paddedPlainText);
-
-    return result;
+  Future<void> decryptAndDownloadFile({required FilesModel file}) async {
+    try {
+      print("inside");
+      Uint8List result = await FilesDb().DownloadFileInMemoryAndDecrypt(
+          file.storage_link, file.storageName, file.creator_uid);
+      print(result);
+      if (result.length != 1) {
+        if (kIsWeb) {
+          js.context.callMethod("webSaveAs", [
+            html.Blob([result]),
+            "${file.storageName}"
+          ]);
+        } else {
+          File('${file.storageName}').writeAsBytes(result);
+        }
+      }
+    } catch (e) {
+      Get..snackbar("Failed", "Failed to get File");
+      print(e.toString());
+    }
   }
-
-  Uint8List getKey(String? id) {
-    List<int> list = utf8.encode(id ?? "");
-    Uint8List bytes = Uint8List.fromList(list);
-    Uint8List key = Crypto().Keccack256kDigest(bytes);
-    return key;
-  }
-
-  Uint8List getiv(String? email) {
-    List<int> list = utf8.encode(email ?? "");
-    Uint8List bytes = Uint8List.fromList(list);
-    Uint8List key = Crypto().ripemd128Digest(bytes);
-    return key;
-  }
-
 }

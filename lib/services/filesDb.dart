@@ -10,6 +10,7 @@ import 'package:velocityx/controllers/authController.dart';
 import 'package:velocityx/controllers/userController.dart';
 import 'package:velocityx/models/file_stats.dart';
 import 'package:velocityx/models/files.dart';
+import 'package:velocityx/services/crypto.dart';
 
 class FilesDb {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -499,6 +500,28 @@ class FilesDb {
       }
     } else {
       return true;
+    }
+  }
+
+  Future<Uint8List> DownloadFileInMemoryAndDecrypt(
+      String storage_link, String fileName, String uid) async {
+    String storagePath =
+        "${Get.find<UserController>().user.organization_no}/${fileName}";
+    print(storage_link);
+    if (storage_link != "") {
+      try {
+        final ref = FirebaseStorage.instance.ref().child(storagePath);
+        final metaData = await ref.getMetadata();
+        final Uint8List? data = await ref.getData(metaData.size ?? 1024);
+        Uint8List result = Crypto().decryptionOfFile(data!, uid);
+        print(result);
+        return result;
+      } catch (e) {
+        print(e.toString());
+        return Uint8List(1);
+      }
+    } else {
+      return Uint8List(1);
     }
   }
 }

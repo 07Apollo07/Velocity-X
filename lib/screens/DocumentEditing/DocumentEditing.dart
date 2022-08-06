@@ -612,14 +612,17 @@ class _DocumentEditingState extends State<DocumentEditing> {
                                 icon: Icon(Icons.download),
                                 onPressed: () {
                                   print(widget.File.storage_link);
-                                  if (kIsWeb) {
-                                    html.window.open(
-                                        widget.File.storage_link, "_blank");
-                                  } else {
-                                    controller.download(
-                                        url: widget.File.storage_link,
-                                        fileName: widget.File.name);
-                                  }
+                                  controller.decryptAndDownloadFile(
+                                      file: widget.File);
+
+                                  // if (kIsWeb) {
+                                  //   html.window.open(
+                                  //       widget.File.storage_link, "_blank");
+                                  // } else {
+                                  //   controller.download(
+                                  //       url: widget.File.storage_link,
+                                  //       fileName: widget.File.name);
+                                  // }
 
                                   print(widget.File.storage_link);
                                 },

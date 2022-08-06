@@ -1,12 +1,16 @@
+import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:pointycastle/api.dart';
 import 'package:pointycastle/block/aes.dart';
 import 'package:pointycastle/block/modes/cbc.dart';
 import 'package:pointycastle/digests/keccak.dart';
 import 'package:pointycastle/digests/sha256.dart';
 import 'package:pointycastle/export.dart';
+import 'package:velocityx/controllers/userController.dart';
+import 'package:velocityx/models/user.dart';
 
 class Crypto {
   static Uint8List Keccack512kDigest(Uint8List? dataToDigest) {
@@ -57,7 +61,7 @@ class Crypto {
   Uint8List aesCbcDecrypt(Uint8List key, Uint8List iv, Uint8List cipherText) {
     assert([128, 192, 256].contains(key.length * 8));
     assert(128 == iv.length * 8);
-    assert(128 == cipherText.length * 8);
+    assert(0 == cipherText.length % 128);
 
     // Create a CBC block cipher with AES, and initialize with key and IV
 
@@ -90,4 +94,36 @@ class Crypto {
     return padded.sublist(0, padded.length - PKCS7Padding().padCount(padded));
   }
 
+  Uint8List decryptionOfFile(Uint8List ciphertext, String uid) {
+    UserModel _user = getUserFromUid(uid);
+    Uint8List key = getKey(_user.id);
+    Uint8List iv = getiv(_user.email);
+
+    Uint8List paddedPlainText = Crypto().aesCbcDecrypt(key, iv, ciphertext);
+    Uint8List result = Crypto().unpad(paddedPlainText);
+    return result;
+  }
+
+  Uint8List getKey(String? id) {
+    List<int> list = utf8.encode(id ?? "");
+    Uint8List bytes = Uint8List.fromList(list);
+    Uint8List key = Crypto().Keccack256kDigest(bytes);
+    return key;
+  }
+
+  Uint8List getiv(String? email) {
+    List<int> list = utf8.encode(email ?? "");
+    Uint8List bytes = Uint8List.fromList(list);
+    Uint8List key = Crypto().ripemd128Digest(bytes);
+    return key;
+  }
+
+  UserModel getUserFromUid(String uid) {
+    UserModel user = Get.find<UserController>().users.firstWhere(
+        (user) => user.id == uid,
+        orElse: () => UserModel(
+            f_name: "Anonymous", l_name: "User", email: "Email Not Set"));
+    // String email = user.email ?? "Email Not Set";
+    return user;
+  }
 }

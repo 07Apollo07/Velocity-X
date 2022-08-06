@@ -1,4 +1,7 @@
 import 'dart:io';
+import 'dart:typed_data';
+import 'dart:html' as html;
+import 'dart:js' as js;
 
 import 'package:ai_barcode/ai_barcode.dart';
 import 'package:file_picker/file_picker.dart';
@@ -414,5 +417,27 @@ class DocEditingController extends GetxController {
         break;
     }
     return extension;
+  }
+
+  Future<void> decryptAndDownloadFile({required FilesModel file}) async {
+    try {
+      print("inside");
+      Uint8List result = await FilesDb().DownloadFileInMemoryAndDecrypt(
+          file.storage_link, file.storageName, file.creator_uid);
+      print(result);
+      if (result.length != 1) {
+        if (kIsWeb) {
+          js.context.callMethod("webSaveAs", [
+            html.Blob([result]),
+            "${file.storageName}"
+          ]);
+        } else {
+          File('${file.storageName}').writeAsBytes(result);
+        }
+      }
+    } catch (e) {
+      Get..snackbar("Failed", "Failed to get File");
+      print(e.toString());
+    }
   }
 }

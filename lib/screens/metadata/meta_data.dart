@@ -375,14 +375,17 @@ class MetaDataPage extends StatelessWidget {
                                 icon: Icon(Icons.download),
                                 onPressed: () {
                                   print(File.storage_link);
-                                  if (kIsWeb) {
-                                    html.window
-                                        .open(File.storage_link, "_blank");
-                                  } else {
-                                    controller.download(
-                                        url: File.storage_link,
-                                        fileName: File.name);
-                                  }
+                                  // controller.downloadFile(File.storage_link);
+                                  controller.decryptAndDownloadFile(file: File);
+                                  print("clicked");
+                                  // if (kIsWeb) {
+                                  //   html.window
+                                  //       .open(File.storage_link, "_blank");
+                                  // } else {
+                                  //   controller.download(
+                                  //       url: File.storage_link,
+                                  //       fileName: File.name);
+                                  // }
 
                                   print(File.storage_link);
                                 },
