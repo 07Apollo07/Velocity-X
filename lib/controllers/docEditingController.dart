@@ -1,10 +1,11 @@
 import 'dart:io';
 import 'dart:typed_data';
-import 'dart:html' as html;
-import 'dart:js' as js;
+// import 'dart:html' as html;
+// import 'dart:js' as js;
 
 import 'package:ai_barcode/ai_barcode.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:file_saver/file_saver.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -427,12 +428,13 @@ class DocEditingController extends GetxController {
       print(result);
       if (result.length != 1) {
         if (kIsWeb) {
-          js.context.callMethod("webSaveAs", [
-            html.Blob([result]),
-            "${file.storageName}"
-          ]);
+          await FileSaver.instance.saveFile(file.storageName, result, "");
+          print("saved web");
         } else {
-          File('${file.storageName}').writeAsBytes(result);
+          File downloadFile =
+              File("/storage/emulated/0/Download/${file.storageName}");
+          downloadFile.writeAsBytes(result);
+          print("saved");
         }
       }
     } catch (e) {
