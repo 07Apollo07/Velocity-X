@@ -265,28 +265,21 @@ class DocCreationController extends GetxController {
         return StorageLink = "";
       } else {
         print("duplicate doesnt exist");
-        // Uint8List hash = await Crypto().Keccack512kDigest(pickedFile?.bytes);
-        // print('SHA-256: $hash');
         String extension = GetExtension(pickedFile!);
-        File file = File("");
-        if (kIsWeb) {
-          file = File("");
-        } else {
-          file = File(pickedFile!.path!);
-        }
-        Uint8List key = getKey(_user.id);
-        Uint8List iv = getiv(_user.email);
-        Uint8List plainText = getPlainText(pickedFile?.bytes ?? Uint8List(256));
+        Uint8List key = Crypto().getKey(_user.id);
+        Uint8List iv = Crypto().getiv(_user.email);
+        Uint8List plainText =
+            Crypto().getPlainText(pickedFile?.bytes ?? Uint8List(256));
         // Encryption
+        print("sending for encryption");
         Uint8List CipherBlock = Crypto().aesCbcEncrypt(key, iv, plainText);
         // final fileBytes = pickedFile?.bytes;
 
         StorageLink = await FilesDb().UploadFileInStorage(
             storagePath,
-            file,
             CipherBlock,
             extension,
-            await compute(Crypto.Keccack512kDigest, pickedFile?.bytes));
+            await compute(Crypto.Keccack512kDigest, plainText));
         print("recieved storage link");
         storageLink.value = StorageLink;
         print(StorageLink);
@@ -296,27 +289,6 @@ class DocCreationController extends GetxController {
     } else {
       return StorageLink = "";
     }
-  }
-
-  Uint8List getKey(String? id) {
-    List<int> list = utf8.encode(id ?? "");
-    Uint8List bytes = Uint8List.fromList(list);
-    Uint8List key = Crypto().Keccack256kDigest(bytes);
-    return key;
-  }
-
-  Uint8List getiv(String? email) {
-    List<int> list = utf8.encode(email ?? "");
-    Uint8List bytes = Uint8List.fromList(list);
-    Uint8List key = Crypto().ripemd128Digest(bytes);
-    return key;
-  }
-
-  Uint8List getPlainText(Uint8List bytes) {
-    print("Before padding = ${bytes.length}");
-    Uint8List plainText = Crypto().pad(bytes, 128);
-    print("padded plaintext = ${plainText.length}");
-    return plainText;
   }
 
   String GetExtension(PlatformFile pickedFile) {

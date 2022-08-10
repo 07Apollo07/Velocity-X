@@ -610,6 +610,7 @@ class MetaDataPage extends StatelessWidget {
                                           'pptx',
                                           'zip',
                                         ],
+                                        withData: true,
                                       );
                                       print(result);
                                       if (result == null) {
@@ -696,7 +697,7 @@ class MetaDataPage extends StatelessWidget {
                               ),
                               onPressed: () async {
                                 controller.storageLink = await controller
-                                    .updateStorageLink()
+                                    .updateStorageLink(File.creator_uid)
                                     .whenComplete(() =>
                                         controller.updateDocument(
                                             File.files_uniqueId,

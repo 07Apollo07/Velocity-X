@@ -407,11 +407,14 @@ class _DocumentCreationState extends State<DocumentCreation> {
                                                 'pptx',
                                                 'zip',
                                               ],
+                                              withData: true,
                                             );
                                             print(result);
                                             if (result == null) {
                                               return null;
                                             } else {
+                                              print(
+                                                  "picked file bytes = ${result.files.first.bytes}");
                                               controller
                                                   .updatePickedFile(result);
                                               print(

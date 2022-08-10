@@ -467,6 +467,7 @@ class _DocumentEditingState extends State<DocumentEditing> {
                                       'pptx',
                                       'zip',
                                     ],
+                                    withData: true,
                                   );
                                   print(result);
                                   if (result == null) {

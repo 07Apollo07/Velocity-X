@@ -83,28 +83,28 @@ class FilesDb {
     });
   }
 
-  Future<String> UploadFileInStorage(String path, File file,
-      Uint8List? fileBytes, String extension, Uint8List digest) async {
+  Future<String> UploadFileInStorage(String path, Uint8List? fileBytes,
+      String extension, Uint8List digest) async {
     String storageLink = "";
     print('Keccack-512: $digest');
     final ref = FirebaseStorage.instance.ref().child(path);
-    if (kIsWeb) {
-      UploadTask uploadTask = ref.putData(
-          fileBytes!,
-          SettableMetadata(
-              contentType: "application/${extension}",
-              customMetadata: {"digest": digest.toString()}));
-      storageLink = await (await uploadTask).ref.getDownloadURL();
-      return storageLink;
-    } else {
-      UploadTask uploadTask = ref.putFile(
-          file,
-          SettableMetadata(
-              contentType: "application/${extension}",
-              customMetadata: {"digest": digest.toString()}));
-      storageLink = await (await uploadTask).ref.getDownloadURL();
-      return storageLink;
-    }
+    // if (kIsWeb) {
+    UploadTask uploadTask = ref.putData(
+        fileBytes!,
+        SettableMetadata(
+            contentType: "application/${extension}",
+            customMetadata: {"digest": digest.toString()}));
+    storageLink = await (await uploadTask).ref.getDownloadURL();
+    return storageLink;
+    // } else {
+    //   UploadTask uploadTask = ref.putFile(
+    //       file,
+    //       SettableMetadata(
+    //           contentType: "application/${extension}",
+    //           customMetadata: {"digest": digest.toString()}));
+    //   storageLink = await (await uploadTask).ref.getDownloadURL();
+    //   return storageLink;
+    // }
   }
 
   Future<bool> CheckIfFileExistsInStorage(String path) async {
@@ -513,7 +513,11 @@ class FilesDb {
         final ref = FirebaseStorage.instance.ref().child(storagePath);
         final metaData = await ref.getMetadata();
         final Uint8List? data = await ref.getData(metaData.size ?? 1024);
+        print("Before Decryption length: ${data?.length}");
+        print("before decryption: ${data}");
         Uint8List result = Crypto().decryptionOfFile(data!, uid);
+        print("After Decryption length: ${result.length}");
+        print("after decryption: ${result}");
         print(result);
         return result;
       } catch (e) {

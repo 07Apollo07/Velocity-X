@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 // import 'dart:html' as html;
@@ -347,20 +348,17 @@ class DocEditingController extends GetxController {
       final storagePath = "${_user.organization_no}/${pickedFile!.name}";
       if (await FilesDb().CheckIfFileExistsInStorage(storagePath)) {
         String extension = GetExtension(pickedFile!);
-
-        File file = File("");
-
-        if (kIsWeb) {
-          file = File("");
-        } else {
-          file = File(pickedFile!.path!);
-        }
-        final fileBytes = pickedFile?.bytes;
+        Uint8List key = Crypto().getKey(_user.id);
+        Uint8List iv = Crypto().getiv(_user.email);
+        Uint8List plainText =
+            Crypto().getPlainText(pickedFile?.bytes ?? Uint8List(256));
+        // Encryption
+        print("sending for encryption");
+        Uint8List CipherBlock = Crypto().aesCbcEncrypt(key, iv, plainText);
 
         String StorageLink = await FilesDb().UploadFileInStorage(
             storagePath,
-            file,
-            fileBytes,
+            CipherBlock,
             extension,
             Crypto.Keccack512kDigest(pickedFile?.bytes));
         print("recieved storage link");

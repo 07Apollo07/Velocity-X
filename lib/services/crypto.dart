@@ -54,7 +54,7 @@ class Crypto {
       offset += cbc.processBlock(paddedPlaintext, offset, cipherText, offset);
     }
     assert(offset == paddedPlaintext.length);
-
+    print(cipherText);
     return cipherText;
   }
 
@@ -100,6 +100,8 @@ class Crypto {
     Uint8List iv = getiv(_user.email);
 
     Uint8List paddedPlainText = Crypto().aesCbcDecrypt(key, iv, ciphertext);
+    print("padded plaintext ${paddedPlainText}");
+    print("padded plaintext length ${paddedPlainText.length}");
     Uint8List result = Crypto().unpad(paddedPlainText);
     return result;
   }
@@ -116,6 +118,13 @@ class Crypto {
     Uint8List bytes = Uint8List.fromList(list);
     Uint8List key = Crypto().ripemd128Digest(bytes);
     return key;
+  }
+
+  Uint8List getPlainText(Uint8List bytes) {
+    print("Before padding = ${bytes.length}");
+    Uint8List plainText = Crypto().pad(bytes, 128);
+    print("padded plaintext = ${plainText.length}");
+    return plainText;
   }
 
   UserModel getUserFromUid(String uid) {
