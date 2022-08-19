@@ -57,8 +57,6 @@ class _OrganizationState extends State<Organization> {
   }
 }
 
-
-
 class OrganizationDoc extends StatelessWidget {
   const OrganizationDoc({Key? key}) : super(key: key);
 
@@ -127,21 +125,173 @@ class UserInfo extends StatelessWidget {
         const SizedBox(
           height: 15,
         ),
-        Text(
-          'Information',
-          style: Theme.of(context).textTheme.headline3,
-        ),
-        const SizedBox(
+        SizedBox(
           height: 10,
         ),
-        Text(
-          '''Name : Organization_1,
-Number of people : 24 ,
-Owner : User_example
-Created : Jan 31, 2021
-Admins : User1, user2 .''',
-          textAlign: TextAlign.left,
-          style: Theme.of(context).textTheme.headline5,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('NAME',
+                    textAlign: TextAlign.start,
+                    style: Theme.of(context).textTheme.headline5),
+                SizedBox(height: 5.0),
+                Container(
+                  width: 400,
+                  child: TextFormField(
+                    enabled: false,
+                    decoration: InputDecoration(
+                      hintText: "Organization_1",
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color: Color(int.parse(("0xff3D3A3A"))),
+                            width: 2.0),
+                      ),
+                      fillColor: Color(int.parse(("0xff3D3A3A"))),
+                      filled: true,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Number of people',
+                    textAlign: TextAlign.start,
+                    style: Theme.of(context).textTheme.headline5),
+                SizedBox(height: 5.0),
+                Container(
+                  width: 400,
+                  child: TextFormField(
+                    enabled: false,
+                    decoration: InputDecoration(
+                      hintText: "24",
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color: Color(int.parse(("0xff3D3A3A"))),
+                            width: 2.0),
+                      ),
+                      fillColor: Color(int.parse(("0xff3D3A3A"))),
+                      filled: true,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Owner',
+                    textAlign: TextAlign.start,
+                    style: Theme.of(context).textTheme.headline5),
+                SizedBox(height: 5.0),
+                Container(
+                  width: 400,
+                  child: TextFormField(
+                    enabled: false,
+                    decoration: InputDecoration(
+                      hintText: "User_example",
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color: Color(int.parse(("0xff3D3A3A"))),
+                            width: 2.0),
+                      ),
+                      fillColor: Color(int.parse(("0xff3D3A3A"))),
+                      filled: true,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Created',
+                    textAlign: TextAlign.start,
+                    style: Theme.of(context).textTheme.headline5),
+                SizedBox(height: 5.0),
+                Container(
+                  width: 400,
+                  child: TextFormField(
+                    enabled: false,
+                    decoration: InputDecoration(
+                      hintText: "Jan 31, 2021",
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color: Color(int.parse(("0xff3D3A3A"))),
+                            width: 2.0),
+                      ),
+                      fillColor: Color(int.parse(("0xff3D3A3A"))),
+                      filled: true,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Admins',
+                    textAlign: TextAlign.start,
+                    style: Theme.of(context).textTheme.headline5),
+                SizedBox(height: 5.0),
+                Container(
+                  width: 400,
+                  child: TextFormField(
+                    enabled: false,
+                    decoration: InputDecoration(
+                      hintText: "User1, user2",
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color: Color(int.parse(("0xff3D3A3A"))),
+                            width: 2.0),
+                      ),
+                      fillColor: Color(int.parse(("0xff3D3A3A"))),
+                      filled: true,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+        SizedBox(
+          height: 20,
         ),
       ],
     );
