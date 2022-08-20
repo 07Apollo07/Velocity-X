@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:velocityx/controllers/filesController.dart';
+import 'package:velocityx/controllers/organizationController.dart';
 import 'package:velocityx/controllers/scannerController.dart';
 import 'package:velocityx/controllers/userController.dart';
 import 'package:velocityx/models/user.dart';
@@ -38,6 +39,7 @@ class AuthController extends GetxController {
       Get.offAll(() => Wrapper());
       Get.put(UserController());
       Get.put(FilesController());
+      Get.put(OrganizationController());
     }
   }
 

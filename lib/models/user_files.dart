@@ -11,6 +11,6 @@ class UserFilesModel {
 
   UserFilesModel.fromDocumentSnapshot({DocumentSnapshot? documentSnapshot}) {
     assigned_files = documentSnapshot!["Assigned_files"];
-    created_files = documentSnapshot!["Created_files"];
+    created_files = documentSnapshot["Created_files"];
   }
 }

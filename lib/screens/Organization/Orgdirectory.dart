@@ -121,8 +121,11 @@ class UserInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetX<OrganizationController>(
-        init: Get.find<OrganizationController>(),
+        init: Get.put<OrganizationController>(OrganizationController()),
         builder: (OrganizationController controller) {
+          if (!controller.initialized) {
+            controller.fetchInfo();
+          }
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

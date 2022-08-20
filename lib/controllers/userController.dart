@@ -37,8 +37,7 @@ class UserController extends GetxController {
   void _userStreams(UserModel userModel) {
     print("binding next streams");
     userList.bindStream(UserDb().userListStream(user.organization_no));
-    Get.delete<OrganizationController>();
-    Get.put<OrganizationController>(OrganizationController());
+    Get.find<OrganizationController>().fetchInfo();
     // update();
   }
 

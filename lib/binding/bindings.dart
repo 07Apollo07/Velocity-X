@@ -16,7 +16,7 @@ class StoreBindings extends Bindings {
     // Get.put<AuthController>(AuthController(), permanent: true);
     Get.lazyPut<UserController>(() => UserController());
     Get.lazyPut<FilesController>(() => FilesController());
-    // Get.lazyPut<OrganizationController>(() => OrganizationController());
+    Get.lazyPut<OrganizationController>(() => OrganizationController());
     Get.put<WrapperController>(WrapperController(), permanent: true);
     Get.put<ScannerV2Controller>(ScannerV2Controller());
     Get.lazyPut<MetaDataController>(() => MetaDataController());
