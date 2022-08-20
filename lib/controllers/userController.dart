@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:velocityx/controllers/authController.dart';
+import 'package:velocityx/controllers/organizationController.dart';
 import 'package:velocityx/models/user.dart';
 import 'package:velocityx/models/user_categories.dart';
 import 'package:velocityx/services/usersDb.dart';
@@ -36,7 +37,8 @@ class UserController extends GetxController {
   void _userStreams(UserModel userModel) {
     print("binding next streams");
     userList.bindStream(UserDb().userListStream(user.organization_no));
-
+    Get.delete<OrganizationController>();
+    Get.put<OrganizationController>(OrganizationController());
     // update();
   }
 

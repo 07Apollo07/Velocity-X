@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:velocityx/assets/custom_icons_icons.dart';
 import 'package:velocityx/controllers/authController.dart';
 import 'package:velocityx/controllers/filesController.dart';
+import 'package:velocityx/controllers/organizationController.dart';
 import 'package:velocityx/controllers/userController.dart';
 import 'package:velocityx/routes/app_pages.dart';
 import 'package:velocityx/screens/FileInformation/file_information.dart';
@@ -119,181 +120,191 @@ class UserInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const SizedBox(
-          height: 15,
-        ),
-        SizedBox(
-          height: 10,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('NAME',
-                    textAlign: TextAlign.start,
-                    style: Theme.of(context).textTheme.headline5),
-                SizedBox(height: 5.0),
-                Container(
-                  width: 400,
-                  child: TextFormField(
-                    enabled: false,
-                    decoration: InputDecoration(
-                      hintText: "Organization_1",
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                            color: Color(int.parse(("0xff3D3A3A"))),
-                            width: 2.0),
+    return GetX<OrganizationController>(
+        init: Get.find<OrganizationController>(),
+        builder: (OrganizationController controller) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(
+                height: 15,
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("NAME",
+                          textAlign: TextAlign.start,
+                          style: Theme.of(context).textTheme.headline5),
+                      SizedBox(height: 5.0),
+                      Container(
+                        width: 400,
+                        child: TextFormField(
+                          enabled: false,
+                          decoration: InputDecoration(
+                            hintText: controller.orgModel.value.orgName,
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Color(int.parse(("0xff3D3A3A"))),
+                                  width: 2.0),
+                            ),
+                            fillColor: Color(int.parse(("0xff3D3A3A"))),
+                            filled: true,
+                          ),
+                        ),
                       ),
-                      fillColor: Color(int.parse(("0xff3D3A3A"))),
-                      filled: true,
-                    ),
+                    ],
                   ),
-                ),
-              ],
-            ),
-          ],
-        ),
-        SizedBox(
-          height: 10,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('Number of people',
-                    textAlign: TextAlign.start,
-                    style: Theme.of(context).textTheme.headline5),
-                SizedBox(height: 5.0),
-                Container(
-                  width: 400,
-                  child: TextFormField(
-                    enabled: false,
-                    decoration: InputDecoration(
-                      hintText: "24",
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                            color: Color(int.parse(("0xff3D3A3A"))),
-                            width: 2.0),
+                ],
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Number of people',
+                          textAlign: TextAlign.start,
+                          style: Theme.of(context).textTheme.headline5),
+                      SizedBox(height: 5.0),
+                      Container(
+                        width: 400,
+                        child: TextFormField(
+                          enabled: false,
+                          decoration: InputDecoration(
+                            hintText: Get.find<UserController>()
+                                .users
+                                .length
+                                .toString(),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Color(int.parse(("0xff3D3A3A"))),
+                                  width: 2.0),
+                            ),
+                            fillColor: Color(int.parse(("0xff3D3A3A"))),
+                            filled: true,
+                          ),
+                        ),
                       ),
-                      fillColor: Color(int.parse(("0xff3D3A3A"))),
-                      filled: true,
-                    ),
+                    ],
                   ),
-                ),
-              ],
-            ),
-          ],
-        ),
-        SizedBox(
-          height: 10,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('Owner',
-                    textAlign: TextAlign.start,
-                    style: Theme.of(context).textTheme.headline5),
-                SizedBox(height: 5.0),
-                Container(
-                  width: 400,
-                  child: TextFormField(
-                    enabled: false,
-                    decoration: InputDecoration(
-                      hintText: "User_example",
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                            color: Color(int.parse(("0xff3D3A3A"))),
-                            width: 2.0),
+                ],
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Owner',
+                          textAlign: TextAlign.start,
+                          style: Theme.of(context).textTheme.headline5),
+                      SizedBox(height: 5.0),
+                      Container(
+                        width: 400,
+                        child: TextFormField(
+                          enabled: false,
+                          decoration: InputDecoration(
+                            hintText: "User_example",
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Color(int.parse(("0xff3D3A3A"))),
+                                  width: 2.0),
+                            ),
+                            fillColor: Color(int.parse(("0xff3D3A3A"))),
+                            filled: true,
+                          ),
+                        ),
                       ),
-                      fillColor: Color(int.parse(("0xff3D3A3A"))),
-                      filled: true,
-                    ),
+                    ],
                   ),
-                ),
-              ],
-            ),
-          ],
-        ),
-        SizedBox(
-          height: 10,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('Created',
-                    textAlign: TextAlign.start,
-                    style: Theme.of(context).textTheme.headline5),
-                SizedBox(height: 5.0),
-                Container(
-                  width: 400,
-                  child: TextFormField(
-                    enabled: false,
-                    decoration: InputDecoration(
-                      hintText: "Jan 31, 2021",
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                            color: Color(int.parse(("0xff3D3A3A"))),
-                            width: 2.0),
+                ],
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Created',
+                          textAlign: TextAlign.start,
+                          style: Theme.of(context).textTheme.headline5),
+                      SizedBox(height: 5.0),
+                      Container(
+                        width: 400,
+                        child: TextFormField(
+                          enabled: false,
+                          decoration: InputDecoration(
+                            hintText: controller
+                                .orgModel.value.creation_datetime
+                                .toString(),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Color(int.parse(("0xff3D3A3A"))),
+                                  width: 2.0),
+                            ),
+                            fillColor: Color(int.parse(("0xff3D3A3A"))),
+                            filled: true,
+                          ),
+                        ),
                       ),
-                      fillColor: Color(int.parse(("0xff3D3A3A"))),
-                      filled: true,
-                    ),
+                    ],
                   ),
-                ),
-              ],
-            ),
-          ],
-        ),
-        SizedBox(
-          height: 10,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('Admins',
-                    textAlign: TextAlign.start,
-                    style: Theme.of(context).textTheme.headline5),
-                SizedBox(height: 5.0),
-                Container(
-                  width: 400,
-                  child: TextFormField(
-                    enabled: false,
-                    decoration: InputDecoration(
-                      hintText: "User1, user2",
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                            color: Color(int.parse(("0xff3D3A3A"))),
-                            width: 2.0),
+                ],
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Admins',
+                          textAlign: TextAlign.start,
+                          style: Theme.of(context).textTheme.headline5),
+                      SizedBox(height: 5.0),
+                      Container(
+                        width: 400,
+                        child: TextFormField(
+                          enabled: false,
+                          decoration: InputDecoration(
+                            hintText:
+                                controller.orgModel.value.admins_uid.toString(),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Color(int.parse(("0xff3D3A3A"))),
+                                  width: 2.0),
+                            ),
+                            fillColor: Color(int.parse(("0xff3D3A3A"))),
+                            filled: true,
+                          ),
+                        ),
                       ),
-                      fillColor: Color(int.parse(("0xff3D3A3A"))),
-                      filled: true,
-                    ),
+                    ],
                   ),
-                ),
-              ],
-            ),
-          ],
-        ),
-        SizedBox(
-          height: 20,
-        ),
-      ],
-    );
+                ],
+              ),
+              SizedBox(
+                height: 20,
+              ),
+            ],
+          );
+        });
   }
 }
