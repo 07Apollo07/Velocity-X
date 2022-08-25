@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class CategoryTile extends StatelessWidget {
   String title;
@@ -21,21 +22,17 @@ class CategoryTile extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Center(
-              child: Text(
-                title,
-                style: Theme.of(context).textTheme.headline5,
-                textAlign: TextAlign.left,
-                 overflow: TextOverflow.ellipsis
-              ),
-            ),
-            SizedBox(
-              height: 70,
-            ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(width: 110),
-                Icon(Icons.arrow_forward, color: Theme.of(context).primaryColor),
+                SizedBox(width: 20),
+                Text(title,
+                    style: GoogleFonts.josefinSans(
+                        textStyle: TextStyle(
+                            fontSize: 24,
+                            color: Theme.of(context).secondaryHeaderColor)),
+                    // textAlign: TextAlign.center,
+                    overflow: TextOverflow.ellipsis),
               ],
             ),
           ],
