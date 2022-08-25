@@ -47,7 +47,7 @@ class _HomeState extends State<Home> {
                 onPressed: () {
                   Get.toNamed(Routes.FAQ);
                 },
-                icon: Icon(CustomIcons.bell),
+                icon: Icon(Icons.question_mark),
                 color: Theme.of(context).primaryColor),
           ),
           Container(
