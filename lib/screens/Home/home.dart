@@ -69,7 +69,7 @@ class _HomeState extends State<Home> {
                   else
                     Get.changeThemeMode(ThemeMode.dark);
                 },
-                icon: Icon(CustomIcons.bell),
+                icon: Icon(Icons.brightness_4_outlined),
                 color: Theme.of(context).primaryColor),
           ),
         ],
@@ -86,7 +86,6 @@ class _HomeState extends State<Home> {
                   return SizedBox(
                     height: 200,
                     child: ListView.builder(
-
                       shrinkWrap: true,
                       scrollDirection: Axis.horizontal,
                       itemCount: userController.categories.length,

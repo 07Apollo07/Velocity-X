@@ -58,7 +58,7 @@ class ContactPage extends GetWidget<UserController> {
                 onPressed: () {
                   AuthController.instance.signOut();
                 },
-                icon: Icon(CustomIcons.bell),
+                icon: Icon(Icons.brightness_4_outlined),
                 color: Theme.of(context).primaryColor),
           ),
         ],

@@ -58,7 +58,7 @@ class Scanner extends StatelessWidget {
                           onPressed: () {
                             AuthController.instance.signOut();
                           },
-                          icon: Icon(CustomIcons.bell),
+                          icon: Icon(Icons.brightness_4_outlined),
                           color: Theme.of(context).primaryColor),
                     ),
                   ],
