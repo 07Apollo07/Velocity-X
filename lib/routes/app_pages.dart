@@ -7,6 +7,7 @@ import 'package:velocityx/models/user_categories.dart';
 import 'package:velocityx/screens/ContactCard/ContactCard.dart';
 import 'package:velocityx/screens/DocumentCreation/document_creation.dart';
 import 'package:velocityx/screens/DocumentEditing/DocumentEditing.dart';
+import 'package:velocityx/screens/FAQ/faq.dart';
 import 'package:velocityx/screens/FileInformation/file_information.dart';
 import 'package:velocityx/screens/Files/Files.dart';
 import 'package:velocityx/screens/Home/HomeWrapper.dart';
@@ -123,6 +124,11 @@ class AppPages {
     GetPage(
       name: _Paths.FILES,
       page: () => Files(category: CategoryModel()),
+      // binding: HomeBinding(),
+    ),
+    GetPage(
+      name: _Paths.FAQ,
+      page: () => FAQPage(),
       // binding: HomeBinding(),
     ),
   ];

@@ -35,20 +35,20 @@ class _HomeState extends State<Home> {
           Container(
             margin: EdgeInsets.only(right: 15.0),
             decoration: BoxDecoration(
-              color: Theme.of(context).scaffoldBackgroundColor,
-              shape: BoxShape.circle,
-            ),
-            child: AnimSearchBar(
-              width: 200,
-              color: Theme.of(context).scaffoldBackgroundColor,
-              style: TextStyle(),
-              textController: textController,
-              onSuffixTap: () {
-                setState(() {
-                  textController.clear();
-                });
-              },
-            ),
+                color: Theme.of(context).scaffoldBackgroundColor,
+                shape: BoxShape.circle,
+                boxShadow: [
+                  BoxShadow(
+                    color: Theme.of(context).primaryColor,
+                    blurRadius: 5.0,
+                  ),
+                ]),
+            child: IconButton(
+                onPressed: () {
+                  Get.toNamed(Routes.FAQ);
+                },
+                icon: Icon(CustomIcons.bell),
+                color: Theme.of(context).primaryColor),
           ),
           Container(
             margin: EdgeInsets.only(right: 15.0),

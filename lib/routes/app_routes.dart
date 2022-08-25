@@ -19,6 +19,7 @@ abstract class Routes {
   static const DOC_CREATOR = _Paths.DOC_CREATOR;
   static const DOC_EDITING = _Paths.DOC_EDITING;
   static const FILES = _Paths.FILES;
+  static const FAQ = _Paths.FAQ;
 }
 
 abstract class _Paths {
@@ -39,4 +40,5 @@ abstract class _Paths {
   static const DOC_CREATOR = "/doc_creator";
   static const DOC_EDITING = "/doc_edit";
   static const FILES = "/files";
+  static const FAQ = "/faq";
 }
