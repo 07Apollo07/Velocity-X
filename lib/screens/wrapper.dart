@@ -46,9 +46,9 @@ class _WrapperState extends State<Wrapper> {
     HomeWrapper(),
     OrgDirectoryWrapper(), // uncomment for org Directory
     // ProfileWrapper(),  // comment
-    Scanner(),
+    // Scanner(),
     // MetaDataPage(),
-    DocumentCreation(),  // uncomment for doc creations
+    DocumentCreation(), // uncomment for doc creations
     // ProfileWrapper(), // comment
     ProfileWrapper(),
 
@@ -80,7 +80,7 @@ class _WrapperState extends State<Wrapper> {
                 OrgDirectoryWrapper(), // uncomment for org Directory
                 // ProfileWrapper(),  // comment
                 // MetaDataPage(),
-                DocumentCreation(),  // uncomment for doc creations
+                DocumentCreation(), // uncomment for doc creations
                 // ProfileWrapper(),  // comment
                 ProfileWrapper(),
                 // PdfViewerWeb(),
@@ -171,10 +171,10 @@ class _WrapperState extends State<Wrapper> {
                     icon: Icons.people,
                     label: 'Directory',
                   ),
-                  SideNavigationBarItem(
-                    icon: Icons.qr_code_scanner_sharp,
-                    label: 'Scanner',
-                  ),
+                  // SideNavigationBarItem(
+                  //   icon: Icons.qr_code_scanner_sharp,
+                  //   label: 'Scanner',
+                  // ),
                   SideNavigationBarItem(
                     icon: Icons.add_card,
                     label: 'Create Document',
