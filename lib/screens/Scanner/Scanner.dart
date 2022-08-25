@@ -81,78 +81,78 @@ class Scanner extends StatelessWidget {
                     //           .setResult("Scanned data will appear here!");
                     //     },
                     //     child: Text("Reset")),
-                    Row(
-                      // mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(30.0),
-                          child: Container(
-                            margin: EdgeInsets.all(15.0),
-                            decoration: BoxDecoration(
-                                color:
-                                    Theme.of(context).scaffoldBackgroundColor,
-                                shape: BoxShape.circle,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.blue,
-                                    blurRadius: 5.0,
-                                  ),
-                                ]),
-                            child: IconButton(
-                              onPressed: () {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => ScanQRCode()));
-                              },
-                              icon: Icon(Icons.supervised_user_circle),
-                              color: Colors.blue,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(30.0),
-                          child: Container(
-                            margin: EdgeInsets.only(right: 15.0),
-                            decoration: BoxDecoration(
-                                color:
-                                    Theme.of(context).scaffoldBackgroundColor,
-                                shape: BoxShape.circle,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.blue,
-                                    blurRadius: 5.0,
-                                  ),
-                                ]),
-                            child: IconButton(
-                              onPressed: () {},
-                              icon: Icon(Icons.note_alt),
-                              color: Colors.blue,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(30.0),
-                          child: Container(
-                            margin: EdgeInsets.only(right: 15.0),
-                            decoration: BoxDecoration(
-                                color:
-                                    Theme.of(context).scaffoldBackgroundColor,
-                                shape: BoxShape.circle,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.blue,
-                                    blurRadius: 5.0,
-                                  ),
-                                ]),
-                            child: IconButton(
-                              onPressed: () {},
-                              icon: Icon(Icons.notes_sharp),
-                              color: Colors.blue,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                    // Row(
+                    //   // mainAxisSize: MainAxisSize.min,
+                    //   mainAxisAlignment: MainAxisAlignment.center,
+                    //   children: [
+                    //     Padding(
+                    //       padding: const EdgeInsets.all(30.0),
+                    //       child: Container(
+                    //         margin: EdgeInsets.all(15.0),
+                    //         decoration: BoxDecoration(
+                    //             color:
+                    //                 Theme.of(context).scaffoldBackgroundColor,
+                    //             shape: BoxShape.circle,
+                    //             boxShadow: [
+                    //               BoxShadow(
+                    //                 color: Colors.blue,
+                    //                 blurRadius: 5.0,
+                    //               ),
+                    //             ]),
+                    //         child: IconButton(
+                    //           onPressed: () {
+                    //             Navigator.of(context).push(MaterialPageRoute(
+                    //                 builder: (context) => ScanQRCode()));
+                    //           },
+                    //           icon: Icon(Icons.supervised_user_circle),
+                    //           color: Colors.blue,
+                    //         ),
+                    //       ),
+                    //     ),
+                    //     Padding(
+                    //       padding: const EdgeInsets.all(30.0),
+                    //       child: Container(
+                    //         margin: EdgeInsets.only(right: 15.0),
+                    //         decoration: BoxDecoration(
+                    //             color:
+                    //                 Theme.of(context).scaffoldBackgroundColor,
+                    //             shape: BoxShape.circle,
+                    //             boxShadow: [
+                    //               BoxShadow(
+                    //                 color: Colors.blue,
+                    //                 blurRadius: 5.0,
+                    //               ),
+                    //             ]),
+                    //         child: IconButton(
+                    //           onPressed: () {},
+                    //           icon: Icon(Icons.note_alt),
+                    //           color: Colors.blue,
+                    //         ),
+                    //       ),
+                    //     ),
+                    //     Padding(
+                    //       padding: const EdgeInsets.all(30.0),
+                    //       child: Container(
+                    //         margin: EdgeInsets.only(right: 15.0),
+                    //         decoration: BoxDecoration(
+                    //             color:
+                    //                 Theme.of(context).scaffoldBackgroundColor,
+                    //             shape: BoxShape.circle,
+                    //             boxShadow: [
+                    //               BoxShadow(
+                    //                 color: Colors.blue,
+                    //                 blurRadius: 5.0,
+                    //               ),
+                    //             ]),
+                    //         child: IconButton(
+                    //           onPressed: () {},
+                    //           icon: Icon(Icons.notes_sharp),
+                    //           color: Colors.blue,
+                    //         ),
+                    //       ),
+                    //     ),
+                    //   ],
+                    // ),
                     SizedBox(
                       height: 30,
                     ),

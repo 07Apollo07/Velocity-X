@@ -22,10 +22,13 @@ class CategoryTile extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+
             Row(
+
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(width: 20),
+
+                // SizedBox(width: 20),
                 Text(title,
                     style: GoogleFonts.josefinSans(
                         textStyle: TextStyle(
