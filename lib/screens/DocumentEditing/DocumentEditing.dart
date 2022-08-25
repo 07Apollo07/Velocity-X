@@ -591,8 +591,7 @@ class _DocumentEditingState extends State<DocumentEditing> {
                           height: 20,
                         ),
                         Visibility(
-                          visible: false,
-                          // visible: controller.storageLink != "" ? true : false,
+                          visible: controller.storageLink != "" ? true : false,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
