@@ -47,20 +47,20 @@ class TaskTile extends StatelessWidget {
                     style: Theme.of(context).textTheme.headline4,
                   ),
                   SizedBox(
-                    height: 3,
+                    height: 5,
                   ),
                   Row(children: [
                     Text(
                       'Assigned by:',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 13,
-                      ),
+                      style: Theme.of(context).textTheme.bodyText2,
                     ),
                     SizedBox(
                       width: 3,
                     ),
-                    Text(filesModel.creator_name)
+                    Text(
+                      filesModel.creator_name,
+                      style: Theme.of(context).textTheme.bodyText2,
+                    )
                   ]),
                 ],
               ),

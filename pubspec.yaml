@@ -61,7 +61,8 @@ dependencies:
   pointycastle: ^3.6.0
   archive: ^3.3.0
   file_saver: ^0.1.1
-  expandable: ^5.0.1
+  expandable: ^5.0.
+  google_fonts: ^3.0.1
 
 dev_dependencies:
   flutter_test:
