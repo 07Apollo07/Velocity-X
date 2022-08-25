@@ -44,10 +44,12 @@ class _WrapperState extends State<Wrapper> {
   ];
   List<Widget> views = [
     HomeWrapper(),
-    OrgDirectoryWrapper(),
+    // OrgDirectoryWrapper(), // uncomment for org Directory
+    ProfileWrapper(),  // comment
     Scanner(),
     // MetaDataPage(),
-    DocumentCreation(),
+    // DocumentCreation(),  // uncomment for doc creations
+    ProfileWrapper(), // comment
     ProfileWrapper(),
 
     // QrCreator(qrCodeOfInput: "Null"),
@@ -75,9 +77,11 @@ class _WrapperState extends State<Wrapper> {
               index: controller.tabIndex,
               children: [
                 HomeWrapper(),
-                OrgDirectoryWrapper(),
+                // OrgDirectoryWrapper(), // uncomment for org Directory
+                ProfileWrapper(),  // comment
                 // MetaDataPage(),
-                DocumentCreation(),
+                // DocumentCreation(),  // uncomment for doc creations
+                ProfileWrapper(),  // comment
                 ProfileWrapper(),
                 // PdfViewerWeb(),
                 // HtmlEditorExample(title: 'Flutter HTML Editor Example'),
