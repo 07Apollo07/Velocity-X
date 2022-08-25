@@ -47,7 +47,7 @@ class _HomeState extends State<Home> {
                 onPressed: () {
                   Get.toNamed(Routes.FAQ);
                 },
-                icon: Icon(CustomIcons.bell),
+                icon: Icon(Icons.question_mark),
                 color: Theme.of(context).primaryColor),
           ),
           Container(
@@ -84,8 +84,9 @@ class _HomeState extends State<Home> {
                 if (userController != null &&
                     userController.categories.length > 0) {
                   return SizedBox(
-                    height: 150,
+                    height: 200,
                     child: ListView.builder(
+
                       shrinkWrap: true,
                       scrollDirection: Axis.horizontal,
                       itemCount: userController.categories.length,

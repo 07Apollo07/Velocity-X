@@ -39,10 +39,8 @@ class MetaDataPage extends StatelessWidget {
           leading: BackButton(
             color: Theme.of(context).primaryColor,
           ),
-          title: Text(
-            "File Information",
-            style: TextStyle(color: Theme.of(context).primaryColor),
-          ),
+          title: Text("File Information",
+              style: Theme.of(context).textTheme.headline4),
           elevation: 0.0,
         ),
         body: Center(
@@ -71,10 +69,8 @@ class MetaDataPage extends StatelessWidget {
                   leading: BackButton(
                     color: Theme.of(context).primaryColor,
                   ),
-                  title: Text(
-                    "File Information",
-                    style: TextStyle(color: Theme.of(context).primaryColor),
-                  ),
+                  title: Text("File Information",
+                      style: Theme.of(context).textTheme.headline4),
                   elevation: 0.0,
                 ),
                 body: SingleChildScrollView(

@@ -27,11 +27,11 @@ class _FAQPageState extends State<FAQPage> {
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor: Color(0xFF210D41),
+        backgroundColor: Colors.black38,
         title: Text("Help",
             style: TextStyle(
                 fontSize: 22,
-                color: Colors.white,
+                color: Theme.of(context).backgroundColor,
                 fontWeight: FontWeight.bold)),
       ),
       body: SingleChildScrollView(
@@ -53,28 +53,40 @@ class _FAQPageState extends State<FAQPage> {
     return Padding(
       padding: const EdgeInsets.all(5.0),
       child: Card(
-        color: Color(0xffececec),
+        color: Theme.of(context).backgroundColor,
         child: Padding(
           padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-          child: ExpandablePanel(
-            header: Text(
-              heading,
-              style: TextStyle(
+          child: ExpandableTheme(
+            data: ExpandableThemeData(
+                iconColor: Theme.of(context).secondaryHeaderColor,
+                animationDuration: const Duration(milliseconds: 500)
+            ),
+            child: ExpandablePanel(
+              
+              header: Text(
+                heading,
+                style: TextStyle(
+                  color: Theme.of(context).secondaryHeaderColor,
 
-                fontSize: 16,
+                  fontSize: 16,
+                ),
               ),
-            ),
-            collapsed: Text(
-              "",
-              softWrap: true,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-            ),
-            expanded: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                loremIpsum,
+              collapsed: Text(
+                "",
                 softWrap: true,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
+              expanded: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+
+                  loremIpsum,
+                  style: TextStyle(
+                      color: Theme.of(context).secondaryHeaderColor
+                  ),
+                  softWrap: true,
+                ),
               ),
             ),
           ),
