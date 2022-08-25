@@ -34,10 +34,19 @@ class _OrganizationState extends State<Organization> {
                       "Organization Name",
                       style: Theme.of(context).textTheme.headline3,
                     ),
-                    Text(
-                      "Organization Code",
-                      style: Theme.of(context).textTheme.headline6,
-                    ),
+                    Row(children: [
+                      Text(
+                        "Addresss: XYZ",
+                        style: Theme.of(context).textTheme.headline5,
+                      ),
+                      SizedBox(
+                        width: 15,
+                      ),
+                      Text(
+                        "Phone: 09863232",
+                        style: Theme.of(context).textTheme.headline5,
+                      ),
+                    ])
                   ],
                 ),
               ],
