@@ -6,6 +6,7 @@ import 'package:velocityx/assets/custom_icons_icons.dart';
 import 'package:velocityx/controllers/authController.dart';
 import 'package:velocityx/controllers/scannerController.dart';
 import 'package:velocityx/screens/Scanner/ScannerV2.dart';
+import 'package:velocityx/screens/Scanner/archival_scanner.dart';
 import 'package:velocityx/screens/Scanner/qr_scan_page.dart';
 
 class Scanner extends StatelessWidget {
@@ -64,120 +65,130 @@ class Scanner extends StatelessWidget {
                   ],
                 ),
                 // backgroundColor: Color.fromRGBO(36, 36, 36, 1.0),
-                body: Column(
-                  mainAxisAlignment: (MediaQuery.of(context).size.width > 600)
-                      ? MainAxisAlignment.center
-                      : MainAxisAlignment.end,
-                  children: [
-                    // Text(controller.qrResult, style: TextStyle(color: Colors.white)),
-                    ElevatedButton(
-                        onPressed: () {
-                          Get.to(() => ScannerV2());
-                        },
-                        child: Text("Scan Document Code")),
-                    ElevatedButton(
-                        onPressed: () {
-                          Get.to(() => ScannerV2());
-                        },
-                        child: Text("Archive Document")),
-                    // Visibility(
-                    //     visible: true,
-                    //     child: Row(
-                    //       children: [
-                    //         ElevatedButton(
-                    //             onPressed: () {
-                    //               Get.to(() => ScannerV2());
-                    //             },
-                    //             child: Text("Archive Document")),
-                    //         ElevatedButton(
-                    //             onPressed: () {
-                    //               Get.to(() => ScannerV2());
-                    //             },
-                    //             child: Text("Archive Document")),
-                    //       ],
-                    //     )),
-                    // ElevatedButton(
-                    //     onPressed: () {
-                    //       controller
-                    //           .setResult("Scanned data will appear here!");
-                    //     },
-                    //     child: Text("Reset")),
-                    // Row(
-                    //   // mainAxisSize: MainAxisSize.min,
-                    //   mainAxisAlignment: MainAxisAlignment.center,
-                    //   children: [
-                    //     Padding(
-                    //       padding: const EdgeInsets.all(30.0),
-                    //       child: Container(
-                    //         margin: EdgeInsets.all(15.0),
-                    //         decoration: BoxDecoration(
-                    //             color:
-                    //                 Theme.of(context).scaffoldBackgroundColor,
-                    //             shape: BoxShape.circle,
-                    //             boxShadow: [
-                    //               BoxShadow(
-                    //                 color: Colors.blue,
-                    //                 blurRadius: 5.0,
-                    //               ),
-                    //             ]),
-                    //         child: IconButton(
-                    //           onPressed: () {
-                    //             Navigator.of(context).push(MaterialPageRoute(
-                    //                 builder: (context) => ScanQRCode()));
-                    //           },
-                    //           icon: Icon(Icons.supervised_user_circle),
-                    //           color: Colors.blue,
-                    //         ),
-                    //       ),
-                    //     ),
-                    //     Padding(
-                    //       padding: const EdgeInsets.all(30.0),
-                    //       child: Container(
-                    //         margin: EdgeInsets.only(right: 15.0),
-                    //         decoration: BoxDecoration(
-                    //             color:
-                    //                 Theme.of(context).scaffoldBackgroundColor,
-                    //             shape: BoxShape.circle,
-                    //             boxShadow: [
-                    //               BoxShadow(
-                    //                 color: Colors.blue,
-                    //                 blurRadius: 5.0,
-                    //               ),
-                    //             ]),
-                    //         child: IconButton(
-                    //           onPressed: () {},
-                    //           icon: Icon(Icons.note_alt),
-                    //           color: Colors.blue,
-                    //         ),
-                    //       ),
-                    //     ),
-                    //     Padding(
-                    //       padding: const EdgeInsets.all(30.0),
-                    //       child: Container(
-                    //         margin: EdgeInsets.only(right: 15.0),
-                    //         decoration: BoxDecoration(
-                    //             color:
-                    //                 Theme.of(context).scaffoldBackgroundColor,
-                    //             shape: BoxShape.circle,
-                    //             boxShadow: [
-                    //               BoxShadow(
-                    //                 color: Colors.blue,
-                    //                 blurRadius: 5.0,
-                    //               ),
-                    //             ]),
-                    //         child: IconButton(
-                    //           onPressed: () {},
-                    //           icon: Icon(Icons.notes_sharp),
-                    //           color: Colors.blue,
-                    //         ),
-                    //       ),
-                    //     ),
-                    //   ],
-                    // ),
-                    SizedBox(
-                      height: 30,
-                    ),
-                  ],
+                body: Center(
+                  child: Column(
+                    mainAxisAlignment: (MediaQuery.of(context).size.width > 600)
+                        ? MainAxisAlignment.center
+                        : MainAxisAlignment.end,
+                    children: [
+                      // Text(controller.qrResult, style: TextStyle(color: Colors.white)),
+                      ElevatedButton(
+
+                          onPressed: () {
+                            Get.to(() => ScannerV2());
+                          },
+                          child: Padding(
+                            padding: EdgeInsets.all(10),
+                            child:
+                              Text("Scan Document Code",style: Theme.of(context).textTheme.headline4,))),
+                      SizedBox(height: 20,),
+                      ElevatedButton(
+                          onPressed: () {
+                            Get.to(() => ScannerInter());
+                          },
+                          child: Padding(
+                              padding: EdgeInsets.all(10),
+                              child:
+                              Text("Archive Document",style: Theme.of(context).textTheme.headline4,))),
+                      // Visibility(
+                      //     visible: true,
+                      //     child: Row(
+                      //       children: [
+                      //         ElevatedButton(
+                      //             onPressed: () {
+                      //               Get.to(() => ScannerV2());
+                      //             },
+                      //             child: Text("Archive Document")),
+                      //         ElevatedButton(
+                      //             onPressed: () {
+                      //               Get.to(() => ScannerV2());
+                      //             },
+                      //             child: Text("Archive Document")),
+                      //       ],
+                      //     )),
+                      // ElevatedButton(
+                      //     onPressed: () {
+                      //       controller
+                      //           .setResult("Scanned data will appear here!");
+                      //     },
+                      //     child: Text("Reset")),
+                      // Row(
+                      //   // mainAxisSize: MainAxisSize.min,
+                      //   mainAxisAlignment: MainAxisAlignment.center,
+                      //   children: [
+                      //     Padding(
+                      //       padding: const EdgeInsets.all(30.0),
+                      //       child: Container(
+                      //         margin: EdgeInsets.all(15.0),
+                      //         decoration: BoxDecoration(
+                      //             color:
+                      //                 Theme.of(context).scaffoldBackgroundColor,
+                      //             shape: BoxShape.circle,
+                      //             boxShadow: [
+                      //               BoxShadow(
+                      //                 color: Colors.blue,
+                      //                 blurRadius: 5.0,
+                      //               ),
+                      //             ]),
+                      //         child: IconButton(
+                      //           onPressed: () {
+                      //             Navigator.of(context).push(MaterialPageRoute(
+                      //                 builder: (context) => ScanQRCode()));
+                      //           },
+                      //           icon: Icon(Icons.supervised_user_circle),
+                      //           color: Colors.blue,
+                      //         ),
+                      //       ),
+                      //     ),
+                      //     Padding(
+                      //       padding: const EdgeInsets.all(30.0),
+                      //       child: Container(
+                      //         margin: EdgeInsets.only(right: 15.0),
+                      //         decoration: BoxDecoration(
+                      //             color:
+                      //                 Theme.of(context).scaffoldBackgroundColor,
+                      //             shape: BoxShape.circle,
+                      //             boxShadow: [
+                      //               BoxShadow(
+                      //                 color: Colors.blue,
+                      //                 blurRadius: 5.0,
+                      //               ),
+                      //             ]),
+                      //         child: IconButton(
+                      //           onPressed: () {},
+                      //           icon: Icon(Icons.note_alt),
+                      //           color: Colors.blue,
+                      //         ),
+                      //       ),
+                      //     ),
+                      //     Padding(
+                      //       padding: const EdgeInsets.all(30.0),
+                      //       child: Container(
+                      //         margin: EdgeInsets.only(right: 15.0),
+                      //         decoration: BoxDecoration(
+                      //             color:
+                      //                 Theme.of(context).scaffoldBackgroundColor,
+                      //             shape: BoxShape.circle,
+                      //             boxShadow: [
+                      //               BoxShadow(
+                      //                 color: Colors.blue,
+                      //                 blurRadius: 5.0,
+                      //               ),
+                      //             ]),
+                      //         child: IconButton(
+                      //           onPressed: () {},
+                      //           icon: Icon(Icons.notes_sharp),
+                      //           color: Colors.blue,
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
+                      SizedBox(
+                        height: 30,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
