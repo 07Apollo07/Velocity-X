@@ -74,7 +74,28 @@ class Scanner extends StatelessWidget {
                         onPressed: () {
                           Get.to(() => ScannerV2());
                         },
-                        child: Text("Scan Code")),
+                        child: Text("Scan Document Code")),
+                    ElevatedButton(
+                        onPressed: () {
+                          Get.to(() => ScannerV2());
+                        },
+                        child: Text("Archive Document")),
+                    // Visibility(
+                    //     visible: true,
+                    //     child: Row(
+                    //       children: [
+                    //         ElevatedButton(
+                    //             onPressed: () {
+                    //               Get.to(() => ScannerV2());
+                    //             },
+                    //             child: Text("Archive Document")),
+                    //         ElevatedButton(
+                    //             onPressed: () {
+                    //               Get.to(() => ScannerV2());
+                    //             },
+                    //             child: Text("Archive Document")),
+                    //       ],
+                    //     )),
                     // ElevatedButton(
                     //     onPressed: () {
                     //       controller

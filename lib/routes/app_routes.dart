@@ -20,6 +20,7 @@ abstract class Routes {
   static const DOC_EDITING = _Paths.DOC_EDITING;
   static const FILES = _Paths.FILES;
   static const FAQ = _Paths.FAQ;
+  static const ARCHIVE_SCANNER = _Paths.ARCHIVE_SCANNER;
 }
 
 abstract class _Paths {
@@ -41,4 +42,6 @@ abstract class _Paths {
   static const DOC_EDITING = "/doc_edit";
   static const FILES = "/files";
   static const FAQ = "/faq";
+  static const ARCHIVE_INTER = "/archive_scanner";
+  static const ARCHIVE_SCANNER = "/archive_inter";
 }

@@ -125,18 +125,18 @@ class _DocumentEditingState extends State<DocumentEditing> {
                           ),
                         ),
                         ElevatedButton(
-                            onPressed: () async {
-                              FileStatsModel FileStats = await FilesDb()
-                                  .GetStats(widget.File.files_uniqueId);
-                              // FilesDb().GetStats("File");
-                              Get.toNamed(
-                                Routes.FILE_INFORMATION,
-                                id: Constants.profileId,
-                                arguments: FileStats,
-                                // arguments: "File",
-                              );
-                            },
-                            // onPressed: () {},
+                            // onPressed: () async {
+                            //   FileStatsModel FileStats = await FilesDb()
+                            //       .GetStats(widget.File.files_uniqueId);
+                            //   // FilesDb().GetStats("File");
+                            //   Get.toNamed(
+                            //     Routes.FILE_INFORMATION,
+                            //     id: Constants.profileId,
+                            //     arguments: FileStats,
+                            //     // arguments: "File",
+                            //   );
+                            // },
+                            onPressed: () {},
                             child: Text("Track Document")),
                         SizedBox(height: 10),
                         Container(

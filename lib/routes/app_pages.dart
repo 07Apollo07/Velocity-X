@@ -18,6 +18,8 @@ import 'package:velocityx/screens/PdfViewer/pdf_viewer.dart';
 import 'package:velocityx/screens/PdfViewerWeb/pdf_viewer_web.dart';
 import 'package:velocityx/screens/QRCodeGeneration/QrCreator.dart';
 import 'package:velocityx/screens/Scanner/Scanner.dart';
+import 'package:velocityx/screens/Scanner/ScannerArchiver.dart';
+import 'package:velocityx/screens/Scanner/archival_scanner.dart';
 import 'package:velocityx/screens/UserProfile/profile.dart';
 import 'package:velocityx/screens/UserProfile/profileWrapper.dart';
 import 'package:velocityx/screens/authenticate/login_page.dart';
@@ -129,6 +131,16 @@ class AppPages {
     GetPage(
       name: _Paths.FAQ,
       page: () => FAQPage(),
+      // binding: HomeBinding(),
+    ),
+    GetPage(
+      name: _Paths.ARCHIVE_INTER,
+      page: () => ScannerInter(),
+      // binding: HomeBinding(),
+    ),
+    GetPage(
+      name: _Paths.ARCHIVE_SCANNER,
+      page: () => ScannerArchiver(),
       // binding: HomeBinding(),
     ),
   ];

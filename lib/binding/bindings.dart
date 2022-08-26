@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:velocityx/controllers/ScannerArchiverController.dart';
 import 'package:velocityx/controllers/authController.dart';
 import 'package:velocityx/controllers/categoryController.dart';
 import 'package:velocityx/controllers/docCreationController.dart';
@@ -19,6 +20,7 @@ class StoreBindings extends Bindings {
     Get.lazyPut<OrganizationController>(() => OrganizationController());
     Get.put<WrapperController>(WrapperController(), permanent: true);
     Get.put<ScannerV2Controller>(ScannerV2Controller());
+    Get.put<ScannerArchiverController>(ScannerArchiverController());
     Get.lazyPut<MetaDataController>(() => MetaDataController());
     Get.lazyPut<FileInformationController>(() => FileInformationController());
   }
