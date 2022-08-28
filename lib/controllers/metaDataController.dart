@@ -295,7 +295,9 @@ class MetaDataController extends GetxController {
     update();
   }
 
-  void FinalApproverResponse(bool response) {}
+  void FinalApproverResponse(String fileId, String response) async {
+    await FilesDb().AddFinalApproverStats(fileId, response);
+  }
 
   void updateDocument(
       String fileId, String userId, FilesModel file, String StorageLink) async {

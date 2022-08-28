@@ -312,14 +312,16 @@ class MetaDataPage extends StatelessWidget {
                               children: [
                                 ElevatedButton(
                                   onPressed: () {
-                                    controller.FinalApproverResponse(false);
+                                    controller.FinalApproverResponse(
+                                        File.files_uniqueId, "Rejected");
                                   },
                                   child: Text("Reject"),
                                 ),
                                 SizedBox(width: 20),
                                 ElevatedButton(
                                   onPressed: () {
-                                    controller.FinalApproverResponse(true);
+                                    controller.FinalApproverResponse(
+                                        File.files_uniqueId, "Accepted");
                                   },
                                   child: Text("Accept"),
                                 ),

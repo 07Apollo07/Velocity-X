@@ -298,6 +298,12 @@ String getRightText(Map<String, dynamic> FileStats) {
   } else if (FileStats["Operation"] == "Scanned") {
     String message = "File Scanned by " + getNameFromUid(FileStats["By"]);
     return message;
+  } else if (FileStats["Operation"] == "Result") {
+    String message = "File has Been " +
+        FileStats["result"] +
+        " by " +
+        getNameFromUid(FileStats["By"]);
+    return message;
   }
 
   return "";

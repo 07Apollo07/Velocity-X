@@ -218,6 +218,31 @@ class FilesDb {
     }
   }
 
+  Future<bool> AddFinalApproverStats(String fileId, String response) async {
+    try {
+      List<dynamic> tracking = [
+        {
+          "Operation": "Result",
+          "By": Get.find<UserController>().user.id,
+          "Time": Timestamp.now(),
+          "result": response,
+        }
+      ];
+      await _firestore
+          .collection("Files")
+          .doc(fileId)
+          .collection("File_Stats")
+          .doc("Stats")
+          .update({
+        "tracking": FieldValue.arrayUnion(tracking),
+      });
+      return true;
+    } catch (e) {
+      print(e.toString());
+      return false;
+    }
+  }
+
   Future<FilesModel> GetFile(String fileId, bool Scanned) async {
     try {
       FilesModel _fileStat = FilesModel();
